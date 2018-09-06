@@ -44,7 +44,7 @@ $$  \begin{gmatrix}
   \exists & \te{exists}\\
   = & \te{equals}\\
   (,) & \te{parentheses} \\
-  (x_i)_{i \in \N}, (y_i)_{i \in \N}, (z_i)_{i \in \N} & \te{variables}
+  (x_i)_{i : \N}, (y_i)_{i : \N}, (z_i)_{i : \N} & \te{variables}
 \end{gmatrix}$$
 }
 
@@ -54,11 +54,11 @@ $$  \begin{gmatrix}
   \item A collection of \tbf{constant symbols} $\msf{Const}(\mc{L})$,
   \item a collection of \tbf{relation symbols} $\msf{Rel}(\mc{L})$,
   \item a collection of \tbf{function symbols} $\msf{Funct}(\mc{L})$, and
-  \item an assignment of each symbol $S \in \msf{Const}(\mc{L}) \cup \msf{Rel}(\mc{L}) \cup \msf{Funct}(\mc{L})$ to a natural number $\opn{arity}(S) \in \mbb{N}$.
+  \item an assignment of each symbol $S : \msf{Const}(\mc{L}) \cup \msf{Rel}(\mc{L}) \cup \msf{Funct}(\mc{L})$ to a natural number $\opn{arity}(S) : \mbb{N}$.
     }
   }
 
-Whenever we interpret a language on some carrier set $A$, we mean for constants $c$ to be interpreted as elements of $A^{\opn{arity}(c)}$, relations $R$ to be interpreted as subsets of $A^{\opn{arity}(R)}$, and for function symbols to always be interpreted as functions $A^{\opn{arity}(f)} \to A$.
+Whenever we interpret a language on some carrier $A$, we mean for constants $c$ to be interpreted as elements of $A^{\opn{arity}(c)}$, relations $R$ to be interpreted as subsets of $A^{\opn{arity}(R)}$, and for function symbols to be interpreted as functions $A^{\opn{arity}(f)} \to A$.
   
   \example{
     \begin{itemize}
@@ -109,7 +109,7 @@ Whenever we interpret our language on a carrier $A$, we mean for terms to be int
 By convention, we always include sentences called ``true'' and ``false''.
 
 
-\subsubsection{Predicate calculus and rules of deduction}
+\subsubsection{Predicate calculus and provability}
 
 % \definition{
 %   \label{def-propositional-function}
@@ -129,7 +129,16 @@ By convention, we always include sentences called ``true'' and ``false''.
 
 \definition{
   \label{def-tautology}
-  A \tbf{propositional function} is a constructive $f : \msf{Prop}^k \to \msf{Prop}$, for some $1 < k \in \N$, which does not mention quantifiers. $f$ is a \tbf{tautology} if $\vdash \forall \vec{p} : \msf{Prop}^k, f \vec{p} \leftrightarrow \opn{true}$.
+  A \tbf{propositional function} is a function $f : \msf{Prop}^k \to \msf{Prop}$, for some $1 < k : \N$ which we define inductively as follows:
+  \begin{enumerate}
+  \item Each projection $(P_1, \dots, P_k) \mapsto P_j$ is a propositional function.
+  \item If $f$ and $g$ are propositional functions, so are
+    $$
+\neg f, f \land g, f \lor g, f \rightarrow g, \te{ and } f \leftrightarrow g,
+$$
+where the operations above are carried out pointwise.
+  \end{enumerate}
+  . $f$ is a \tbf{tautology} if $\vdash \forall \vec{p} : \msf{Prop}^k, f \vec{p} \leftrightarrow \opn{true}$.
 }
 
 Every propositional function can be reified as a function $\msf{Sentences}(\mc{L}) \to \msf{Sentences}(\mc{L})$.
@@ -158,6 +167,8 @@ is valid.
 \item (Rule of specialization ``$\forall$-elimination'')
   Let $c$ be any constant symbol, and let $\varphi(x)$ be a formula whose only free variable is $x$. Then $(\forall x \varphi(x)) \to \varphi(c)$ is valid.
 
+\item $A \leftrightarrow (A \rightarrow \opn{true})$ is valid.
+  
 \item (``$\neg$-introduction'')
   If $\neg A \leftrightarrow (A \to \opn{false})$ is valid.
   
@@ -172,13 +183,82 @@ is valid.
   }
   }
 
+  \definition{\label{def-provable} \label{def-consistent} Let $S$ be a collection of sentences. \bfenumerate{
+      \item We say that $A$ is provable from $S$ if there exist finitely many $B_1, \dots, B_n : S$ such that $\left(B_1 \wedge \dots \wedge B_n \right) \to A$ is valid.
+
+      \item  We say that $S$ is consistent if $\opn{false}$ is not valid.
+      }
+      }
+      
+  
+      \subsection{Models and satisfiability}
+      For the remainder of this section we fix a language $\mc{L}$.
+\definition{
+  \label{def-theory}
+ An \tbf{$\mc{L}$-theory} is a collection of sentences from $\msf{Sentences}(\mc{L})$.
+}
+
+\definition{
+  \label{def-model}
+  An $\mc{L}$-structure comprises the following data:
+  \bfenumerate{
+  \item A carrier type $A$,
+  \item an assignment of every $c : \msf{Const}(\mc{L})$ to a $c^A : A^{\opn{arity}(c)}$,
+  \item an assignment of every $R : \msf{Rel}(\mc{L})$ to a subtype $R^A : A^{\opn{arity}(R)} \to \msf{Prop}$,
+  \item an assignment of every $f : \msf{Funct}(\mc{L})$ to a function $f^A : A^{\opn{arity}(f)} \to A$.
+    }
+  }
   \definition{
-    \label{def-provable}
-    Let $S$ be a collection of sentences. We say that $A$ is provable from $S$ if there exist finitely many $B_1, \dots, B_n \in S$ such that $\left(B_1 \wedge \dots \wedge B_n \right) \to A$ is valid.
+    \label{def-realization-of-terms}
+    Let $A$ be an $\mc{L}$-structure. Using the data of $A$ being an $\mc{L}$-structure, we can inductively assign to every term $t$ (of arity $k$ and containing $n$ free variables) a \tbf{realization} $\mbf{r}(t) : A^n \to A^k$, as follows:
+    \begin{enumerate}
+    \item If $t = v$ for a variable $v$, $\mbf{r}(t) = \id_A = \lambda v, v$.
+    \item If $t = c$ for a constant symbol $c$, $\mbf{r}(t) = A^0 \overset{c^A}{\to} A$.
+    \item If $t = (t_1, \dots, t_m)$, then $\mbf{r}(t) = \mbf{r}(t_1) \times \dots \times \mbf{r}(t_m)$.
+    \item If $t = f(t_0)$ for some function symbol $f$, then $\mbf{r}(t) = f^A \circ \mbf{r}(t_0)$.
+    \end{enumerate}
     }
   
+  \definition{
+    \label{def-realization-of-formulas}
+    Let $A$ be an $\mc{L}$-structure. Using the data of $A$ being an $\mc{L}$-structure, we can inductively assign to every formula $\varphi(x_1, \dots, x_n)$ (where $x_1, \dots, x_n$) exhaust the free variables of $\varphi$ a \tbf{realization} $\mbf{r}(\varphi) : A^n \to \msf{Prop}$, as follows:
+    \begin{enumerate}
+    \item If $\varphi$ is of the form $t_1 = t_2$, then $\mbf{r}(\varphi)$ is $\mbf{r}(t_1) = \mbf{r}(t_2)$ (where symbolic equality is realized as true equality).
+
+    \item If $\varphi$ is of the form $R(t)$, $\mbf{r}(R(t))$ is $R^A(\mbf{r}(t))$.
+
+    \item If $\varphi$ is of the form $\neg \psi$, then $\mbf{r}(\varphi)$ is $\neg \mbf{r}(\psi)$.
+
+    \item If $\varphi$ is of the form $\psi \lor \psi'$, then $\mbf{r}(\varphi)$ is $\mbf{r}(\psi) \lor \mbf{r}(\psi')$.
+
+    \item If $\varphi$ is of the form $\psi \land \psi'$, then $\mbf{r}(\varphi)$ is $\mbf{r}(\psi) \land \mbf{r}(\psi')$.
+
+    \item If $\varphi$ is of the form $\exists v \psi$, then $\mbf{r}(\varphi)$ is $\exists v \mbf{r}(\varphi)$.
+
+     \item If $\varphi$ is of the form $\forall v \psi$, then $\mbf{r}(\varphi)$ is $\forall v \mbf{r}(\varphi)$.
+    \end{enumerate}
+  }
+
+  In particular, each sentence $\varphi$ is sent to a $\msf{Prop}$ $\mbf{r}(\varphi)$.
+
+  \definition{
+    \label{def-satisfiability}
+    Let $A$ be an $\mc{L}$-structure, and let $\varphi$ be a sentence. We say that $A$ \tbf{satisfies} $\varphi$, written
+    $$
+A \models \varphi,
+$$
+if $\entails \mbf{r}(\varphi)$.
+}
+
+\definition{
+  \label{def-model}
+Let $T$ be an $\mc{L}$-theory, and let $A$ be an $\mc{L}$-structure. We say that $A$ is a \tbf{model} of $T$ if for every sentence $\varphi : T$, $A \models \varphi$.
+  }
+
 \subsection{The completeness theorem}
 \remph{TODO}(jesse)
+
+\subsection{The L\"owenheim-Skolem theorem}
 \section{Generic sets: Cohen's original proof}
 
 
