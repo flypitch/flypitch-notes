@@ -34,10 +34,151 @@ In these notes, intended as the plaintext part of the Flypitch project, we give 
 \section{Preliminaries}
 
 \subsection{First-order logic}
+\subsubsection{General logical symbols}
+\definition{\label{def-general-logical-symbol} We reserve the following general logical symbols:
+$$  \begin{gmatrix}
+   \neg & \te{not}\\
+ \lor   & \te{or}\\
+ \land   & \te{and}\\
+  \forall  & \te{for all}\\
+  \exists & \te{exists}\\
+  = & \te{equals}\\
+  (,) & \te{parentheses} \\
+  (x_i)_{i \in \N}, (y_i)_{i \in \N}, (z_i)_{i \in \N} & \te{variables}
+\end{gmatrix}$$
+}
+
+\subsubsection{First-order languages}
+\definition{\label{def-language} A (first-order, one-sorted) \tbf{language} $\mc{L}$ comprises the following data:
+  \bfenumerate{
+  \item A collection of \tbf{constant symbols} $\msf{Const}(\mc{L})$,
+  \item a collection of \tbf{relation symbols} $\msf{Rel}(\mc{L})$,
+  \item a collection of \tbf{function symbols} $\msf{Funct}(\mc{L})$, and
+  \item an assignment of each symbol $S \in \msf{Const}(\mc{L}) \cup \msf{Rel}(\mc{L}) \cup \msf{Funct}(\mc{L})$ to a natural number $\opn{arity}(S) \in \mbb{N}$.
+    }
+  }
+
+Whenever we interpret a language on some carrier set $A$, we mean for constants $c$ to be interpreted as elements of $A^{\opn{arity}(c)}$, relations $R$ to be interpreted as subsets of $A^{\opn{arity}(R)}$, and for function symbols to always be interpreted as functions $A^{\opn{arity}(f)} \to A$.
+  
+  \example{
+    \begin{itemize}
+    \item The language of groups comprises a $1$-ary constant symbol for the identity and a $2$-ary function for group multiplication.
+
+    \item The language of rings comprises constant symbols $0$ and $1$ and $2$-ary functions for addition and multiplication.
+
+     \item The language of set theory comprises just one $2$-ary relation $\in$.
+    \end{itemize}
+  }
+
+\subsubsection{Terms, formulas, and sentences}
+\definition{\label{def-term} A \tbf{term} is a string of symbols defined by structural induction as follows:
+  \begin{enumerate}
+  \item Any variable $v$ is a term.
+  \item Any constant $c$ is a term.
+  \item If $t_1, \dots, t_n$ are terms of arities $a_1, \dots, a_n$, then $(t_1, \dots, t_n)$ is a term of arity $a_1 + \dots + a_n$.
+  \item If $t$ is a term and $f$ is a function symbol with matching arities, then $f t$ is a term.
+  \end{enumerate}
+}
+
+Whenever we interpret our language on a carrier $A$, we mean for terms to be interpreted as functions into $A$ which we can construct by composing existing constants (constant functions), basic functions (i.e. the interpretations of the function symbols), and variables (identity).
+
+\definition{\label{def-formula} A \tbf{formula} is defined by structural induction as follows:
+  \begin{enumerate}
+  \item If $t_1$ and $t_2$ are terms of the same arity, $t_1 = t_2$ is a formula.
+  \item If $t$ is a term and $R$ is a relation symbol, and $t$ and $R$ have the same arity, then $R t$ is a formula.
+  \item If $\varphi$ is a formula, $\neg \varphi$ is a formula.
+  \item If $\varphi$ and $\psi$ are formulas, then $\varphi \lor \psi$ is a formula.
+  \item If $\varphi$ and $\psi$ are formulas, then $\varphi \land \psi$ is a formula.
+  \item If $\varphi$ is a formula containing a variable $v$, then $\exists v \varphi$ is a formula.
+  \item If $\varphi$ is a formula containing a variable $v$, then $\forall v \varphi v$ is a formula.
+  \end{enumerate}
+}
+
+\definition{\label{def-free-variable}
+  Let $\varphi$ be a formula containing the variables $x_1, \dots, x_n$. We say that the variable $x_k$ is \tbf{free} if $x_k$ is not contained in a subformula of the form $\exists x_k \psi$ or $\forall x_k \psi$.
+
+  $x_k$ is \tbf{bound} if it is not free.
+}
+
+\definition{\label{def-sentence}
+  A formula is a \tbf{sentence} (or \tbf{statement}) if it contains no free variables.
+
+  We write $\msf{Formulas}(\mc{L})$ for all the first-order formulas of $\mc{L}$, and we write $\msf{Sentences}(\mc{L})$ for all the first-order sentences of $\mc{L}$.
+}
+
+By convention, we always include sentences called ``true'' and ``false''.
 
 
+\subsubsection{Predicate calculus and rules of deduction}
+
+% \definition{
+%   \label{def-propositional-function}
+%   Fix an $n > 1$. The collection of functions $\{\opn{false}, \opn{true}\}^n \to \{\opn{false}, \opn{true}\}$ inherits the structure of a Boolean algebra by performing operations pointwise.
+
+%   A \tbf{propositional function} $\{\opn{false}, \opn{true}\}^n \to \{\opn{false}, \opn{true}\}$ is defined inductively as follows:
+%   \begin{enumerate}
+%   \item Every projection $(\epsilon_1, \dots, \epsilon_n) \mapsto \epsilon_k$ is a propositional function.
+%   \item If $P$ and $Q$ are propositional functions, then so are
+%     $$
+% \neg P, P \land Q, P \lor Q, P \to Q, \te{ and } P \leftrightarrow Q.
+%     $$
+%   \end{enumerate}
+
+% A propositional function is a \tbf{tautology} if it is constantly true.
+% }
+
+\definition{
+  \label{def-tautology}
+  A \tbf{propositional function} is a constructive $f : \msf{Prop}^k \to \msf{Prop}$, for some $1 < k \in \N$, which does not mention quantifiers. $f$ is a \tbf{tautology} if $\vdash \forall \vec{p} : \msf{Prop}^k, f \vec{p} \leftrightarrow \opn{true}$.
+}
+
+Every propositional function can be reified as a function $\msf{Sentences}(\mc{L}) \to \msf{Sentences}(\mc{L})$.
+
+\definition{
+  \label{def-predicate-calculus}
+  The \tbf{predicate calculus} comprises the following rules for deducing sentences from other sentences. We call deducible sentences \tbf{valid}.
+
+\alphenumerate{
+\item (Rule of the propositional calculus) if $\ol{f}$ is a reified tautology which takes $k$ arguments, then for any $k$ sentences $A_1, \dots, A_k$, the propositional combination $\ol{f}(\varphi_1, \dots, \varphi_k)$ is a valid sentence.
+
+\item (Rule of modus ponens) If $A$ and $A \to B$ are valid, then $B$ is valid.
+
+\item (Rules of equality)
+  \bfenumerate{
+  \item $\forall x, x = x$, $\forall x \forall y, x = y \wedge y = x$, and $\forall x \forall y \forall z, x = y \wedge y = z \rightarrow x = z$ are all valid.
+  \item Let $\varphi(x)$ be a formula whose only free variable is $x$. Then
+    $$
+\forall x \forall y, (x = y) \rightarrow (\varphi(x) \rightarrow \varphi(y))
+$$
+is valid.
+  }
+\item (Change of variable)
+  If $A$ is a sentence and $A'$ represents $A$ with all instances of a variable $x$ switched to $y$, then $A \leftrightarrow A'$ is valid.
+
+\item (Rule of specialization ``$\forall$-elimination'')
+  Let $c$ be any constant symbol, and let $\varphi(x)$ be a formula whose only free variable is $x$. Then $(\forall x \varphi(x)) \to \varphi(c)$ is valid.
+
+\item (``$\neg$-introduction'')
+  If $\neg A \leftrightarrow (A \to \opn{false})$ is valid.
+  
+\item (Generalization of constants ``$\forall$-introduction'')
+  Let $B$ be a sentence which does not contain the constant $c$ or the variable $x$. Let $\varphi(x)$ be some formula such that $\varphi(x) \to B$ is valid. Then $\exists x \varphi(x) \to B$ is also valid.\footnote{In particular, using the next rule, if $\neg \varphi(c) \to \opn{false}$ is valid, so is $\exists x \neg \varphi(x) \to \opn{false}$, so is $\neg \exists x \neg \varphi(x)$, and therefore so is $\forall x \varphi(x)$.}
+
+\item (de Morgan laws)
+  Let $\varphi(x)$ have $x$ as its only free variable. Let $B$ be a sentence which does not contain $x$. Then the following are valid statements:
+  $$(\neg (\forall x \varphi(x))) \leftrightarrow (\exists x \neg \varphi(x))$$
+  $$((\forall x \varphi(x)) \wedge B ) \leftrightarrow \left((\forall x(\varphi(x) \wedge  B\right)$$
+  $$((\exists x \varphi(x)) \wedge B ) \leftrightarrow \left((\exists x(\varphi(x) \wedge B\right)$$
+  }
+  }
+
+  \definition{
+    \label{def-provable}
+    Let $S$ be a collection of sentences. We say that $A$ is provable from $S$ if there exist finitely many $B_1, \dots, B_n \in S$ such that $\left(B_1 \wedge \dots \wedge B_n \right) \to A$ is valid.
+    }
+  
 \subsection{The completeness theorem}
-
+\remph{TODO}(jesse)
 \section{Generic sets: Cohen's original proof}
 
 
