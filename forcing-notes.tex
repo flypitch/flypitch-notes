@@ -110,7 +110,7 @@ By convention, we always include sentences called ``true'' and ``false''.
 
 
 \subsubsection{Predicate calculus and provability}
-
+Throughout this section, we fix a language $\mc{L}$.
 % \definition{
 %   \label{def-propositional-function}
 %   Fix an $n > 1$. The collection of functions $\{\opn{false}, \opn{true}\}^n \to \{\opn{false}, \opn{true}\}$ inherits the structure of a Boolean algebra by performing operations pointwise.
@@ -129,6 +129,7 @@ By convention, we always include sentences called ``true'' and ``false''.
 
 \definition{
   \label{def-tautology}
+  \label{def-propositional-function}
   A \tbf{propositional function} is a function $f : \msf{Prop}^k \to \msf{Prop}$, for some $1 < k : \N$ which we define inductively as follows:
   \begin{enumerate}
   \item Each projection $(P_1, \dots, P_k) \mapsto P_j$ is a propositional function.
@@ -136,19 +137,30 @@ By convention, we always include sentences called ``true'' and ``false''.
     $$
 \neg f, f \land g, f \lor g, f \rightarrow g, \te{ and } f \leftrightarrow g,
 $$
-where the operations above are carried out pointwise.
+where the operations above are carried out pointwise in $\msf{Prop}$.
   \end{enumerate}
   . $f$ is a \tbf{tautology} if $\vdash \forall \vec{p} : \msf{Prop}^k, f \vec{p} \leftrightarrow \opn{true}$.
 }
 
-Every propositional function can be reified as a function $\msf{Sentences}(\mc{L}) \to \msf{Sentences}(\mc{L})$.
+\definition{
+  \label{def-propositional-combination}
+  A \tbf{propositional combination} is a function $f : \msf{Sentences}(\mc{L})^k \to \msf{Sentences}(\mc{L})^k$, for some $1 < k : \N$ which we define inductively as follows:
+  \begin{enumerate}
+  \item Each projection $(B_1, \dots, B_k) \mapsto B_j$ is a propositional combination.
+  \item If $f$ and $g$ are propositional combinations, so are
+    $$\neg f, f \land g, f \lor g, f \rightarrow g, \te{ and } f \leftrightarrow g,$$
+    where the operations are carried out pointwise in $\msf{Sentences}(\mc{L})$.
+  \end{enumerate}
+}
+
+By sending projections to projections and symbols $(\neg, \land, \lor, \rightarrow, \leftrightarrow)$ to the corresponding operations on $\msf{Prop}$, every propositional combination $f : \msf{Sentences}(\mc{L})^{k} \to \msf{Sentences}(\mc{L})$ can be realized as a propositional function $\mbf{r}(f) : \msf{Prop}^k \to \msf{Prop}$.
 
 \definition{
   \label{def-predicate-calculus}
   The \tbf{predicate calculus} comprises the following rules for deducing sentences from other sentences. We call deducible sentences \tbf{valid}.
 
 \alphenumerate{
-\item (Rule of the propositional calculus) if $\ol{f}$ is a reified tautology which takes $k$ arguments, then for any $k$ sentences $A_1, \dots, A_k$, the propositional combination $\ol{f}(\varphi_1, \dots, \varphi_k)$ is a valid sentence.
+\item (Rule of the propositional calculus) if $f$ is a propositional combination taking $k$ arguments such that $\mbf{r}(f)$ is a tautology, then for any $k$ sentences $A_1, \dots, A_k$, the value of the propositional combination $f(\varphi_1, \dots, \varphi_k)$ is a valid sentence.
 
 \item (Rule of modus ponens) If $A$ and $A \to B$ are valid, then $B$ is valid.
 
@@ -221,7 +233,7 @@ is valid.
   
   \definition{
     \label{def-realization-of-formulas}
-    Let $A$ be an $\mc{L}$-structure. Using the data of $A$ being an $\mc{L}$-structure, we can inductively assign to every formula $\varphi(x_1, \dots, x_n)$ (where $x_1, \dots, x_n$) exhaust the free variables of $\varphi$ a \tbf{realization} $\mbf{r}(\varphi) : A^n \to \msf{Prop}$, as follows:
+    Let $A$ be an $\mc{L}$-structure. Using the data of $A$ being an $\mc{L}$-structure, we can inductively assign to every formula $\varphi(x_1, \dots, x_n)$ (where $x_1, \dots, x_n$ exhaust the free variables of $\varphi$) a \tbf{realization} $\mbf{r}(\varphi) : A^n \to \msf{Prop}$, as follows:
     \begin{enumerate}
     \item If $\varphi$ is of the form $t_1 = t_2$, then $\mbf{r}(\varphi)$ is $\mbf{r}(t_1) = \mbf{r}(t_2)$ (where symbolic equality is realized as true equality).
 
