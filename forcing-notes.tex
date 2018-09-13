@@ -12,8 +12,6 @@
 \usepackage{fixltx2e}
 \usepackage{tcolorbox}
 \usepackage{jmhmacros}
-\newcommand{\true}{\msf{true}}
-\newcommand{\false}{\msf{false}}
 
 \graphicspath{ {/home/pv/Pictures/latex/} }
 
@@ -179,8 +177,6 @@ is valid.
 
 \item (Rule of specialization ``$\forall$-elimination'')
   Let $c$ be any constant symbol, and let $\varphi(x)$ be a formula whose only free variable is $x$. Then $(\forall x \varphi(x)) \to \varphi(c)$ is valid.
-
-\item $A \leftrightarrow (A \rightarrow \true)$ is valid.
   
 \item (``$\neg$-introduction'')
   If $\neg A \leftrightarrow (A \to \false)$ is valid.
@@ -201,6 +197,10 @@ is valid.
 
       \item  We say that $S$ is consistent if $\false$ is not valid.
       }
+    }
+
+    \remark{
+One may wonder why we work with a type of formulas and not with a collection of $\Prop$s directly. The problem with this is that everything needs to be typed, and so to reason about a predicate (say ``$\in$'') using $\Prop$, we need some carrier type $A$ such that $\in : A \to A \to \Prop$, so that e.g. $\in$ satisfies the axioms of set theory. But then what does it mean for some other type $B$ to have an interpretation of $\in$ and the axioms it satisfies? There then needs to be a separate predicate $\in_B : B \to B \to \Prop$ satisfying the same \emph{kind} of $\Prop$s as $\in : A \to A \to \Prop$. We could proceed to define a typeclass of such $(B, \in_B)$, and we would then be working with models of set theory, but we would lack a way to reason syntactically about the axioms themselves.
       }
       
   
@@ -213,7 +213,7 @@ is valid.
 
 \definition{
   \label{def-structure}
-  An $\mc{L}$-structure comprises the following data:
+  An \tbf{$\mc{L}$-structure} comprises the following data:
   \bfenumerate{
   \item A carrier type $A$,
   \item an assignment of every $c : \msf{Const}(\mc{L})$ to a $c^A : A^{\opn{arity}(c)}$,
@@ -280,6 +280,14 @@ Let $T$ be an $\mc{L}$-theory, and let $A$ be an $\mc{L}$-structure. We say that
 $$
 which is clearly symmetric.
 }
+
+\example{
+  Let $\Mod(\msf{Graph})$ be the collection of graphs.\footnote{Warning: this is ``large'', so lives in the next universe up: one can interpret a trivial edge relation on \emph{every} type in the current universe.} A \tbf{graph property} is a map $P : \Mod(\msf{Graph}) \to \Prop$ such that whenever $G \simeq G'$, $P(G) \leftrightarrow P(G')$. We say that $G$ \emph{satisfies} $P$ if $P(g) \leftrightarrow \true$. A graph property is additionally said to be \emph{monotone} if whenever $G \subseteq G'$ is a subgraph, then $P(G') \rightarrow P(G)$.
+
+  For example, the property of being a complete graph is not monotone, while the property of being cycle-free is.
+
+  The \tbf{graph evasiveness conjecture} says that for every monotone graph property $P$ and every $n : \N$, one needs to ask $\binom{n}{2}$ questions of the form ``is there an edge between $v$ and $w$'' to determine if an arbitrary graph on $n$ vertices satisfies $P$.
+  }
 
 \example{
   (Peano arithmetic)
@@ -400,13 +408,50 @@ For every ($n$-ary) relation symbol $R_{\beta}$, we realize $R_{\beta}$ by putti
 $$
 R_{\beta}^{\mc{C}} \left(c_1, \dots, c_n\right) \leftrightarrow \medleft R(c_1, \dots, c_n) : H \medright.
 $$
-This is a model of $H$: for any atomic or negated-atomic sentence $\sigma$ which is consistent with $S$, $\sigma$ must arise as some $G_{\alpha}$ and therefore by construction is satisfied by $M$. Since $S$ is quantifier-free, every sentence splits into a disjunction of conjunctions of atomic or negated-atomic sentences, so by induction every quantifier-free sentence consistent with $S$ is again satisfied by $M$.
+
+It remains to show that $M$ is a model of $S$. Since $S$ was quantifier-free, then by the inductive definition of formulas, every sentence in $S$ is a Boolean combination of atomic sentences (precisely the $F_{\alpha}$) or their negations. Let $\varphi : S$. We can additionally rearrange $\varphi$ into a disjunctive normal form, so that
+$$
+\varphi \equiv \bigvee_{i \leq n} \left(\bigwedge_{j \leq m_i}L^i_j\right),
+$$
+where each $L^i_j$ is an atomic or negated-atomic sentence. For each disjunctand $\bigwedge_{j \leq m_i} L^i_j$, we have each of the $L^i_j$ belong to $\{F_{\alpha}\}$, so either $L^i_j$ or $\neg L^i_j$ belongs to the $\{G_{\alpha}\}$. It follows that if for every $\bigwedge_{j \leq m_i} L^i_j$, there exists some $L^i_{j}$ such that $\neg L^i_j$ is in $\{G_{\alpha}\}$, then $H \entails \neg \varphi$ is inconsistent. Therefore, there must be some disjunctand $\bigwedge_{j \leq m_i} L^i_j$ such that every $L^i_j$ is in $\{G_{\alpha}\}$.
+
+Since $M$ was designed to satisfy the $G_{\alpha}$, the propositional calculus implies that $M \models \varphi$. Since $\varphi : S$ was arbitrary, $M \models S$.
 \end{proof}
 
+\definition{
+Let us say that two $\mc{L}$-theories $T$ and $T'$ are \emph{equivalent} if every sentence of $T$ can be proved from $T'$ and every sentence of $T'$ can be proved from $T$. It is easy to see that if $T$ and $T'$ are equivalent, $T$ is consistent if and only if $T'$ is consistent.
+}
+
+\definition{
+We say that a sentence $\varphi$ is in \tbf{prenex normal form} if any quantifiers occurying in $\varphi$ occur together at the beginning of $\varphi$. We say that a theory is in prenex normal form if every sentence in $T$ is in prenex normal form.
+}
+
+\lemma{
+Every theory $T$ is equivalent to a theory $T'$ in prenex normal form.
+  }
+
+  \begin{proof}
+    Apply the change-of-variables rule and the de Morgan rules for quantifiers to change any sentence not in the desired form into one in $T'$.
+  \end{proof}
+  
 \theorem{\label{theorem-relational-completeness}Now suppose that $S$ is a relational theory, which possibly contains quantifiers, and is consistent. Then $S$ has a model.}
-
 \begin{proof}
+  Let $T$ be a theory whose sentences are either quantifier-free or begin with a quantifier. We expand $T$ (and the language) as follows: for every sentence in $T$ of the form $\exists x \varphi(x)$, we expand the language by a new constant symbol $c$ and adjoin to $T$ the sentence $\varphi(c)$, and for every sentence in $T$ of the form $\forall x \varphi(x)$ and every constant $c$ already occuring in $T$, we adjoin the sentence $\varphi(c)$. We call the result of this process $T^*$.
 
+  We observe that whenever $T$ is consistent, so is $T^*$: if $T^* \entails_{\mc{L}} \false$, then there are finitely many sentences $\varphi_1, \dots, \varphi_n$ from $T^*$ such that $\entails_{\mc{L}}\left(\bigwedge_{i} \varphi_i \right) \to \false$. We regroup this conjunction according to whether or not $\varphi_i$ contains a new constant symbol or not, viz.
+  $$
+\entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\bigwedge_{j} \psi_j(c_j)\right) \to \false,
+$$ where $c_j$ are the new constant symbols. Applying the generalization of constants deduction rule and the de Morgan rules, we conclude that
+$$
+\entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\exists x_j\bigwedge_{j} \psi_j(x_j)\right) \to \false 
+$$
+and therefore
+$$
+\entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\bigvee_{j} \neg \exists x_j \psi_j(x_j)\right).
+$$
+So, for some $j$, $\entails_{\mc{L}} \exists x_j \psi_j(x_j)$, but by construction $\exists x_j \psi_j(x_j) : T$ for $\psi_j(c_j)$ to be in $T^*$. Therefore, $T$ is not consistent.
+
+Now let $S$ be any consistent theory. We put $S_0 \dfeq S$ and if $S_n$ has already been defined, we put $S_{n+1} \dfeq \left(S_n\right)^*$. Then we obtain a consistent limit theory $\ol{S} \dfeq \bigcup_{n \in \N} S_n$, and we define the model $M$ as we did in the quantifier-free case for the quantifier-free part of $\ol{S}$.
 \end{proof}
 
 \proposition{\label{prop-T-rel-is-conservative}
