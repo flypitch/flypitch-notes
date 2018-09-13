@@ -1,5 +1,4 @@
 \documentclass[11pt]{article}
- 
 \usepackage[margin=1in]{geometry} 
 \usepackage{tikz-cd}
 \usepackage{graphicx}
@@ -13,6 +12,8 @@
 \usepackage{fixltx2e}
 \usepackage{tcolorbox}
 \usepackage{jmhmacros}
+\newcommand{\true}{\msf{true}}
+\newcommand{\false}{\msf{false}}
 
 \graphicspath{ {/home/pv/Pictures/latex/} }
 
@@ -106,16 +107,16 @@ Whenever we interpret our language on a carrier $A$, we mean for terms to be int
   We write $\msf{Formulas}(\mc{L})$ for all the first-order formulas of $\mc{L}$, and we write $\msf{Sentences}(\mc{L})$ for all the first-order sentences of $\mc{L}$.
 }
 
-By convention, we always include sentences called ``true'' and ``false''.
+By convention, we always include sentences called $\true$ and $\false$.
 
 
 \subsubsection{Predicate calculus and provability}
 Throughout this section, we fix a language $\mc{L}$.
 % \definition{
 %   \label{def-propositional-function}
-%   Fix an $n > 1$. The collection of functions $\{\opn{false}, \opn{true}\}^n \to \{\opn{false}, \opn{true}\}$ inherits the structure of a Boolean algebra by performing operations pointwise.
+%   Fix an $n > 1$. The collection of functions $\{\false, \true\}^n \to \{\false, \true\}$ inherits the structure of a Boolean algebra by performing operations pointwise.
 
-%   A \tbf{propositional function} $\{\opn{false}, \opn{true}\}^n \to \{\opn{false}, \opn{true}\}$ is defined inductively as follows:
+%   A \tbf{propositional function} $\{\false, \true\}^n \to \{\false, \true\}$ is defined inductively as follows:
 %   \begin{enumerate}
 %   \item Every projection $(\epsilon_1, \dots, \epsilon_n) \mapsto \epsilon_k$ is a propositional function.
 %   \item If $P$ and $Q$ are propositional functions, then so are
@@ -139,7 +140,7 @@ Throughout this section, we fix a language $\mc{L}$.
 $$
 where the operations above are carried out pointwise in $\msf{Prop}$.
   \end{enumerate}
-  . $f$ is a \tbf{tautology} if $\vdash \forall \vec{p} : \msf{Prop}^k, f \vec{p} \leftrightarrow \opn{true}$.
+$f$ is a \tbf{tautology} if $\vdash \forall \vec{p} : \msf{Prop}^k, f \vec{p} \leftrightarrow \true$.
 }
 
 \definition{
@@ -157,7 +158,7 @@ By sending projections to projections and symbols $(\neg, \land, \lor, \rightarr
 
 \definition{
   \label{def-predicate-calculus}
-  The \tbf{predicate calculus} comprises the following rules for deducing sentences from other sentences. We call deducible sentences \tbf{valid}.
+  The \tbf{predicate calculus} comprises the following rules for deducing sentences from other sentences. We call deducible sentences \tbf{valid}, and write $\entails_{\mc{L}} \varphi$ to mean that the $\mc{L}$-sentence $\varphi$ is valid (and to disambiguate from $\entails$, which when used unadorned means ``provable in the metatheory).
 
 \alphenumerate{
 \item (Rule of the propositional calculus) if $f$ is a propositional combination taking $k$ arguments such that $\mbf{r}(f)$ is a tautology, then for any $k$ sentences $A_1, \dots, A_k$, the value of the propositional combination $f(\varphi_1, \dots, \varphi_k)$ is a valid sentence.
@@ -179,13 +180,13 @@ is valid.
 \item (Rule of specialization ``$\forall$-elimination'')
   Let $c$ be any constant symbol, and let $\varphi(x)$ be a formula whose only free variable is $x$. Then $(\forall x \varphi(x)) \to \varphi(c)$ is valid.
 
-\item $A \leftrightarrow (A \rightarrow \opn{true})$ is valid.
+\item $A \leftrightarrow (A \rightarrow \true)$ is valid.
   
 \item (``$\neg$-introduction'')
-  If $\neg A \leftrightarrow (A \to \opn{false})$ is valid.
+  If $\neg A \leftrightarrow (A \to \false)$ is valid.
   
 \item (Generalization of constants ``$\forall$-introduction'')
-  Let $B$ be a sentence which does not contain the constant $c$ or the variable $x$. Let $\varphi(x)$ be some formula such that $\varphi(x) \to B$ is valid. Then $\exists x \varphi(x) \to B$ is also valid.\footnote{In particular, using the next rule, if $\neg \varphi(c) \to \opn{false}$ is valid, so is $\exists x \neg \varphi(x) \to \opn{false}$, so is $\neg \exists x \neg \varphi(x)$, and therefore so is $\forall x \varphi(x)$.}
+  Let $B$ be a sentence which does not contain the constant $c$ or the variable $x$. Let $\varphi(x)$ be some formula such that $\varphi(x) \to B$ is valid. Then $\exists x \varphi(x) \to B$ is also valid.\footnote{In particular, using the next rule, if $\neg \varphi(c) \to \false$ is valid, so is $\exists x \neg \varphi(x) \to \false$, so is $\neg \exists x \neg \varphi(x)$, and therefore so is $\forall x \varphi(x)$.}
 
 \item (de Morgan laws)
   Let $\varphi(x)$ have $x$ as its only free variable. Let $B$ be a sentence which does not contain $x$. Then the following are valid statements:
@@ -198,7 +199,7 @@ is valid.
   \definition{\label{def-provable} \label{def-consistent} Let $S$ be a collection of sentences. \bfenumerate{
       \item We say that $A$ is provable from $S$ if there exist finitely many $B_1, \dots, B_n : S$ such that $\left(B_1 \wedge \dots \wedge B_n \right) \to A$ is valid.
 
-      \item  We say that $S$ is consistent if $\opn{false}$ is not valid.
+      \item  We say that $S$ is consistent if $\false$ is not valid.
       }
       }
       
@@ -211,7 +212,7 @@ is valid.
 }
 
 \definition{
-  \label{def-model}
+  \label{def-structure}
   An $\mc{L}$-structure comprises the following data:
   \bfenumerate{
   \item A carrier type $A$,
@@ -253,6 +254,7 @@ is valid.
 
   In particular, each sentence $\varphi$ is sent to a $\msf{Prop}$ $\mbf{r}(\varphi)$.
 
+
   \definition{
     \label{def-satisfiability}
     Let $A$ be an $\mc{L}$-structure, and let $\varphi$ be a sentence. We say that $A$ \tbf{satisfies} $\varphi$, written
@@ -265,13 +267,172 @@ if $\entails \mbf{r}(\varphi)$.
 \definition{
   \label{def-model}
 Let $T$ be an $\mc{L}$-theory, and let $A$ be an $\mc{L}$-structure. We say that $A$ is a \tbf{model} of $T$ if for every sentence $\varphi : T$, $A \models \varphi$.
-  }
+}
 
-\subsection{The completeness theorem}
+\example{
+(Line graph)  The \tbf{language of graphs} $\mc{L}_{\msf{Graph}}$ comprises a single $2$-ary relation symbol $E$.
+
+  The \tbf{theory of graphs} $\msf{Graph}$ comprises the sentence $\forall x \forall y \left(E(x,y) \leftrightarrow E(y,x)\right)$.
+
+  The natural numbers $\N$ can be viewed as a model of $\msf{Graph}$ as follows. We realize $E$ as the set
+  $$
+(y = \opn{succ} x) \lor (x = \opn{succ} y) : \N \to \N  \to \msf{Prop}
+$$
+which is clearly symmetric.
+}
+
+\example{
+  (Peano arithmetic)
+
+  The \tbf{language of Peano arithmetic} $\mc{L}_{\msf{PA}}$ comprises:
+  \begin{enumerate}
+  \item A $1$-ary constant $0$.
+  \item Three function symbols $\opn{succ}, +, \times$.
+  \end{enumerate}
+
+  The \tbf{theory of Peano arithmetic} $\msf{PA}$ comprises:
+  \begin{enumerate}
+  \item $\forall x, s(x) \neq 0$
+  \item $\forall x \forall y, (s(x) = s(y)) \to x = y$
+  \item $\forall x, x + 0 = x$
+  \item $\forall x \forall y, x + s(y) = s(x + y)$
+  \item $\forall x, x \times 0 = 0$
+  \item $\forall x \forall y, x \times S(y) = (x \times y) + x$
+  \item[Schema:] For every $\mc{L}_{\msf{PA}}$-formula $\varphi(x)$ with one free variable $x$,
+    $$
+\medleft \varphi(0) \land \forall x (\varphi(x) \rightarrow  \varphi(\opn{succ} x) ) \medright \rightarrow \forall x \varphi(x).
+    $$
+  \end{enumerate}
+
+  The \tbf{standard model} of $\msf{PA}$ is $\N$ with $0$ realized as $0 : \N$, $\opn{succ}$ realized as $\opn{succ} : \N \to \N$, $+$ realized as $+ : \N \to \N \to \N$, and $\times$ realized as $\times : \N \to \N \to \N$.
+}
+
+By recursing on the inductive type of valid sentences and replacing every rule of the propositional calculus with the corresponding deduction rule for $\msf{Prop}$, we can construct for every valid $\mc{L}$-sentence $\varphi$ a proof that $\mbf{r}(\varphi) \leftrightarrow \true.$
+
+That is the soundness theorem. (In what follows, taking $\psi$ to be $\true$ yields the assertion in the previous paragraph.)
+
+\theorem{\label{theorem-soundness} (Soundness theorem)
+  For every $\mc{L}$-structure and any sentences $\varphi, \psi : \msf{Sentences}(\mc{L})$, $$\entails_{\mc{L}} \varphi \to \psi \hspace{4mm} \implies \hspace{4mm} \entails \mbf{r}(\varphi) \to \mbf{r}(\psi).$$
+}
+
+
+This happens regardless of which $\mc{L}$-structure is doing the realizing. When the $\mc{L}$-structure itself is a model of a theory $T$, then whenever $T \entails_{\mc{L}} \psi$, then since there is some sentence $\varphi : T$ such that $\entails_{\mc{L}}\varphi \to \psi$, $\msf{Prop}$'s modus ponens tells us that the model satisfies $\psi$ also.
+
+  \example{
+    For example, suppose we're working in the language of graphs expanded with two $1$-ary constants $a$ and $b$, and we know that there is some model $M$ such that $M$ satisfies the sole axiom that $E$ is symmetric. We can show
+    $$
+\vdash (\forall x \forall y, \mbf{r}(E)(x,y) \leftrightarrow \mbf{r}(E)(y,x)) \rightarrow \mbf{r}(E)(\mbf{r}(a), \mbf{r}(b)) \leftrightarrow \mbf{r}(E)(\mbf{r}(b), \mbf{r}(a))
+$$
+because we already know the antecedent and can apply $\msf{Prop}$'s $\forall$-elimination.
+}
+
+The converse of \myref{Theorem}{theorem-soundness} is false. There may be some things which are incidentally true about the model which are not universally valid.
+
+\example{
+  Working again in the language of graphs, consider a complete graph on $n$ vertices. Call this model $M$. $M$ happens to satisfy the $\mc{L}$-sentence
+  $$
+\medleft \forall x \forall y, E(x,y) \leftrightarrow E(y,x) \medright \rightarrow \medleft \forall x \forall y \forall z, E(x,y) \land E(y,z) \rightarrow E(x,z)\medright,
+$$
+but this is not a valid $\mc{L}$-sentence. (Indeed, if it were, then the soundness theorem would imply that \emph{every} graph has a transitive edge relation, which is not true.)
+}
+
+It will turn out that we can do the next best thing. If we rule out this kind of exception by requiring that $M \models \varphi$ \emph{for every $\mc{L}$-structure} $M$ (resp. every model $M$ of $T$), then it follows that $\entails_{\mc{L}} \varphi$ (resp. $T \entails_{\mc{L}} \varphi$). This is the completeness theorem.
+  
+  \subsection{The completeness theorem}
+In this section, our goal will be to prove the \tbf{completeness theorem}:
+\theorem{\label{theorem-completeness} Let $T$ be an $\mc{L}$-theory. $T$ is consistent if and only if there exists a model of $T$.}
+
+First we will prove that if there exists a model $M$ of $T$, then $T$ is consistent.
+
+\begin{proof}
+Suppose $T$ is inconsistent. If $T$ has a model $M$, then by the soundness theorem $M \models \false$. By definition, this means that in $\msf{Prop}$, we have proved that $\true \leftrightarrow \false$, a contradiction.
+\end{proof}
+
+It then remains to show that if $T$ is consistent, $T$ has a model. We will first prove \myref{Theorem}{theorem-completeness} in the case where the language $\mc{L}$ of $T$ is \emph{relational}, i.e. has no function symbols. Later, we will show that to every theory $\mc{L}$-theory $T$ we can associate a relational language $\mc{L}_{\opn{rel}}$ and an $\mc{L}_{\opn{rel}}$-theory $T_{\opn{rel}}$ by replacing function symbols with their graph relations. Then we will show that if $T$ is consistent, so is $T_{\opn{rel}}$, and that every model of $T_{\opn{rel}}$ gives rise to a model of $T$, which will give the full completeness theorem.
+
+Before proceeding, we prove a lemma, valid for any consistent theory in any language.
+
+\lemma{Suppose $T$ is consistent. Let $\varphi$ be an $\mc{L}$-sentence. Then $T \cup \{\varphi\}$ is consistent or $T \cup \{\neg \varphi\}$ is consistent.}
+
+\begin{proof}
+  Suppose that both $T \cup \{\varphi\}$ and $T \cup \{ \neg \varphi\}$ are inconsistent. Then there exist sentences $\sigma$ and $\rho$ from $T$ such that
+  $$
+\entails_{\mc{L}} (\sigma \wedge \varphi) \to \false \hspace{2mm} \te{ and } \hspace{2mm} \entails_{\mc{L}} (\rho \wedge \neg \varphi) \to \false.
+$$
+By $\neg$-introduction, we get
+$$
+\entails_{\mc{L}} \neg \left(\sigma \wedge \varphi\right) \hspace{2mm} \te{ and } \hspace{2mm} \entails_{\mc{L}} \neg \left(\rho \wedge \neg \varphi\right)
+$$
+and by $\wedge$-introduction, we get
+$$
+\entails_{\mc{L}} \left(\neg(\sigma \wedge \varphi) \right) \wedge \left(\neg (\rho \wedge \neg \varphi) \right).
+$$
+Since the finitary de Morgan laws are tautologies in the sense of \ref{def-tautology}, it follows that
+$$
+\entails_{\mc{L}} \neg \left(\sigma \lor \varphi \lor \rho \lor \neg \varphi\right).
+$$
+Since the metatheory satisfies the law of the excluded middle, we have that the law of the excluded middle for $\mc{L}$-formulas is a tautology in the sense of \ref{def-tautology}. Therefore,
+$$
+\entails_{\mc{L}} \neg(\sigma \lor \rho) \Leftrightarrow \entails_{\mc{L}} \neg \sigma \land \neg \rho,
+$$
+so by $\wedge$-elimination,
+$\entails_{\mc{L}} \neg \sigma$ and $\entails_{\mc{L}} \neg \rho$, so $T$ is inconsistent.
+\end{proof}
+
+\theorem{
+\label{theorem-propositional-completeness} Suppose that $S$ is a relational theory, containing no quantifiers, and which is consistent. Then $S$ has a model.
+}
+
+\begin{proof}
+  We start by choosing a well-ordering of $S$, which induces a well-ordering of the constant and relation symbols which appear in $S$. In turn, this induces a lexicographic ordering on all sentences of the form $c_i = c_j$ and $R_{\beta}(c_1, \dots, c_n)$ where $c_i, c_j$ and $R_{\beta}$ are constant and relation symbols occuring in $S$. Collect these sentences into a single well-ordered set $(F_{\alpha})$.
+
+  Now, we inductively decide whether the $F_{\alpha}$ should be true or false consistent with $S$. We put $G_{0} \dfeq F_0$ if $S \cup \{F_0\}$ is consistent; otherwise we put $G_0 \dfeq \neg F_0$. Similarly, for $\beta > 0$ we put $G_{\beta} \dfeq F_{\beta}$ if $S \cup \{G_{\alpha} \stbar \alpha < \beta\} \cup \{F_{\beta}\}$ is consistent, and we put $G_{\beta} \dfeq \neg F_{\beta}$ otherwise.
+
+  From the previous lemma, at each stage $\beta$ of this construction, $S_{\beta} \dfeq S \cup \{G_{\alpha} \stbar \alpha < \beta\}$ is consistent. Since any inconsistency is derivable from finitely many other sentences, the union
+  $$
+H \dfeq \bigcup_{\beta} S_{\beta} 
+$$
+is consistent.
+
+Now, there is a natural equivalence relation on the collection $\mc{C}$ of all constant symbols which occur in $H$, given by $$ c \sim_{\mc{C}} c' \iff c = c' : H .$$ Since $\mc{C}$ is well-ordered, we may pick the least element of each $\sim_{\mc{C}}$-class, and collect them as $\mc{C}'$. We will make $\mc{C'}$ into a model of $H$. First, we realize every constant symbol $c$ as the chosen least representative of its $\sim_{\mc{C}}$-class.
+
+For every ($n$-ary) relation symbol $R_{\beta}$, we realize $R_{\beta}$ by putting
+$$
+R_{\beta}^{\mc{C}} \left(c_1, \dots, c_n\right) \leftrightarrow \medleft R(c_1, \dots, c_n) : H \medright.
+$$
+This is a model of $H$: for any atomic or negated-atomic sentence $\sigma$ which is consistent with $S$, $\sigma$ must arise as some $G_{\alpha}$ and therefore by construction is satisfied by $M$. Since $S$ is quantifier-free, every sentence splits into a disjunction of conjunctions of atomic or negated-atomic sentences, so by induction every quantifier-free sentence consistent with $S$ is again satisfied by $M$.
+\end{proof}
+
+\theorem{\label{theorem-relational-completeness}Now suppose that $S$ is a relational theory, which possibly contains quantifiers, and is consistent. Then $S$ has a model.}
+
+\begin{proof}
+
+\end{proof}
+
+\proposition{\label{prop-T-rel-is-conservative}
+Let $T$ be an $\mc{L}$-theory, and let $T_{\opn{rel}}$ be the associated $\mc{L}_{\opn{rel}}$-theory obtained by replacing function symbols with their graphs. Then any model $M_{\opn{rel}} \models T_{\opn{rel}}$ can be viewed as a model $M \models T$.
+}
+
+\begin{proof}[Sketch.]
+For every function symbol $f$ of $\mc{L}$, we interpret $f$ as the function specified by the graph relation $\Gamma_f$ in $\mc{L}_{\opn{rel}}$, which was axiomatized in $T_{\opn{rel}}$ to be the graph of a function. This gives an $\mc{L}$-structure $M$. Since $M \models T_{\opn{rel}}$ and every sentence of $T_{\opn{rel}}$ is either a modified version of a sentence in $T$ or asserts that a new relation is a graph of a function, $M \models T$. 
+\end{proof}
+
+\proposition{
+Let $T$ be an $\mc{L}$-theory. If $T$ is consistent, then $T_{\opn{rel}}$ is consistent.
+}
+\begin{proof}[Sketch.]
+ Suppose towards the contrapositive that $T_{\opn{rel}}$ is inconsistent. Then there is a proof from $T_{\opn{rel}}$ of $\false$. It suffices to show that replacing the graphs $\Gamma_f$ by the functions $f$ induces a deduction-preserving map from the valid $\mc{L}_{\opn{rel}}$-sentences to the valid $\mc{L}$-sentences, for then we will have a proof from $T$ of $\false$. This can be done by induction and a case-by-case analysis of the rules of deduction.
+\end{proof}
+
+\subsection{The Henkin construction}
+In this section, we present an alternate proof of the completeness theorem, due to Henkin, by building ``term models''.
+
 \remph{TODO}(jesse)
 
 \subsection{The L\"owenheim-Skolem theorem}
 \remph{TODO}(kody)
+
+\section{$\msf{ZFC}$}
 
 \section{Generic sets: Cohen's original proof}
 
