@@ -13,6 +13,7 @@
 \usepackage{tcolorbox}
 \usepackage{jmhmacros}
 
+\newcommand{\arity}{\opn{arity}}
 \graphicspath{ {/home/pv/Pictures/latex/} }
 
 \begin{document}
@@ -182,8 +183,8 @@ is valid.
 \item (``$\neg$-introduction'')
   If $\neg A \leftrightarrow (A \to \false)$ is valid.
   
-\item (Generalization of constants ``$\forall$-introduction'')
-  Let $B$ be a sentence which does not contain the constant $c$ or the variable $x$. Let $\varphi(x)$ be some formula such that $\varphi(x) \to B$ is valid. Then $\exists x \varphi(x) \to B$ is also valid.\footnote{In particular, using the next rule, if $\neg \varphi(c) \to \false$ is valid, so is $\exists x \neg \varphi(x) \to \false$, so is $\neg \exists x \neg \varphi(x)$, and therefore so is $\forall x \varphi(x)$.}
+\item (Generalization of constants ``$\forall$-introduction'') \label{forall-introduction}
+  Let $B$ be a sentence which does not contain the constant $c$ or the variable $x$. Let $\varphi(x)$ be some formula such that $\varphi(c) \to B$ is valid. Then $\exists x \varphi(x) \to B$ is also valid.\footnote{In particular, using the next rule, if $\neg \varphi(c) \to \false$ is valid, so is $\exists x \neg \varphi(x) \to \false$, so is $\neg \exists x \neg \varphi(x)$, and therefore so is $\forall x \varphi(x)$.}
 
 \item (de Morgan laws)
   Let $\varphi(x)$ have $x$ as its only free variable. Let $B$ be a sentence which does not contain $x$. Then the following are valid statements:
@@ -290,7 +291,7 @@ which is clearly symmetric.
   The \tbf{graph evasiveness conjecture} says that for every monotone graph property $P$ and every $n : \N$, one needs to ask $\binom{n}{2}$ questions of the form ``is there an edge between $v$ and $w$'' to determine if an arbitrary graph on $n$ vertices satisfies $P$.
   }
 
-\example{
+\example{\label{example-PA}
   (Peano arithmetic)
 
   The \tbf{language of Peano arithmetic} $\mc{L}_{\msf{PA}}$ comprises:
@@ -354,7 +355,25 @@ In this section, our goal will be to prove the \tbf{completeness theorem}:
 First we will prove that if there exists a model $M$ of $T$, then $T$ is consistent.
 
 \begin{proof}
-Suppose $T$ is inconsistent. If $T$ has a model $M$, then by the soundness theorem $M \models \false$. By definition, this means that in $\msf{Prop}$, we have proved that $\true \leftrightarrow \false$, a contradiction.
+  We will show the contrapositive: if $T$ is inconsistent, then there does not exist a model $M$ of $T$.
+
+  Indeed, suppose that $T$ is inconsistent. Suppose there is a model $M$. Then by the soundness theorem, $M \models \false$. By definition, this means that
+  $$
+\entails \false,
+$$
+so we have shown that
+$$
+\entails \te{($T$ inconsistent) $\wedge$ (there exists a model $M$ of $T$) $\rightarrow \false$}
+$$
+which is equivalent to
+$$
+\entails (T \te{ not inconsistent}) \lor (T \te{ does not have a model}),
+$$
+which is equivalent to
+$$
+\entails T \te{ inconsistent } \rightarrow T \te{ does not have a model.}
+$$
+Taking the contrapositive, we conclude that if $T$ has a model, then $T$ is consistent.
 \end{proof}
 
 It then remains to show that if $T$ is consistent, $T$ has a model. We will first prove \myref{Theorem}{theorem-completeness} in the case where the language $\mc{L}$ of $T$ is \emph{relational}, i.e. has no function symbols. Later, we will show that to every theory $\mc{L}$-theory $T$ we can associate a relational language $\mc{L}_{\opn{rel}}$ and an $\mc{L}_{\opn{rel}}$-theory $T_{\opn{rel}}$ by replacing function symbols with their graph relations. Then we will show that if $T$ is consistent, so is $T_{\opn{rel}}$, and that every model of $T_{\opn{rel}}$ gives rise to a model of $T$, which will give the full completeness theorem.
@@ -471,12 +490,149 @@ Let $T$ be an $\mc{L}$-theory. If $T$ is consistent, then $T_{\opn{rel}}$ is con
 \end{proof}
 
 \subsection{The Henkin construction}
-In this section, we present an alternate proof of the completeness theorem, due to Henkin, by building ``term models''.
+\definition{\label{def-henkin-theory} Let $T$ be an $\mc{L}$-theory. We say that $T$ is a \tbf{Henkin theory} if, for every formula $\varphi(x)$, there is a constant $c : \msf{Const}(\mc{L})$ such that
+  $T \entails_{\mc{L}} (\exists x \varphi(x)) \rightarrow \varphi(c).$}
 
-\remph{TODO}(jesse)
+\example{\label{fields-henkin} Let $\mc{L}_{\opn{field}}$ be the language of fields, which we define to be $\{0, 1, +, \times, (-)^{-1}\}$ (the usual language of rings augmented with an inversion operation), and let $T$ be the usual axiomatization of a field of characteristic zero. $T$ is not a Henkin theory, for there is no constant $c$ such that e.g. $c = (1 + 1)^{-1}$.}
+
+  \example{\label{true-arithmetic-is-not-a-Henkin-theory} Let $\mc{L}_{\msf{PA}}$ be the language of Peano arithmetic (see \myref{Example}{example-PA}). Let $T$ be the collection of all $\mc{L}_{\msf{PA}}$-sentences $\psi$ such that $N \models \psi$. Then $T$ certainly contains the sentence $\exists x \forall y, x \cdot y = y$. However, $1 = \opn{succ} \hspace{1mm}0$ is not a constant in the language, but rather a term. So $T$ is not a Henkin theory.
+
+    However, if we \emph{expand} $\mc{L}_{\msf{PA}}$ to a language $\mc{L}'$ with a constant symbol $c_n$ for every natural number $n$, and if we let $T'$ be the collection all $\mc{L}'$-sentences $\psi$ such that $\N$ (viewed in the natural way as a model of $\mc{L}'$) satisfies $\psi$, then $T'$ \emph{is} a Henkin theory.
+  }
+
+  \proposition{\label{prop-extend-henkin}
+    Let $T$ be an $\mc{L}$-theory. If $T$ is consistent, then there exists a language $\mc{L}'$ extending $L$ and an $\mc{L}'$-theory $T'$ extending $T$ viewed as an $\mc{L}$'-theory, such that $T'$ is a Henkin theory.
+
+    Furthermore, if $T$ is consistent, then $T'$ is consistent.
+}
+
+\begin{proof}
+  Put $\mc{L}_0 \dfeq \mc{L}$ and $T_0 \dfeq T$. We define a chain of languages $\mc{L}_i$ and for each $i$ we define an $\mc{L}_i$-theory $T_i$ as follows: given $\mc{L}_n$ and $\mc{T}_n$, let $\mc{L}_{n+1}$ be the language obtained by adding a constant $c_{\varphi, x}$ where $\varphi$ ranges over all $\mc{L}_{n}$-formulas and $x$ ranges over the free variables of $\varphi$.
+
+  Having defined $\mc{L}_{n+1}$, we now define $T_{n+1}$ to be
+  $$
+T_{n} \cup \{\exists x \varphi(x) \rightarrow \varphi(c_{\varphi,x})\}_{\varphi, x}
+$$
+where above we have adjoined a sentence saying that the newly-adjoined constant $c_{\varphi,x}$ behaves as expected.
+
+We put $$T' \dfeq \displaystyle \bigcup_{n \opn{:} \N} T_n.$$ By construction, $T'$ is a Henkin theory.
+
+It remains to show that if $T$ is consistent, so is $T'$. If $T \entails_{\mc{L}} \psi$, then from the finiteness of proofs, we must have that $T_n \entails_{\mc{L}}$ for some $n$. So, to show $T'$ is consistent, it suffices to show that for each $n$, $T_n$ is consistent.
+
+We induct on $n$. The base case $T = T_0$ is by assumption. For the induction step, we must show that if $T_n$ is consistent, then $T_{n+1}$ is consistent.
+
+Suppose towards the contrapositive that $T_{n+1}$ is inconsistent. Since $T_{n+1}$ is obtained by adjoining formulas of the form $\exists x \varphi(x) \rightarrow \varphi(c)$, there must be finitely many such formulas $\psi_1, \dots, \psi_m : T_{n+1} \backslash T_n$ of this form, along with finitely many formulas $\rho_1, \dots, \rho_n$ from $T_n$, such that
+$$
+\entails_{\mc{L}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_m \to \false.
+$$
+By material implication, we get that
+$$
+\entails_{\mc{L}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1} \to \neg \psi_m,
+$$
+which is equivalent to
+$$
+\entails_{\mc{L}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1} \to \neg (\exists x \varphi_m(x) \rightarrow \varphi_m(c_m)),
+$$
+which is equivalent to
+$$
+\entails_{\mc{L}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1} \to (\exists x \varphi_m(x)) \wedge \neg \varphi_m(c_m)),
+$$
+and since
+$$
+\entails_{\mc{L}} (\exists x \varphi_m(x)) \wedge \neg \varphi_m(c_m)) \to \false,
+$$
+we conclude that $$\rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1}$$ is inconsistent. Continuing this way, we eliminate all the $\psi_i$ and conclude that $\rho_1 \wedge \dots \wedge \rho_n$ is inconsistent, and therefore that $T$ is inconsistent, which gives the contrapositive of the induction hypothesis.
+\end{proof}
+
+\newcommand{\term}{\opn{term}}
+\definition{
+  \label{def-term-model}
+  To any Henkin $\mc{L}$-theory $T$, we can associate a canonical structure (a ``term model'') $\opn{term}(T)$ built from the closed terms (i.e. those not containing any variables).
+
+  First, we take the collection $A$ of all closed $\mc{L}$-terms. We define a relation $E : A \to A \to \Prop$, with the convention that $\entails E \hspace{2mm} a_1 \hspace{2mm}  a_2 \leftrightarrow \true$ if and only if $T \entails_{\mc{L}} a_1 = a_2$. By the rules about equality that we have stipulated as part of the predicate calculus, $E$ is an equivalence relation.
+
+  We put $\wt{A} \dfeq A/E$. This will be the underlying type of the model.
+
+  For a constant $c : \msf{Const}(\mc{L})$, we put $c^{\wt{A}} \dfeq c/E$ ($c$ belongs to $\mc{L}_0$, and so is a closed term of $\mc{L}'$).
+
+  For a relation symbol $R : \msf{Rel}(\mc{L})$, we define $R^{\wt{A}} : \wt{A}^{\arity(R)} \to \Prop$ by $R^{\wt{A}}\left(a_1/E, \dots, a_n/E\right) \leftrightarrow T' \entails_{\mc{L}} R(a_1, \dots, a_n)$.
+
+  For a function symbol $f : \msf{Funct}(\mc{L})$, we define $f^{\wt{A}} : \wt{A}^{\arity(f)} \to \wt{A}$ by
+  $$
+\lambda a_1/E \hspace{2mm} \dots \hspace{2mm} a_n/E, f(a_1, \dots, a_n)/E.
+$$
+This completes the definition of $\term(T)$.
+}
+By the soundness theorem, if $T$ is inconsistent, then $\term(T)$ cannot be a model of $T$. But the inverse is true.
+
+\proposition{
+Let $T$ be a Henkin $\mc{L}$-theory. If $T$ is consistent, then $\term(T)$ is a model of $T$.
+}
+\begin{proof}
+  We will show that for every $\psi : \msf{Sentences}(\mc{L})$,
+$$
+T \entails \psi \leftrightarrow \term(T) \models \psi.
+$$
+We will do this by a structural induction on formulas. In the base case, we have atomic sentences.
+
+\begin{itemize}
+\item If $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $a_1 = a_2$ where $a_1$ and $a_2$ are closed terms, then since $T \entails_{\mc{L}} a_1 = a_2$, then $\entails a_1^{\wt{A}} = a_2^{\wt{A}}$ (in $\wt{A}$), so $\term(T) \models \psi$.
+
+  Conversely, if $\term(T) \models \psi$, then $\entails a_1^{\wt{A}} = a_2^{\wt{A}}$, so by definition of the equivalence relation we used to define $\wt{A}$, $T \entails_{\mc{L}} a_1 = a_2$.
+
+\item If $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $R(a_1, \dots, a_n)$ where $R$ is a relation symbol and $a_1, \dots, a_n$ are closed terms, then since $T \entails_{\mc{L}} R(a_1, \dots, a_n)$, we have that $\entails R^{\wt{A}}(a_1^{\wt{A}}, \dots, a_n^{\wt{A}})$.
+
+  Conversely, if $\term(T) \models \psi$, then $\entails R^{\wt{A}}(a_1^{\wt{A}}, \dots, a_n^{\wt{A}})$, so by definition of how we interpreted $\mc{L}$ onto $\wt{A}$, $T \entails_{\mc{L}} R(a_1, \dots, a_n)$.
+
+\item If $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $\varphi_1 \wedge \varphi_2$, then by $\wedge$-elimination in $\msf{Sentences}(\mc{L})$, $$\entails (T \entails_{\mc{L}} \psi) \rightarrow (T \entails_{\mc{L}} \varphi_1) \wedge (T entails_{\mc{L}} \varphi_2).$$ By the induction hypothesis, $\term(T) \models \varphi_1$ and $\term(T) \models \varphi_2$, so by $\wedge$-introduction in $\Prop$, $\term(T) \models \varphi_1 \wedge \varphi_2$.
+
+  Conversely, if $\term(T) \models \varphi_1 \wedge \varphi_2$, then by $\wedge$-elimination in $\Prop$, $\term(T) \models \varphi_1$ and $\term(T) \models \varphi_2$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi_1$ and $T \entails_{\mc{L}} \varphi_2$, so by $\wedge$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \varphi_1 \wedge \varphi_2$.
+
+\item Suppose $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $\neg \varphi$. The induction hypothesis says that $T \entails_{\mc{L}} \varphi$ if and only if $\term(T) \models \varphi$. Since $T$ is consistent, $T \not \entails_{\mc{L}} \varphi$. Therefore, by the induction hypothesis, $\term(T) \not \models \varphi$. Since
+  $$
+\term(T) \models \varphi \leftrightarrow \entails \mbf{r}(\varphi),
+$$
+we have that
+$$
+\entails \neg \mbf{r}(\varphi),
+$$
+but $\neg \mbf{r}(\varphi) \leftrightarrow \mbf{r}(\neg \varphi)$. We conclude that $M \models \neg \varphi$.
+
+We omit the cases for $\wedge$ and $\rightarrow$, which are entirely analogous.
+
+We conclude that whenever $\psi$ is quantifier-free, $T \entails_{\mc{L}} \psi$ if and only if $\term(T) \models \psi$.
+
+To complete the proof, we must take care of quantifiers.
+
+\item Suppose that $T \entails_{\mc{L}} \exists x \varphi(x)$, where $\varphi(x)$ satisfies the induction hypothesis that if we substitute a closed term $c$ for $x$, $\varphi(c)$ is a sentence such that $T \entails_{\mc{L}} \varphi(c)$ if and only if $\term(T) \models \varphi(c)$.
+
+  Then, since $T$ is a Henkin theory, there exists some $c$ such that
+  $$
+T \entails_{\mc{L}} \varphi(c).
+$$
+By the induction hypothesis, we have that
+$$
+\term(T) \models \varphi(c),
+$$
+and therefore by $\exists$-introduction in $\Prop$, we conclude that
+$$
+\term(T) \models \exists x \varphi(x).
+$$
+
+Conversely, suppose that $\term(T) \models \exists x \varphi(x)$. By $\exists$-elimination in $\Prop$, there exists some $a/E : \wt{A}$ such that $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi(a)$, and by $\exists$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \exists x \varphi(x)$.
+
+\item Similarly, suppose that $T \entails_{\mc{L}} \forall x \varphi(x)$, where $\varphi(x)$ satisfies the induction hypothesis that if we substitute a closed term $c$ for $x$, $\varphi(c)$ is a sentence such that $T \entails_{\mc{L}} \varphi(c)$ if and only if $\term(T) \models \varphi(c)$.
+
+  Then by $\forall$-elimination in $\msf{Sentences}(\mc{L})$, we have that for every constant $c : \msf{Const}(\mc{L})$, $T \entails_{\mc{L}} \varphi(c)$. By the induction hypothesis, $\term(T) \models \varphi(c)$. Since the interpretations of $c$ exhaust $\term(T)$, we conclude by $\forall$-introduction in $\Prop$ that $\term(T) \models \forall x \varphi(x)$.
+
+  Conversely, suppose that $\term(T) \models \forall x \varphi(x)$. By $\forall$-elimination in $\Prop$, for every $a/E \in \wt{A}$, $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, for every $c : \msf{Const}(\mc{L})$, $T \entails_{\mc{L}} \varphi(c)$.
+
+  Since $T$ is consistent, for every $c$, $T$ does not prove $\neg \varphi(c)$, so $\term(T) \models \neg \varphi(c) \to \false$, and therefore $T \entails \neg \varphi(c) \to \false$. Specializing to a $c$ which does not occur in $\varphi$, we get from $\forall$-introduction \ref{forall-introduction} in $\msf{Sentences}(\mc{L})$ that $T \entails_{\mc{L}} \exists x \neg \varphi(x) \to \false$. By the de Morgan laws, $T \entails_{\mc{L}} \forall x \neg \neg \varphi(x)$. Since we are assuming double-negation elimination is a propositional tautology, we conclude that $T \entails_{\mc{L}} \forall x \varphi(x)$.
+\end{itemize}
+
+\end{proof}
 
 \subsection{The L\"owenheim-Skolem theorem}
-\remph{TODO}(kody)
 
 \section{$\msf{ZFC}$}
 
