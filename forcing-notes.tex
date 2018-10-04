@@ -571,32 +571,26 @@ Let $T$ be a Henkin $\mc{L}$-theory. If $T$ is consistent, then $\term(T)$ is a 
 \begin{proof}
   We will show that for every $\psi : \msf{Sentences}(\mc{L})$,
 $$
-T \entails \psi \leftrightarrow \term(T) \models \psi.
+T \entails_{\mc{L}} \psi \te{ implies that } \term(T) \models \psi.
 $$
 We will do this by a structural induction on formulas. In the base case, we have atomic sentences.
 
 \begin{itemize}
 \item If $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $a_1 = a_2$ where $a_1$ and $a_2$ are closed terms, then since $T \entails_{\mc{L}} a_1 = a_2$, then $\entails a_1^{\wt{A}} = a_2^{\wt{A}}$ (in $\wt{A}$), so $\term(T) \models \psi$.
 
-  Conversely, if $\term(T) \models \psi$, then $\entails a_1^{\wt{A}} = a_2^{\wt{A}}$, so by definition of the equivalence relation we used to define $\wt{A}$, $T \entails_{\mc{L}} a_1 = a_2$.
+%   Conversely, if $\term(T) \models \psi$, then $\entails a_1^{\wt{A}} = a_2^{\wt{A}}$, so by definition of the equivalence relation we used to define $\wt{A}$, $T \entails_{\mc{L}} a_1 = a_2$.
 
 \item If $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $R(a_1, \dots, a_n)$ where $R$ is a relation symbol and $a_1, \dots, a_n$ are closed terms, then since $T \entails_{\mc{L}} R(a_1, \dots, a_n)$, we have that $\entails R^{\wt{A}}(a_1^{\wt{A}}, \dots, a_n^{\wt{A}})$.
 
-  Conversely, if $\term(T) \models \psi$, then $\entails R^{\wt{A}}(a_1^{\wt{A}}, \dots, a_n^{\wt{A}})$, so by definition of how we interpreted $\mc{L}$ onto $\wt{A}$, $T \entails_{\mc{L}} R(a_1, \dots, a_n)$.
+%   Conversely, if $\term(T) \models \psi$, then $\entails R^{\wt{A}}(a_1^{\wt{A}}, \dots, a_n^{\wt{A}})$, so by definition of how we interpreted $\mc{L}$ onto $\wt{A}$, $T \entails_{\mc{L}} R(a_1, \dots, a_n)$.
 
 \item If $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $\varphi_1 \wedge \varphi_2$, then by $\wedge$-elimination in $\msf{Sentences}(\mc{L})$, $$\entails (T \entails_{\mc{L}} \psi) \rightarrow (T \entails_{\mc{L}} \varphi_1) \wedge (T entails_{\mc{L}} \varphi_2).$$ By the induction hypothesis, $\term(T) \models \varphi_1$ and $\term(T) \models \varphi_2$, so by $\wedge$-introduction in $\Prop$, $\term(T) \models \varphi_1 \wedge \varphi_2$.
 
-  Conversely, if $\term(T) \models \varphi_1 \wedge \varphi_2$, then by $\wedge$-elimination in $\Prop$, $\term(T) \models \varphi_1$ and $\term(T) \models \varphi_2$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi_1$ and $T \entails_{\mc{L}} \varphi_2$, so by $\wedge$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \varphi_1 \wedge \varphi_2$.
+%   Conversely, if $\term(T) \models \varphi_1 \wedge \varphi_2$, then by $\wedge$-elimination in $\Prop$, $\term(T) \models \varphi_1$ and $\term(T) \models \varphi_2$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi_1$ and $T \entails_{\mc{L}} \varphi_2$, so by $\wedge$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \varphi_1 \wedge \varphi_2$.
 
-\item Suppose $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $\neg \varphi$. The induction hypothesis says that $T \entails_{\mc{L}} \varphi$ if and only if $\term(T) \models \varphi$. Since $T$ is consistent, $T \not \entails_{\mc{L}} \varphi$. Therefore, by the induction hypothesis, $\term(T) \not \models \varphi$. Since
-  $$
-\term(T) \models \varphi \leftrightarrow \entails \mbf{r}(\varphi),
-$$
-we have that
-$$
-\entails \neg \mbf{r}(\varphi),
-$$
-but $\neg \mbf{r}(\varphi) \leftrightarrow \mbf{r}(\neg \varphi)$. We conclude that $M \models \neg \varphi$.
+\item Suppose $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $\neg \varphi$. The induction hypothesis says that $T \entails_{\mc{L}} \varphi$ if and only if $\term(T) \models \varphi$. Since $T$ is consistent, $T \not \entails_{\mc{L}} \varphi$. Therefore, by the induction hypothesis, $\term(T) \not \models \varphi$. By the law of the excluded middle, $\term(T) \models \neg \varphi$.
+
+%   Conversely, suppose that $\term(T)$ 
 
 We omit the cases for $\wedge$ and $\rightarrow$, which are entirely analogous.
 
@@ -619,13 +613,13 @@ $$
 \term(T) \models \exists x \varphi(x).
 $$
 
-Conversely, suppose that $\term(T) \models \exists x \varphi(x)$. By $\exists$-elimination in $\Prop$, there exists some $a/E : \wt{A}$ such that $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi(a)$, and by $\exists$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \exists x \varphi(x)$.
+%  Conversely, suppose that $\term(T) \models \exists x \varphi(x)$. By $\exists$-elimination in $\Prop$, there exists some $a/E : \wt{A}$ such that $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi(a)$, and by $\exists$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \exists x \varphi(x)$.
 
 \item Similarly, suppose that $T \entails_{\mc{L}} \forall x \varphi(x)$, where $\varphi(x)$ satisfies the induction hypothesis that if we substitute a closed term $c$ for $x$, $\varphi(c)$ is a sentence such that $T \entails_{\mc{L}} \varphi(c)$ if and only if $\term(T) \models \varphi(c)$.
 
   Then by $\forall$-elimination in $\msf{Sentences}(\mc{L})$, we have that for every constant $c : \msf{Const}(\mc{L})$, $T \entails_{\mc{L}} \varphi(c)$. By the induction hypothesis, $\term(T) \models \varphi(c)$. Since the interpretations of $c$ exhaust $\term(T)$, we conclude by $\forall$-introduction in $\Prop$ that $\term(T) \models \forall x \varphi(x)$.
 
-  Conversely, suppose that $\term(T) \models \forall x \varphi(x)$. By $\forall$-elimination in $\Prop$, for every $a/E \in \wt{A}$, $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, for every $c : \msf{Const}(\mc{L})$, $T \entails_{\mc{L}} \varphi(c)$.
+%   Conversely, suppose that $\term(T) \models \forall x \varphi(x)$. By $\forall$-elimination in $\Prop$, for every $a/E \in \wt{A}$, $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, for every $c : \msf{Const}(\mc{L})$, $T \entails_{\mc{L}} \varphi(c)$.
 
   Since $T$ is consistent, for every $c$, $T$ does not prove $\neg \varphi(c)$, so $\term(T) \models \neg \varphi(c) \to \false$, and therefore $T \entails \neg \varphi(c) \to \false$. Specializing to a $c$ which does not occur in $\varphi$, we get from $\forall$-introduction \ref{forall-introduction} in $\msf{Sentences}(\mc{L})$ that $T \entails_{\mc{L}} \exists x \neg \varphi(x) \to \false$. By the de Morgan laws, $T \entails_{\mc{L}} \forall x \neg \neg \varphi(x)$. Since we are assuming double-negation elimination is a propositional tautology, we conclude that $T \entails_{\mc{L}} \forall x \varphi(x)$.
 \end{itemize}
