@@ -376,120 +376,122 @@ $$
 Taking the contrapositive, we conclude that if $T$ has a model, then $T$ is consistent.
 \end{proof}
 
-It then remains to show that if $T$ is consistent, $T$ has a model. We will first prove \myref{Theorem}{theorem-completeness} in the case where the language $\mc{L}$ of $T$ is \emph{relational}, i.e. has no function symbols. Later, we will show that to every theory $\mc{L}$-theory $T$ we can associate a relational language $\mc{L}_{\opn{rel}}$ and an $\mc{L}_{\opn{rel}}$-theory $T_{\opn{rel}}$ by replacing function symbols with their graph relations. Then we will show that if $T$ is consistent, so is $T_{\opn{rel}}$, and that every model of $T_{\opn{rel}}$ gives rise to a model of $T$, which will give the full completeness theorem.
+It then remains to show that if $T$ is consistent, $T$ has a model. We will use the Henkin construction.
 
-Before proceeding, we prove a lemma, valid for any consistent theory in any language.
+% We will first prove \myref{Theorem}{theorem-completeness} in the case where the language $\mc{L}$ of $T$ is \emph{relational}, i.e. has no function symbols. Later, we will show that to every theory $\mc{L}$-theory $T$ we can associate a relational language $\mc{L}_{\opn{rel}}$ and an $\mc{L}_{\opn{rel}}$-theory $T_{\opn{rel}}$ by replacing function symbols with their graph relations. Then we will show that if $T$ is consistent, so is $T_{\opn{rel}}$, and that every model of $T_{\opn{rel}}$ gives rise to a model of $T$, which will give the full completeness theorem.
 
-\lemma{Suppose $T$ is consistent. Let $\varphi$ be an $\mc{L}$-sentence. Then $T \cup \{\varphi\}$ is consistent or $T \cup \{\neg \varphi\}$ is consistent.}
+% Before proceeding, we prove a lemma, valid for any consistent theory in any language.
 
-\begin{proof}
-  Suppose that both $T \cup \{\varphi\}$ and $T \cup \{ \neg \varphi\}$ are inconsistent. Then there exist sentences $\sigma$ and $\rho$ from $T$ such that
-  $$
-\entails_{\mc{L}} (\sigma \wedge \varphi) \to \false \hspace{2mm} \te{ and } \hspace{2mm} \entails_{\mc{L}} (\rho \wedge \neg \varphi) \to \false.
-$$
-By $\neg$-introduction, we get
-$$
-\entails_{\mc{L}} \neg \left(\sigma \wedge \varphi\right) \hspace{2mm} \te{ and } \hspace{2mm} \entails_{\mc{L}} \neg \left(\rho \wedge \neg \varphi\right)
-$$
-and by $\wedge$-introduction, we get
-$$
-\entails_{\mc{L}} \left(\neg(\sigma \wedge \varphi) \right) \wedge \left(\neg (\rho \wedge \neg \varphi) \right).
-$$
-Since the finitary de Morgan laws are tautologies in the sense of \ref{def-tautology}, it follows that
-$$
-\entails_{\mc{L}} \neg \left(\sigma \lor \varphi \lor \rho \lor \neg \varphi\right).
-$$
-Since the metatheory satisfies the law of the excluded middle, we have that the law of the excluded middle for $\mc{L}$-formulas is a tautology in the sense of \ref{def-tautology}. Therefore,
-$$
-\entails_{\mc{L}} \neg(\sigma \lor \rho) \Leftrightarrow \entails_{\mc{L}} \neg \sigma \land \neg \rho,
-$$
-so by $\wedge$-elimination,
-$\entails_{\mc{L}} \neg \sigma$ and $\entails_{\mc{L}} \neg \rho$, so $T$ is inconsistent.
-\end{proof}
+% \lemma{Suppose $T$ is consistent. Let $\varphi$ be an $\mc{L}$-sentence. Then $T \cup \{\varphi\}$ is consistent or $T \cup \{\neg \varphi\}$ is consistent.}
 
-\theorem{
-\label{theorem-propositional-completeness} Suppose that $S$ is a relational theory, containing no quantifiers, and which is consistent. Then $S$ has a model.
-}
+% \begin{proof}
+%   Suppose that both $T \cup \{\varphi\}$ and $T \cup \{ \neg \varphi\}$ are inconsistent. Then there exist sentences $\sigma$ and $\rho$ from $T$ such that
+%   $$
+% \entails_{\mc{L}} (\sigma \wedge \varphi) \to \false \hspace{2mm} \te{ and } \hspace{2mm} \entails_{\mc{L}} (\rho \wedge \neg \varphi) \to \false.
+% $$
+% By $\neg$-introduction, we get
+% $$
+% \entails_{\mc{L}} \neg \left(\sigma \wedge \varphi\right) \hspace{2mm} \te{ and } \hspace{2mm} \entails_{\mc{L}} \neg \left(\rho \wedge \neg \varphi\right)
+% $$
+% and by $\wedge$-introduction, we get
+% $$
+% \entails_{\mc{L}} \left(\neg(\sigma \wedge \varphi) \right) \wedge \left(\neg (\rho \wedge \neg \varphi) \right).
+% $$
+% Since the finitary de Morgan laws are tautologies in the sense of \ref{def-tautology}, it follows that
+% $$
+% \entails_{\mc{L}} \neg \left(\sigma \lor \varphi \lor \rho \lor \neg \varphi\right).
+% $$
+% Since the metatheory satisfies the law of the excluded middle, we have that the law of the excluded middle for $\mc{L}$-formulas is a tautology in the sense of \ref{def-tautology}. Therefore,
+% $$
+% \entails_{\mc{L}} \neg(\sigma \lor \rho) \Leftrightarrow \entails_{\mc{L}} \neg \sigma \land \neg \rho,
+% $$
+% so by $\wedge$-elimination,
+% $\entails_{\mc{L}} \neg \sigma$ and $\entails_{\mc{L}} \neg \rho$, so $T$ is inconsistent.
+% \end{proof}
 
-\begin{proof}
-  We start by choosing a well-ordering of $S$, which induces a well-ordering of the constant and relation symbols which appear in $S$. In turn, this induces a lexicographic ordering on all sentences of the form $c_i = c_j$ and $R_{\beta}(c_1, \dots, c_n)$ where $c_i, c_j$ and $R_{\beta}$ are constant and relation symbols occuring in $S$. Collect these sentences into a single well-ordered set $(F_{\alpha})$.
+% \theorem{
+% \label{theorem-propositional-completeness} Suppose that $S$ is a relational theory, containing no quantifiers, and which is consistent. Then $S$ has a model.
+% }
 
-  Now, we inductively decide whether the $F_{\alpha}$ should be true or false consistent with $S$. We put $G_{0} \dfeq F_0$ if $S \cup \{F_0\}$ is consistent; otherwise we put $G_0 \dfeq \neg F_0$. Similarly, for $\beta > 0$ we put $G_{\beta} \dfeq F_{\beta}$ if $S \cup \{G_{\alpha} \stbar \alpha < \beta\} \cup \{F_{\beta}\}$ is consistent, and we put $G_{\beta} \dfeq \neg F_{\beta}$ otherwise.
+% \begin{proof}
+%   We start by choosing a well-ordering of $S$, which induces a well-ordering of the constant and relation symbols which appear in $S$. In turn, this induces a lexicographic ordering on all sentences of the form $c_i = c_j$ and $R_{\beta}(c_1, \dots, c_n)$ where $c_i, c_j$ and $R_{\beta}$ are constant and relation symbols occuring in $S$. Collect these sentences into a single well-ordered set $(F_{\alpha})$.
 
-  From the previous lemma, at each stage $\beta$ of this construction, $S_{\beta} \dfeq S \cup \{G_{\alpha} \stbar \alpha < \beta\}$ is consistent. Since any inconsistency is derivable from finitely many other sentences, the union
-  $$
-H \dfeq \bigcup_{\beta} S_{\beta} 
-$$
-is consistent.
+%   Now, we inductively decide whether the $F_{\alpha}$ should be true or false consistent with $S$. We put $G_{0} \dfeq F_0$ if $S \cup \{F_0\}$ is consistent; otherwise we put $G_0 \dfeq \neg F_0$. Similarly, for $\beta > 0$ we put $G_{\beta} \dfeq F_{\beta}$ if $S \cup \{G_{\alpha} \stbar \alpha < \beta\} \cup \{F_{\beta}\}$ is consistent, and we put $G_{\beta} \dfeq \neg F_{\beta}$ otherwise.
 
-Now, there is a natural equivalence relation on the collection $\mc{C}$ of all constant symbols which occur in $H$, given by $$ c \sim_{\mc{C}} c' \iff c = c' : H .$$ Since $\mc{C}$ is well-ordered, we may pick the least element of each $\sim_{\mc{C}}$-class, and collect them as $\mc{C}'$. We will make $\mc{C'}$ into a model of $H$. First, we realize every constant symbol $c$ as the chosen least representative of its $\sim_{\mc{C}}$-class.
+%   From the previous lemma, at each stage $\beta$ of this construction, $S_{\beta} \dfeq S \cup \{G_{\alpha} \stbar \alpha < \beta\}$ is consistent. Since any inconsistency is derivable from finitely many other sentences, the union
+%   $$
+% H \dfeq \bigcup_{\beta} S_{\beta} 
+% $$
+% is consistent.
 
-For every ($n$-ary) relation symbol $R_{\beta}$, we realize $R_{\beta}$ by putting
-$$
-R_{\beta}^{\mc{C}} \left(c_1, \dots, c_n\right) \leftrightarrow \medleft R(c_1, \dots, c_n) : H \medright.
-$$
+% Now, there is a natural equivalence relation on the collection $\mc{C}$ of all constant symbols which occur in $H$, given by $$ c \sim_{\mc{C}} c' \iff c = c' : H .$$ Since $\mc{C}$ is well-ordered, we may pick the least element of each $\sim_{\mc{C}}$-class, and collect them as $\mc{C}'$. We will make $\mc{C'}$ into a model of $H$. First, we realize every constant symbol $c$ as the chosen least representative of its $\sim_{\mc{C}}$-class.
 
-It remains to show that $M$ is a model of $S$. Since $S$ was quantifier-free, then by the inductive definition of formulas, every sentence in $S$ is a Boolean combination of atomic sentences (precisely the $F_{\alpha}$) or their negations. Let $\varphi : S$. We can additionally rearrange $\varphi$ into a disjunctive normal form, so that
-$$
-\varphi \equiv \bigvee_{i \leq n} \left(\bigwedge_{j \leq m_i}L^i_j\right),
-$$
-where each $L^i_j$ is an atomic or negated-atomic sentence. For each disjunctand $\bigwedge_{j \leq m_i} L^i_j$, we have each of the $L^i_j$ belong to $\{F_{\alpha}\}$, so either $L^i_j$ or $\neg L^i_j$ belongs to the $\{G_{\alpha}\}$. It follows that if for every $\bigwedge_{j \leq m_i} L^i_j$, there exists some $L^i_{j}$ such that $\neg L^i_j$ is in $\{G_{\alpha}\}$, then $H \entails \neg \varphi$ is inconsistent. Therefore, there must be some disjunctand $\bigwedge_{j \leq m_i} L^i_j$ such that every $L^i_j$ is in $\{G_{\alpha}\}$.
+% For every ($n$-ary) relation symbol $R_{\beta}$, we realize $R_{\beta}$ by putting
+% $$
+% R_{\beta}^{\mc{C}} \left(c_1, \dots, c_n\right) \leftrightarrow \medleft R(c_1, \dots, c_n) : H \medright.
+% $$
 
-Since $M$ was designed to satisfy the $G_{\alpha}$, the propositional calculus implies that $M \models \varphi$. Since $\varphi : S$ was arbitrary, $M \models S$.
-\end{proof}
+% It remains to show that $M$ is a model of $S$. Since $S$ was quantifier-free, then by the inductive definition of formulas, every sentence in $S$ is a Boolean combination of atomic sentences (precisely the $F_{\alpha}$) or their negations. Let $\varphi : S$. We can additionally rearrange $\varphi$ into a disjunctive normal form, so that
+% $$
+% \varphi \equiv \bigvee_{i \leq n} \left(\bigwedge_{j \leq m_i}L^i_j\right),
+% $$
+% where each $L^i_j$ is an atomic or negated-atomic sentence. For each disjunctand $\bigwedge_{j \leq m_i} L^i_j$, we have each of the $L^i_j$ belong to $\{F_{\alpha}\}$, so either $L^i_j$ or $\neg L^i_j$ belongs to the $\{G_{\alpha}\}$. It follows that if for every $\bigwedge_{j \leq m_i} L^i_j$, there exists some $L^i_{j}$ such that $\neg L^i_j$ is in $\{G_{\alpha}\}$, then $H \entails \neg \varphi$ is inconsistent. Therefore, there must be some disjunctand $\bigwedge_{j \leq m_i} L^i_j$ such that every $L^i_j$ is in $\{G_{\alpha}\}$.
 
-\definition{
-Let us say that two $\mc{L}$-theories $T$ and $T'$ are \emph{equivalent} if every sentence of $T$ can be proved from $T'$ and every sentence of $T'$ can be proved from $T$. It is easy to see that if $T$ and $T'$ are equivalent, $T$ is consistent if and only if $T'$ is consistent.
-}
+% Since $M$ was designed to satisfy the $G_{\alpha}$, the propositional calculus implies that $M \models \varphi$. Since $\varphi : S$ was arbitrary, $M \models S$.
+% \end{proof}
 
-\definition{
-We say that a sentence $\varphi$ is in \tbf{prenex normal form} if any quantifiers occurying in $\varphi$ occur together at the beginning of $\varphi$. We say that a theory is in prenex normal form if every sentence in $T$ is in prenex normal form.
-}
+% \definition{
+% Let us say that two $\mc{L}$-theories $T$ and $T'$ are \emph{equivalent} if every sentence of $T$ can be proved from $T'$ and every sentence of $T'$ can be proved from $T$. It is easy to see that if $T$ and $T'$ are equivalent, $T$ is consistent if and only if $T'$ is consistent.
+% }
 
-\lemma{
-Every theory $T$ is equivalent to a theory $T'$ in prenex normal form.
-  }
+% \definition{
+% We say that a sentence $\varphi$ is in \tbf{prenex normal form} if any quantifiers occurying in $\varphi$ occur together at the beginning of $\varphi$. We say that a theory is in prenex normal form if every sentence in $T$ is in prenex normal form.
+% }
 
-  \begin{proof}
-    Apply the change-of-variables rule and the de Morgan rules for quantifiers to change any sentence not in the desired form into one in $T'$.
-  \end{proof}
+% \lemma{
+% Every theory $T$ is equivalent to a theory $T'$ in prenex normal form.
+%   }
+
+%   \begin{proof}
+%     Apply the change-of-variables rule and the de Morgan rules for quantifiers to change any sentence not in the desired form into one in $T'$.
+%   \end{proof}
   
-\theorem{\label{theorem-relational-completeness}Now suppose that $S$ is a relational theory, which possibly contains quantifiers, and is consistent. Then $S$ has a model.}
-\begin{proof}
-  Let $T$ be a theory whose sentences are either quantifier-free or begin with a quantifier. We expand $T$ (and the language) as follows: for every sentence in $T$ of the form $\exists x \varphi(x)$, we expand the language by a new constant symbol $c$ and adjoin to $T$ the sentence $\varphi(c)$, and for every sentence in $T$ of the form $\forall x \varphi(x)$ and every constant $c$ already occuring in $T$, we adjoin the sentence $\varphi(c)$. We call the result of this process $T^*$.
+% \theorem{\label{theorem-relational-completeness}Now suppose that $S$ is a relational theory, which possibly contains quantifiers, and is consistent. Then $S$ has a model.}
+% \begin{proof}
+%   Let $T$ be a theory whose sentences are either quantifier-free or begin with a quantifier. We expand $T$ (and the language) as follows: for every sentence in $T$ of the form $\exists x \varphi(x)$, we expand the language by a new constant symbol $c$ and adjoin to $T$ the sentence $\varphi(c)$, and for every sentence in $T$ of the form $\forall x \varphi(x)$ and every constant $c$ already occuring in $T$, we adjoin the sentence $\varphi(c)$. We call the result of this process $T^*$.
 
-  We observe that whenever $T$ is consistent, so is $T^*$: if $T^* \entails_{\mc{L}} \false$, then there are finitely many sentences $\varphi_1, \dots, \varphi_n$ from $T^*$ such that $\entails_{\mc{L}}\left(\bigwedge_{i} \varphi_i \right) \to \false$. We regroup this conjunction according to whether or not $\varphi_i$ contains a new constant symbol or not, viz.
-  $$
-\entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\bigwedge_{j} \psi_j(c_j)\right) \to \false,
-$$ where $c_j$ are the new constant symbols. Applying the generalization of constants deduction rule and the de Morgan rules, we conclude that
-$$
-\entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\exists x_j\bigwedge_{j} \psi_j(x_j)\right) \to \false 
-$$
-and therefore
-$$
-\entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\bigvee_{j} \neg \exists x_j \psi_j(x_j)\right).
-$$
-So, for some $j$, $\entails_{\mc{L}} \exists x_j \psi_j(x_j)$, but by construction $\exists x_j \psi_j(x_j) : T$ for $\psi_j(c_j)$ to be in $T^*$. Therefore, $T$ is not consistent.
+%   We observe that whenever $T$ is consistent, so is $T^*$: if $T^* \entails_{\mc{L}} \false$, then there are finitely many sentences $\varphi_1, \dots, \varphi_n$ from $T^*$ such that $\entails_{\mc{L}}\left(\bigwedge_{i} \varphi_i \right) \to \false$. We regroup this conjunction according to whether or not $\varphi_i$ contains a new constant symbol or not, viz.
+%   $$
+% \entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\bigwedge_{j} \psi_j(c_j)\right) \to \false,
+% $$ where $c_j$ are the new constant symbols. Applying the generalization of constants deduction rule and the de Morgan rules, we conclude that
+% $$
+% \entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\exists x_j\bigwedge_{j} \psi_j(x_j)\right) \to \false 
+% $$
+% and therefore
+% $$
+% \entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\bigvee_{j} \neg \exists x_j \psi_j(x_j)\right).
+% $$
+% So, for some $j$, $\entails_{\mc{L}} \exists x_j \psi_j(x_j)$, but by construction $\exists x_j \psi_j(x_j) : T$ for $\psi_j(c_j)$ to be in $T^*$. Therefore, $T$ is not consistent.
 
-Now let $S$ be any consistent theory. We put $S_0 \dfeq S$ and if $S_n$ has already been defined, we put $S_{n+1} \dfeq \left(S_n\right)^*$. Then we obtain a consistent limit theory $\ol{S} \dfeq \bigcup_{n \in \N} S_n$, and we define the model $M$ as we did in the quantifier-free case for the quantifier-free part of $\ol{S}$.
-\end{proof}
+% Now let $S$ be any consistent theory. We put $S_0 \dfeq S$ and if $S_n$ has already been defined, we put $S_{n+1} \dfeq \left(S_n\right)^*$. Then we obtain a consistent limit theory $\ol{S} \dfeq \bigcup_{n \in \N} S_n$, and we define the model $M$ as we did in the quantifier-free case for the quantifier-free part of $\ol{S}$.
+% \end{proof}
 
-\proposition{\label{prop-T-rel-is-conservative}
-Let $T$ be an $\mc{L}$-theory, and let $T_{\opn{rel}}$ be the associated $\mc{L}_{\opn{rel}}$-theory obtained by replacing function symbols with their graphs. Then any model $M_{\opn{rel}} \models T_{\opn{rel}}$ can be viewed as a model $M \models T$.
-}
+% \proposition{\label{prop-T-rel-is-conservative}
+% Let $T$ be an $\mc{L}$-theory, and let $T_{\opn{rel}}$ be the associated $\mc{L}_{\opn{rel}}$-theory obtained by replacing function symbols with their graphs. Then any model $M_{\opn{rel}} \models T_{\opn{rel}}$ can be viewed as a model $M \models T$.
+% }
 
-\begin{proof}[Sketch.]
-For every function symbol $f$ of $\mc{L}$, we interpret $f$ as the function specified by the graph relation $\Gamma_f$ in $\mc{L}_{\opn{rel}}$, which was axiomatized in $T_{\opn{rel}}$ to be the graph of a function. This gives an $\mc{L}$-structure $M$. Since $M \models T_{\opn{rel}}$ and every sentence of $T_{\opn{rel}}$ is either a modified version of a sentence in $T$ or asserts that a new relation is a graph of a function, $M \models T$. 
-\end{proof}
+% \begin{proof}[Sketch.]
+% For every function symbol $f$ of $\mc{L}$, we interpret $f$ as the function specified by the graph relation $\Gamma_f$ in $\mc{L}_{\opn{rel}}$, which was axiomatized in $T_{\opn{rel}}$ to be the graph of a function. This gives an $\mc{L}$-structure $M$. Since $M \models T_{\opn{rel}}$ and every sentence of $T_{\opn{rel}}$ is either a modified version of a sentence in $T$ or asserts that a new relation is a graph of a function, $M \models T$. 
+% \end{proof}
 
-\proposition{
-Let $T$ be an $\mc{L}$-theory. If $T$ is consistent, then $T_{\opn{rel}}$ is consistent.
-}
-\begin{proof}[Sketch.]
- Suppose towards the contrapositive that $T_{\opn{rel}}$ is inconsistent. Then there is a proof from $T_{\opn{rel}}$ of $\false$. It suffices to show that replacing the graphs $\Gamma_f$ by the functions $f$ induces a deduction-preserving map from the valid $\mc{L}_{\opn{rel}}$-sentences to the valid $\mc{L}$-sentences, for then we will have a proof from $T$ of $\false$. This can be done by induction and a case-by-case analysis of the rules of deduction.
-\end{proof}
+% \proposition{
+% Let $T$ be an $\mc{L}$-theory. If $T$ is consistent, then $T_{\opn{rel}}$ is consistent.
+% }
+% \begin{proof}[Sketch.]
+%  Suppose towards the contrapositive that $T_{\opn{rel}}$ is inconsistent. Then there is a proof from $T_{\opn{rel}}$ of $\false$. It suffices to show that replacing the graphs $\Gamma_f$ by the functions $f$ induces a deduction-preserving map from the valid $\mc{L}_{\opn{rel}}$-sentences to the valid $\mc{L}$-sentences, for then we will have a proof from $T$ of $\false$. This can be done by induction and a case-by-case analysis of the rules of deduction.
+% \end{proof}
 
-\subsection{The Henkin construction}
+\subsubsection{The Henkin construction}
 \definition{\label{def-henkin-theory} Let $T$ be an $\mc{L}$-theory. We say that $T$ is a \tbf{Henkin theory} if, for every formula $\varphi(x)$, there is a constant $c : \msf{Const}(\mc{L})$ such that
   $T \entails_{\mc{L}} (\exists x \varphi(x)) \rightarrow \varphi(c).$}
 
@@ -517,31 +519,35 @@ where above we have adjoined a sentence saying that the newly-adjoined constant 
 
 We put $$T' \dfeq \displaystyle \bigcup_{n \opn{:} \N} T_n.$$ By construction, $T'$ is a Henkin theory.
 
-It remains to show that if $T$ is consistent, so is $T'$. If $T \entails_{\mc{L}} \psi$, then from the finiteness of proofs, we must have that $T_n \entails_{\mc{L}}$ for some $n$. So, to show $T'$ is consistent, it suffices to show that for each $n$, $T_n$ is consistent.
+It remains to show that if $T$ is consistent, so is $T'$. If $T \entails_{\mc{L}} \psi$, then from the finiteness of proofs, we must have that $T_n \entails_{\mc{L}} \psi$ for some $n$. So, to show $T'$ is consistent, it suffices to show that for each $n$, $T_n$ is consistent.
 
 We induct on $n$. The base case $T = T_0$ is by assumption. For the induction step, we must show that if $T_n$ is consistent, then $T_{n+1}$ is consistent.
 
 Suppose towards the contrapositive that $T_{n+1}$ is inconsistent. Since $T_{n+1}$ is obtained by adjoining formulas of the form $\exists x \varphi(x) \rightarrow \varphi(c)$, there must be finitely many such formulas $\psi_1, \dots, \psi_m : T_{n+1} \backslash T_n$ of this form, along with finitely many formulas $\rho_1, \dots, \rho_n$ from $T_n$, such that
 $$
-\entails_{\mc{L}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_m \to \false.
+\entails_{\mc{L}_{n+1}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_m \to \false.
 $$
 By material implication, we get that
 $$
-\entails_{\mc{L}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1} \to \neg \psi_m,
+\entails_{\mc{L}_{n+1}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1} \to \neg \psi_m,
 $$
 which is equivalent to
 $$
-\entails_{\mc{L}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1} \to \neg (\exists x \varphi_m(x) \rightarrow \varphi_m(c_m)),
+\entails_{\mc{L}_{n+1}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1} \to \neg (\exists x \varphi_m(x) \rightarrow \varphi_m(c_m)),
 $$
 which is equivalent to
 $$
-\entails_{\mc{L}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1} \to (\exists x \varphi_m(x)) \wedge \neg \varphi_m(c_m)),
+\entails_{\mc{L}_{n+1}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1} \to (\exists x \varphi_m(x)) \wedge \neg \varphi_m(c_m)),
 $$
-and since
+and since $c_m$ does not occur in the premise of the implication, we have that
 $$
-\entails_{\mc{L}} (\exists x \varphi_m(x)) \wedge \neg \varphi_m(c_m)) \to \false,
+\entails_{\mc{L}_{n+1}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1} \to (\exists x \varphi_m(x)) \wedge \forall x \neg \varphi_m(x))
 $$
-we conclude that $$\rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1}$$ is inconsistent. Continuing this way, we eliminate all the $\psi_i$ and conclude that $\rho_1 \wedge \dots \wedge \rho_n$ is inconsistent, and therefore that $T$ is inconsistent, which gives the contrapositive of the induction hypothesis.
+and therefore
+$$
+\entails_{\mc{L}_{n+1}} \rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1} \to \false.
+$$
+We conclude that $$\rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots \wedge \psi_{m-1}$$ is inconsistent. Repeating this argument, we eliminate all the $\psi_i$ and conclude that $\rho_1 \wedge \dots \wedge \rho_n$ is inconsistent, and therefore that $T$ is inconsistent.
 \end{proof}
 
 \newcommand{\term}{\opn{term}}
@@ -563,34 +569,96 @@ we conclude that $$\rho_1 \wedge \dots \wedge \rho_n \wedge \psi_1 \wedge \dots 
 $$
 This completes the definition of $\term(T)$.
 }
-By the soundness theorem, if $T$ is inconsistent, then $\term(T)$ cannot be a model of $T$. But the inverse is true.
+By the soundness theorem, if $T$ is inconsistent, then $\term(T)$ cannot be a model of $T$. But, under suitable assumptions, the inverse is true.
 
-\proposition{
-Let $T$ be a Henkin $\mc{L}$-theory. If $T$ is consistent, then $\term(T)$ is a model of $T$.
+\definition{
+  \label{def-complete-theory}
+An $\mc{L}$-theory $T$ is \tbf{complete} if for every $\mc{L}$-sentence $\psi$,
+  $$
+\entails \left(T \entails_{\mc{L}} \psi\right) \lor \left(T \entails_{\mc{L}} \neg \psi\right).
+  $$
+  }
+
+  \remark{
+    Excluded middle in $\Prop$ implies that for any $\mc{L}$-structure $M$ and every $\mc{L}$-sentence $\psi$,
+    $$
+\entails (M \models \psi) \lor (M \models \neg \psi),
+$$
+and therefore that the $\mc{L}$-theory of an $\mc{L}$-structure (i.e. the collection of all sentences true in the structure) is complete.
+    }
+
+    By invoking the axiom of choice, we can extend any consistent theory to a complete consistent theory. We will prove this.
+    
+    \proposition{Let $T$ be a consistent $\mc{L}$-theory. There exists a complete, consistent$\mc{L}$-theory $T'$ which contains $T$.
+      \label{prop-complete-extension}
+    }
+
+    To prove this, we will use Zorn's lemma. To start the argument, we prove the following lemma.
+
+        \lemma{Suppose $T$ is consistent. Let $\varphi$ be an $\mc{L}$-sentence. Then $T \cup \{\varphi\}$ is consistent or $T \cup \{\neg \varphi\}$ is consistent.}
+
+\begin{proof}
+  Suppose that both $T \cup \{\varphi\}$ and $T \cup \{ \neg \varphi\}$ are inconsistent. Then there exist sentences $\sigma$ and $\rho$ from $T$ such that
+  $$
+\entails_{\mc{L}} (\sigma \wedge \varphi) \to \false \hspace{2mm} \te{ and } \hspace{2mm} \entails_{\mc{L}} (\rho \wedge \neg \varphi) \to \false.
+$$
+By $\neg$-introduction, we get
+$$
+\entails_{\mc{L}} \neg \left(\sigma \wedge \varphi\right) \hspace{2mm} \te{ and } \hspace{2mm} \entails_{\mc{L}} \neg \left(\rho \wedge \neg \varphi\right)
+$$
+and by $\wedge$-introduction, we get
+$$
+\entails_{\mc{L}} \left(\neg(\sigma \wedge \varphi) \right) \wedge \left(\neg (\rho \wedge \neg \varphi) \right).
+$$
+Since the finitary de Morgan laws are tautologies in the sense of \ref{def-tautology}, it follows that
+$$
+\entails_{\mc{L}} \neg \left(\sigma \lor \varphi \lor \rho \lor \neg \varphi\right).
+$$
+Since the metatheory satisfies the law of the excluded middle, we have that the law of the excluded middle for $\mc{L}$-formulas is a tautology in the sense of \ref{def-tautology}. Therefore,
+$$
+\entails_{\mc{L}} \neg(\sigma \lor \rho) \Leftrightarrow \entails_{\mc{L}} \neg \sigma \land \neg \rho,
+$$
+so by $\wedge$-elimination,
+$\entails_{\mc{L}} \neg \sigma$ and $\entails_{\mc{L}} \neg \rho$, so $T$ is inconsistent.
+\end{proof}
+
+
+    \begin{proof}[Proof of \ref{prop-complete-extension}.]
+      Consider the poset of proper consistent extensions of $T$. If $T$ is not complete, then the previous lemma shows that this poset is nonempty.
+
+      Now we show that we can take the union of a chain in this poset and obtain an upper bound on that chain.
+
+      Indeed, let $(T_i)_{i \in I}$ be a chain in this poset, and let $T_{\infty}$ be its union. This is clearly a theory which contains all the theories in the chain (and also $T$). We need to show that it is consistent. Indeed, if it were inconsistent, then by the finiteness of proofs, there exists some $T_n$ such that $T_n \entails_{\mc{L}} \false$.
+
+      This now fits the hypotheses of Zorn's lemma, which gives us a maximal consistent extension of $T'$ of $T$. If $T'$ were not complete, then the previous lemma shows that we can extend it.
+    \end{proof}
+    
+\theorem{\label{theorem-henkin-completeness}
+  Let $T$ be a complete Henkin $\mc{L}$-theory. If $T$ is consistent, then $\term(T)$ is a model of $T$.
 }
 \begin{proof}
   We will show that for every $\psi : \msf{Sentences}(\mc{L})$,
 $$
-T \entails_{\mc{L}} \psi \te{ implies that } \term(T) \models \psi.
+T \entails_{\mc{L}} \psi \iff \term(T) \models \psi.
 $$
 We will do this by a structural induction on formulas. In the base case, we have atomic sentences.
 
 \begin{itemize}
 \item If $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $a_1 = a_2$ where $a_1$ and $a_2$ are closed terms, then since $T \entails_{\mc{L}} a_1 = a_2$, then $\entails a_1^{\wt{A}} = a_2^{\wt{A}}$ (in $\wt{A}$), so $\term(T) \models \psi$.
 
-%   Conversely, if $\term(T) \models \psi$, then $\entails a_1^{\wt{A}} = a_2^{\wt{A}}$, so by definition of the equivalence relation we used to define $\wt{A}$, $T \entails_{\mc{L}} a_1 = a_2$.
+   Conversely, if $\term(T) \models \psi$, then $\entails a_1^{\wt{A}} = a_2^{\wt{A}}$, so by definition of the equivalence relation we used to define $\wt{A}$, $T \entails_{\mc{L}} a_1 = a_2$.
 
 \item If $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $R(a_1, \dots, a_n)$ where $R$ is a relation symbol and $a_1, \dots, a_n$ are closed terms, then since $T \entails_{\mc{L}} R(a_1, \dots, a_n)$, we have that $\entails R^{\wt{A}}(a_1^{\wt{A}}, \dots, a_n^{\wt{A}})$.
 
-%   Conversely, if $\term(T) \models \psi$, then $\entails R^{\wt{A}}(a_1^{\wt{A}}, \dots, a_n^{\wt{A}})$, so by definition of how we interpreted $\mc{L}$ onto $\wt{A}$, $T \entails_{\mc{L}} R(a_1, \dots, a_n)$.
+   Conversely, if $\term(T) \models \psi$, then $\entails R^{\wt{A}}(a_1^{\wt{A}}, \dots, a_n^{\wt{A}})$, so by definition of how we interpreted $\mc{L}$ onto $\wt{A}$, $T \entails_{\mc{L}} R(a_1, \dots, a_n)$.
 
-\item If $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $\varphi_1 \wedge \varphi_2$, then by $\wedge$-elimination in $\msf{Sentences}(\mc{L})$, $$\entails (T \entails_{\mc{L}} \psi) \rightarrow (T \entails_{\mc{L}} \varphi_1) \wedge (T entails_{\mc{L}} \varphi_2).$$ By the induction hypothesis, $\term(T) \models \varphi_1$ and $\term(T) \models \varphi_2$, so by $\wedge$-introduction in $\Prop$, $\term(T) \models \varphi_1 \wedge \varphi_2$.
+\item If $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $\varphi_1 \wedge \varphi_2$, then by $\wedge$-elimination in $\msf{Sentences}(\mc{L})$, $$\entails (T \entails_{\mc{L}} \psi) \rightarrow (T \entails_{\mc{L}} \varphi_1) \wedge (T \entails_{\mc{L}} \varphi_2).$$ By the induction hypothesis, $\term(T) \models \varphi_1$ and $\term(T) \models \varphi_2$, so by $\wedge$-introduction in $\Prop$, $\term(T) \models \varphi_1 \wedge \varphi_2$.
 
-%   Conversely, if $\term(T) \models \varphi_1 \wedge \varphi_2$, then by $\wedge$-elimination in $\Prop$, $\term(T) \models \varphi_1$ and $\term(T) \models \varphi_2$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi_1$ and $T \entails_{\mc{L}} \varphi_2$, so by $\wedge$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \varphi_1 \wedge \varphi_2$.
+   Conversely, if $\term(T) \models \varphi_1 \wedge \varphi_2$, then by $\wedge$-elimination in $\Prop$, $\term(T) \models \varphi_1$ and $\term(T) \models \varphi_2$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi_1$ and $T \entails_{\mc{L}} \varphi_2$, so by $\wedge$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \varphi_1 \wedge \varphi_2$.
 
 \item Suppose $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $\neg \varphi$. The induction hypothesis says that $T \entails_{\mc{L}} \varphi$ if and only if $\term(T) \models \varphi$. Since $T$ is consistent, $T \not \entails_{\mc{L}} \varphi$. Therefore, by the induction hypothesis, $\term(T) \not \models \varphi$. By the law of the excluded middle, $\term(T) \models \neg \varphi$.
 
-%   Conversely, suppose that $\term(T)$ 
+ Conversely, suppose that $\term(T) \models \neg \varphi$. Then $\term(T) \not \models \varphi$, so by the induction hypothesis, $T \not \entails_{\mc{L}} \varphi$. Since $T$ was complete, $T \entails_{\mc{L}} \varphi$.
 
 We omit the cases for $\wedge$ and $\rightarrow$, which are entirely analogous.
 
@@ -613,23 +681,129 @@ $$
 \term(T) \models \exists x \varphi(x).
 $$
 
-%  Conversely, suppose that $\term(T) \models \exists x \varphi(x)$. By $\exists$-elimination in $\Prop$, there exists some $a/E : \wt{A}$ such that $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi(a)$, and by $\exists$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \exists x \varphi(x)$.
+  Conversely, suppose that $\term(T) \models \exists x \varphi(x)$. By $\exists$-elimination in $\Prop$, there exists some $a/E : \wt{A}$ such that $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi(a)$, and by $\exists$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \exists x \varphi(x)$.
 
 \item Similarly, suppose that $T \entails_{\mc{L}} \forall x \varphi(x)$, where $\varphi(x)$ satisfies the induction hypothesis that if we substitute a closed term $c$ for $x$, $\varphi(c)$ is a sentence such that $T \entails_{\mc{L}} \varphi(c)$ if and only if $\term(T) \models \varphi(c)$.
 
   Then by $\forall$-elimination in $\msf{Sentences}(\mc{L})$, we have that for every constant $c : \msf{Const}(\mc{L})$, $T \entails_{\mc{L}} \varphi(c)$. By the induction hypothesis, $\term(T) \models \varphi(c)$. Since the interpretations of $c$ exhaust $\term(T)$, we conclude by $\forall$-introduction in $\Prop$ that $\term(T) \models \forall x \varphi(x)$.
 
-%   Conversely, suppose that $\term(T) \models \forall x \varphi(x)$. By $\forall$-elimination in $\Prop$, for every $a/E \in \wt{A}$, $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, for every $c : \msf{Const}(\mc{L})$, $T \entails_{\mc{L}} \varphi(c)$.
+   Conversely, suppose that $\term(T) \models \forall x \varphi(x)$. By $\forall$-elimination in $\Prop$, for every $a/E \in \wt{A}$, $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, for every $c : \msf{Const}(\mc{L})$, $T \entails_{\mc{L}} \varphi(c)$.
 
-  Since $T$ is consistent, for every $c$, $T$ does not prove $\neg \varphi(c)$, so $\term(T) \models \neg \varphi(c) \to \false$, and therefore $T \entails \neg \varphi(c) \to \false$. Specializing to a $c$ which does not occur in $\varphi$, we get from $\forall$-introduction \ref{forall-introduction} in $\msf{Sentences}(\mc{L})$ that $T \entails_{\mc{L}} \exists x \neg \varphi(x) \to \false$. By the de Morgan laws, $T \entails_{\mc{L}} \forall x \neg \neg \varphi(x)$. Since we are assuming double-negation elimination is a propositional tautology, we conclude that $T \entails_{\mc{L}} \forall x \varphi(x)$.
+  Since $T$ is consistent, for every $c$, $T$ does not prove $\neg \varphi(c)$, so $\term(T) \models \neg \varphi(c) \to \false$, and therefore $T \entails \neg \varphi(c) \to \false$. Specializing to a $c$ which does not occur in $\varphi$, we get from $\forall$-introduction \ref{forall-introduction} in $\msf{Sentences}(\mc{L})$ that $T \entails_{\mc{L}} \exists x \neg \varphi(x) \to \false$. By the de Morgan laws, $T \entails_{\mc{L}} \forall x \neg \neg \varphi(x)$. Since double-negation elimination is a propositional tautology, we conclude that $T \entails_{\mc{L}} \forall x \varphi(x)$.
 \end{itemize}
-
 \end{proof}
 
+\corollary{
+Let $T$ be a consistent $\mc{L}$-theory. Then $T$ has a model.
+}
+
+\begin{proof}
+  By \ref{prop-extend-henkin}, extend $T$ to a Henkin theory $T'$. By \ref{prop-complete-extension}, extend $T'$ to a complete theory $T''$.
+
+  $T''$ is again Henkin: for any formula $\varphi(x)$, there already exists a $c$ such that $T' \entails_{L'} \exists x \varphi(x) \leftrightarrow \varphi(x)$, and $T''$ contains all the sentences of $T'$.
+
+  By \ref{theorem-henkin-completeness}, $\term(T'')$ is a model of $T''$. Since $T''$ contains $T$, $\term(T'')$ is also a model of $T$.
+\end{proof}
+
+This completes the proof of the completeness theorem.
+
 \subsection{The L\"owenheim-Skolem theorem}
-
+\remph{TODO}
 \section{$\msf{ZFC}$}
+The language $\mc{L}_{\msf{ZFC}}$ of set theory comprises just one $2$-ary relation $\in$. Now we give the definition of the $\mc{L}_{\msf{ZFC}}$-theory $\msf{ZFC}$.
 
+\definition{
+  \label{def-zfc}
+  $\msf{ZFC}$ is defined to be the collection of following axioms and axiom schemas:
+  \begin{description}
+  \item[Extensionality] \label{zfc-extensionality} $$
+\forall x \forall y (\forall z( z \in x \leftrightarrow x \in y) \to x = y).
+$$
+This says that every set is determined by its elements.
+
+\notation{In what follows, we write $"x \subseteq y"$ to abbreviate the formal statement $\forall z \in x, z \in y$.}
+\item[Empty set] \label{zfc-empty-set}
+  $$
+\exists x \forall y (\neg y \in x).
+$$
+Viewing a model of $\msf{ZFC}$ as a directed tree, this says that every model has a least (``root'') element.
+\item[Pairing] \label{zfc-pairing}
+  $$
+\forall x \forall y \exists z \forall w (w \in z \leftrightarrow w = x \lor w = y)
+$$
+This axiom says that we can form unordered pairs.
+
+\notation{We denote $z$ as above by $\{x, y\}$, adopt the convention that $\{x\} \dfeq \{x,x\}$, and we implement ordered pairs with \emph{Kuratowski ordered pairs}, viz. $(x,y) \dfeq \{\{x\}, \{x,y\}\}$.}
+
+Now that we have defined ordered pairs, we can define functions (internal to $\msf{ZFC}$):
+\definition{
+A \tbf{function} is a set $f$ of ordered pairs such that $(x,y) \wedge (x,z) \rightarrow y = z$.
+}
+\item[Union] \label{zfc-union}
+  $$
+\forall x \exists y \forall z (z \in y \leftrightarrow \exists t(z \in t \wedge t \in x)).
+$$
+This says that the $y$ above is the union of all the members of $x$. Applying \ref{zfc-pairing}, we conclude that given sets $x$ and $y$, there exists $z$ such that $z = x \cup y$.
+
+  \definition{
+    Let $x$ be a set. We denote the \tbf{successor} of $x$ to be the set $\succ x \dfeq x \cup \{x\}$.
+  }
+
+\item[Infinity] \label{zfc-infinity}
+  $$
+\exists x \left(\emptyset \in x \wedge \forall y( y \in x \rightarrow \succ y \in x) \right).
+$$
+
+\item[Replacement] \label{zfc-replacement}
+    Let $\varphi(x,y, t_1, \dots, t_k)$ be an $\mc{L}_{\msf{ZFC}}$-formula with at least two free variables. For each such formula,
+  $$
+\forall t_1 \dots \forall t_k (\forall x \exists! y \varphi(x,y,t_1, \dots, t_k) \to \forall u \exists v \forall r( r \in v \leftrightarrow \exists s (s \in u \wedge \varphi(s,r,t_1, \dots, t_k)))).
+  $$
+  is an axiom of $\msf{ZFC}$.
+
+  This axiom says that if for fixed terms $t_1, \dots, t_k$, $\varphi(x,y,t_1, \dots, t_k)$ is the graph of a function sending $x$ to $y$, then for each set $u$, the image of $u$ under this function is again a set.
+
+  Note that the quantifiers above can range over the entire model of $\msf{ZFC}$.
+
+\item[Powerset] \label{zfc-powerset}
+  $$
+\forall x \exists y \forall z (z \in y \leftrightarrow z \subseteq x).
+$$
+\item[Choice] \label{zfc-choice} Let $y : x \to z$ abbreviate the $\mc{L}_{\msf{ZFC}}$-formula which says that $y$ is a function from $x$ to $z$.
+  $$
+\forall y \forall y \forall z, y : x \to z \wedge (y \neq \emptyset) \rightarrow \left( \exists f (f : x \to (\bigcup z) \wedge \forall a \in x, f(a) \in y(x)) \right).
+  $$
+More clearly, this says that for every $x$-indexed family of sets $z$, there exists a section to the projection $\bigcup z \twoheadrightarrow x$.
+\item[Regularity] \label{zfc-regularity}
+  $$
+\forall x \exists y  (x = \emptyset \lor (y \in x \wedge \forall z (z \in x \to \neg z \in y)))
+$$
+This asserts that every set contains an element which is minimal with respect to $\in$.
+\end{description}
+}
+
+\subsection{Ordinal numbers}
+\definition{
+  \label{def-zfc-relation}
+We say that $y$ is a (binary) \tbf{relation} on $x$ if $y$ is a set of ordered pairs from $X$.
+  }
+\definition{
+  \label{well-ordering}
+  We say that a relation $<$ on $x$ is a \tbf{well-ordering} if:
+  \begin{enumerate}
+  \item $$\forall a \forall b, a = b \lor a < b \lor b <a.$$
+  \item $$\forall a \forall b \forall c, a < b \wedge b < c \rightarrow a < c.$$
+  \item $$\forall s \subseteq x, s \neq \emptyset \rightarrow \exists a(a \in x \wedge \forall b(b \in s \to \neg a < b)).$$
+    \end{enumerate}
+  }
+
+  \definition{
+A set $x$ is called \tbf{transitive} if $y \in x, z \in y \rightarrow z \in x$.
+    }
+\definition{
+  \label{def-ordinal} We say that a set $\alpha$ is an \tbf{ordinal} if it is well-ordered by the membership relation $\in$ and it is transitive. We abbreviate this assertion by $\opn{On } \alpha$.
+  }
+\subsection{Cardinal numbers}
 \section{Generic sets: Cohen's original proof}
 
 
