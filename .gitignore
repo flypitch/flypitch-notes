@@ -7,3 +7,5 @@ forcing-notes.out
 forcing-notes.tex~
 forcing-notes.tex~~
 .gitignore~
+listing*
+lst*
