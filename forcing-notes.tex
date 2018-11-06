@@ -6,12 +6,26 @@
 \usepackage{amsmath,amsthm,amssymb,mathrsfs,mathabx}
 \usepackage{enumitem}
 \usepackage{csquotes}
-\usepackage{color} 
 \usepackage{parskip}
 \usepackage{hyperref}
 \usepackage{fixltx2e}
 \usepackage{tcolorbox}
 \usepackage{jmhmacros}
+
+% % COPY THIS
+ \usepackage[utf8x]{inputenc}
+ \usepackage{color}
+ \definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
+ \definecolor{tacticcolor}{rgb}{0.1, 0.2, 0.6}    % blue
+ \definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
+ \definecolor{symbolcolor}{rgb}{0.0, 0.1, 0.6}    % blue
+ \definecolor{sortcolor}{rgb}{0.1, 0.5, 0.1}      % green
+ \definecolor{attributecolor}{rgb}{0.7, 0.1, 0.1} % red
+ \usepackage{listings}
+ \def\lstlanguagefiles{lstlean.tex}
+ \lstset{language=lean,breakatwhitespace,xleftmargin=\parindent} % the last two options are optional
+ \lstMakeShortInline" % optional, if you want to use the character " to open/close inline code
+ % be careful, any instances of " inside a math environment will break compilation
 
 \newcommand{\arity}{\opn{arity}}
 \graphicspath{ {/home/pv/Pictures/latex/} }
@@ -337,7 +351,6 @@ because we already know the antecedent and can apply $\msf{Prop}$'s $\forall$-el
 }
 
 The converse of \myref{Theorem}{theorem-soundness} is false. There may be some things which are incidentally true about the model which are not universally valid.
-
 \example{
   Working again in the language of graphs, consider a complete graph on $n$ vertices. Call this model $M$. $M$ happens to satisfy the $\mc{L}$-sentence
   $$
@@ -658,7 +671,7 @@ We will do this by a structural induction on formulas. In the base case, we have
 
 \item Suppose $T \entails_{\mc{L}} \psi$ and $\psi$ is of the form $\neg \varphi$. The induction hypothesis says that $T \entails_{\mc{L}} \varphi$ if and only if $\term(T) \models \varphi$. Since $T$ is consistent, $T \not \entails_{\mc{L}} \varphi$. Therefore, by the induction hypothesis, $\term(T) \not \models \varphi$. By the law of the excluded middle, $\term(T) \models \neg \varphi$.
 
- Conversely, suppose that $\term(T) \models \neg \varphi$. Then $\term(T) \not \models \varphi$, so by the induction hypothesis, $T \not \entails_{\mc{L}} \varphi$. Since $T$ was complete, $T \entails_{\mc{L}} \varphi$.
+ Conversely, suppose that $\term(T) \models \neg \varphi$. Then $\term(T) \not \models \varphi$, so by the induction hypothesis, $T$ does not prove $\varphi$. Since $T$ was complete, $T \entails_{\mc{L}} \varphi$.
 
 We omit the cases for $\wedge$ and $\rightarrow$, which are entirely analogous.
 
@@ -681,15 +694,15 @@ $$
 \term(T) \models \exists x \varphi(x).
 $$
 
-  Conversely, suppose that $\term(T) \models \exists x \varphi(x)$. By $\exists$-elimination in $\Prop$, there exists some $a/E : \wt{A}$ such that $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi(a)$, and by $\exists$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \exists x \varphi(x)$.
+Conversely, suppose that $\term(T) \models \exists x \varphi(x)$. By $\exists$-elimination in $\Prop$, there exists some $a/E : \wt{A}$ such that $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, $T \entails_{\mc{L}} \varphi(a)$, and by $\exists$-introduction in $\msf{Sentences}(\mc{L})$, $T \entails_{\mc{L}} \exists x \varphi(x)$.
 
 \item Similarly, suppose that $T \entails_{\mc{L}} \forall x \varphi(x)$, where $\varphi(x)$ satisfies the induction hypothesis that if we substitute a closed term $c$ for $x$, $\varphi(c)$ is a sentence such that $T \entails_{\mc{L}} \varphi(c)$ if and only if $\term(T) \models \varphi(c)$.
 
   Then by $\forall$-elimination in $\msf{Sentences}(\mc{L})$, we have that for every constant $c : \msf{Const}(\mc{L})$, $T \entails_{\mc{L}} \varphi(c)$. By the induction hypothesis, $\term(T) \models \varphi(c)$. Since the interpretations of $c$ exhaust $\term(T)$, we conclude by $\forall$-introduction in $\Prop$ that $\term(T) \models \forall x \varphi(x)$.
 
-   Conversely, suppose that $\term(T) \models \forall x \varphi(x)$. By $\forall$-elimination in $\Prop$, for every $a/E \in \wt{A}$, $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, for every $c : \msf{Const}(\mc{L})$, $T \entails_{\mc{L}} \varphi(c)$.
+  Conversely, suppose that $\term(T) \models \forall x \varphi(x)$. By $\forall$-elimination in $\Prop$, for every $a/E \in \wt{A}$, $\entails \mbf{r}(\varphi)(a/E)$, which is equivalent to $\term(T) \models \varphi(a)$. By the induction hypothesis, for every $c : \msf{Const}(\mc{L})$, $T \entails_{\mc{L}} \varphi(c)$.
 
-  Since $T$ is consistent, for every $c$, $T$ does not prove $\neg \varphi(c)$, so $\term(T) \models \neg \varphi(c) \to \false$, and therefore $T \entails \neg \varphi(c) \to \false$. Specializing to a $c$ which does not occur in $\varphi$, we get from $\forall$-introduction \ref{forall-introduction} in $\msf{Sentences}(\mc{L})$ that $T \entails_{\mc{L}} \exists x \neg \varphi(x) \to \false$. By the de Morgan laws, $T \entails_{\mc{L}} \forall x \neg \neg \varphi(x)$. Since double-negation elimination is a propositional tautology, we conclude that $T \entails_{\mc{L}} \forall x \varphi(x)$.
+  Suppose towards a contradiction that $T$ does not prove $\forall x \varphi(x)$. Since $T$ was complete, $T$ proves $\exists x \neg \varphi(x)$. Since we have already proved the cases for $\exists and \neg$, we conclude that $\term(T) \models \exists x \neg \varphi(x)$, and by the axiom of choice we can find a witness $c \in \term(T)$ such that $\term(T) \models \neg \varphi(c)$. This contradicts the conclusion of the previous paragraph.
 \end{itemize}
 \end{proof}
 
@@ -721,7 +734,7 @@ The language $\mc{L}_{\msf{ZFC}}$ of set theory comprises just one $2$-ary relat
 $$
 This says that every set is determined by its elements.
 
-\notation{In what follows, we write $"x \subseteq y"$ to abbreviate the formal statement $\forall z \in x, z \in y$.}
+\notation{In what follows, we write ``$x \subseteq y$'' to abbreviate the formal statement $\forall z \in x, z \in y$.}
 \item[Empty set] \label{zfc-empty-set}
   $$
 \exists x \forall y (\neg y \in x).

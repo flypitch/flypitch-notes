@@ -1,0 +1,31 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{amssymb}
+
+\usepackage{color}
+\definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
+\definecolor{tacticcolor}{rgb}{0.1, 0.2, 0.6}    % blue
+\definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
+\definecolor{symbolcolor}{rgb}{0.0, 0.1, 0.6}    % blue
+\definecolor{sortcolor}{rgb}{0.1, 0.5, 0.1}      % green
+\definecolor{attributecolor}{rgb}{0.7, 0.1, 0.1} % red
+\usepackage{listings}
+\def\lstlanguagefiles{lstlean.tex}
+\lstset{language=lean,breakatwhitespace,xleftmargin=\parindent} % the last two options are optional
+\lstMakeShortInline" % optional, if you want to use the character " to open/close inline code
+  
+\begin{document}
+A test \lstinline{Σ(n : ℕ), Π(k : ℕ), n ≤ k} and another test "variables {α : Type u} {β : Type v} {γ : Type w}".
+
+Third test
+\begin{lstlisting}
+  instance (α : Type u) : inhabited (list α) :=
+  ⟨list.nil⟩
+\end{lstlisting}
+
+
+\end{document}
+
+
+%% Lean code
