@@ -6,12 +6,26 @@
 \usepackage{amsmath,amsthm,amssymb,mathrsfs,mathabx}
 \usepackage{enumitem}
 \usepackage{csquotes}
-\usepackage{color} 
 \usepackage{parskip}
 \usepackage{hyperref}
 \usepackage{fixltx2e}
 \usepackage{tcolorbox}
 \usepackage{jmhmacros}
+
+% % COPY THIS
+ \usepackage[utf8x]{inputenc}
+ \usepackage{color}
+ \definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
+ \definecolor{tacticcolor}{rgb}{0.1, 0.2, 0.6}    % blue
+ \definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
+ \definecolor{symbolcolor}{rgb}{0.0, 0.1, 0.6}    % blue
+ \definecolor{sortcolor}{rgb}{0.1, 0.5, 0.1}      % green
+ \definecolor{attributecolor}{rgb}{0.7, 0.1, 0.1} % red
+ \usepackage{listings}
+ \def\lstlanguagefiles{lstlean.tex}
+ \lstset{language=lean,breakatwhitespace,xleftmargin=\parindent} % the last two options are optional
+ \lstMakeShortInline" % optional, if you want to use the character " to open/close inline code
+ % be careful, any instances of " inside a math environment will break compilation
 
 \newcommand{\arity}{\opn{arity}}
 \graphicspath{ {/home/pv/Pictures/latex/} }
@@ -224,7 +238,8 @@ One may wonder why we work with a type of formulas and not with a collection of 
     }
   }
   \definition{
-    \label{def-realization-of-terms}
+    \label{def-
+      realization-of-terms}
     Let $A$ be an $\mc{L}$-structure. Using the data of $A$ being an $\mc{L}$-structure, we can inductively assign to every term $t$ (of arity $k$ and containing $n$ free variables) a \tbf{realization} $\mbf{r}(t) : A^n \to A^k$, as follows:
     \begin{enumerate}
     \item If $t = v$ for a variable $v$, $\mbf{r}(t) = \id_A = \lambda v, v$.
@@ -337,7 +352,6 @@ because we already know the antecedent and can apply $\msf{Prop}$'s $\forall$-el
 }
 
 The converse of \myref{Theorem}{theorem-soundness} is false. There may be some things which are incidentally true about the model which are not universally valid.
-
 \example{
   Working again in the language of graphs, consider a complete graph on $n$ vertices. Call this model $M$. $M$ happens to satisfy the $\mc{L}$-sentence
   $$
@@ -717,11 +731,11 @@ The language $\mc{L}_{\msf{ZFC}}$ of set theory comprises just one $2$-ary relat
   $\msf{ZFC}$ is defined to be the collection of following axioms and axiom schemas:
   \begin{description}
   \item[Extensionality] \label{zfc-extensionality} $$
-\forall x \forall y (\forall z( z \in x \leftrightarrow x \in y) \to x = y).
+\forall x \forall y (\forall z( z \in x \leftrightarrow z \in y) \to x = y).
 $$
 This says that every set is determined by its elements.
 
-\notation{In what follows, we write $"x \subseteq y"$ to abbreviate the formal statement $\forall z \in x, z \in y$.}
+\notation{In what follows, we write ``$x \subseteq y$'' to abbreviate the formal statement $\forall z \in x, z \in y$.}
 \item[Empty set] \label{zfc-empty-set}
   $$
 \exists x \forall y (\neg y \in x).
@@ -804,10 +818,111 @@ A set $x$ is called \tbf{transitive} if $y \in x, z \in y \rightarrow z \in x$.
   \label{def-ordinal} We say that a set $\alpha$ is an \tbf{ordinal} if it is well-ordered by the membership relation $\in$ and it is transitive. We abbreviate this assertion by $\opn{On } \alpha$.
   }
 \subsection{Cardinal numbers}
-\section{Generic sets: Cohen's original proof}
+
 
 
 \section{Boolean-valued models}
+\subsection{Boolean algebras}
+\newcommand{\lt}{<}
+
+\definition{
+  A \tbf{preorder} $B$ is a type $B$ equipped with relations $\leq$ and $\lt$ satisfying the following properties:
+  \begin{enumerate}
+  \item $\forall a : B, a \leq a$
+  \item $\forall a, b, c : B, a \leq b \to b \leq c \to a \leq c$
+  \item $\forall a, b : B, a \leq b \land \neg b \leq a$
+  \item $\forall a, b : B, a < b \leftrightarrow (a \leq b \land \neg b \leq a)$
+  \end{enumerate}
+  }
+
+\definition{
+  A \tbf{partial order} $B$ is a preorder such that the $\leq$ relation is antisymmetric:
+  $$
+\forall a, b : B, a \leq b \to b \leq a \to a = b.
+  $$
+  }
+
+\definition{
+  A \tbf{join-semilattice} $B$ is a partial order with binary sup operation $\sqcup$ which satisfies the following properties:
+  \begin{enumerate}
+  \item $\forall a, b : B, a \leq a \sqcup b$
+  \item $\forall a, b : B, b \leq a \sqcup b$
+  \item $\forall a, b, c : B, a\ leq c \to b \leq c \to a \sqcup b \leq c$.
+  \end{enumerate}
+  }
+
+\definition{
+  A \tbf{meet-semilattice} $B$ is a partial order with a, binary infimum operation $\sqcap$ which satisfies the following properties:
+  \begin{enumerate}
+  \item $ \forall a, b : B, a \sqcap b \leq a$
+  \item $\forall a, b : B, a \sqcap b \leq b$
+  \item $\forall a, b, c : B, a \leq b \to a \leq c \to a \leq b \sqcap c$.
+  \end{enumerate}
+  }
+
+\definition{
+A \tbf{lattice} $B$ is a join-semilattice which is also a meet-semilattice.
+  }
+
+\definition{
+  A \tbf{distributive lattice} $B$ is a lattice which satisfies the following property:\footnote{From the \lstinline{mathlib} docstring: a distributive lattice can be defined to satisfy any of four equivalent distribution properties (of sup over inf or inf over sup, on the left or right). A classic example of a distributive lattice is the lattice of subsets of a set, and in fact this example is generic in the sense that every distributive lattice is realizable as a sublattice of a powerset lattice.}
+  $$
+\label{le-sup-inf} \forall x, y,z : B, (x \sqcup y) \sqcap (x \sqcup z) \leq x \sqcup (y \sqcap z).
+  $$}
+
+\definition{
+A lattice $B$ has a \tbf{bottom element} $\bot$ if for every $a : B, \bot \leq a$,
+  }
+\definition{
+A lattice $B$ has a \tbf{top element} $\top$ if for every $a : B, a \leq \top$.
+  }
+
+\definition{
+  A \tbf{bounded lattice} is a lattice with a top and bottom element.
+  }
+
+\definition{
+  \label{def-bounded-distributive-lattice}
+  A \tbf{bounded distributive lattice} is a distributive lattice which is a, bounded.
+  }
+
+\definition{
+  \label{def-boolean-algebra} A \tbf{Boolean algebra} $B$ is a, bounded distributive lattice such that:
+  \begin{enumerate}
+  \item For every $a : B$, there exists an element $\neg a : B$ which satisfies the following properties:
+    \begin{enumerate}
+    \item $\forall x : B, x \sqcap \neg x = \bot$
+    \item $\forall x : B, x \sqcup \neg x = \top$
+    \end{enumerate}
+  \item We additionally specify a \tbf{complementation operator} $\lambda x, y, x - y : B \to B$ which satisfies the property:
+    $$
+    \forall x, y : B, x - y = x \sqcap \neg y.
+    $$
+  \end{enumerate}
+  }
+
+  \definition{
+    For convenience, we accumulate the previous definitions into a complete axiomatization of a boolean algebra. A boolean algebra is a type $B$ with a specification of binary ordering relations $\leq$, $\lt$, a binary sup operation $\sqcup$, a binary inf operation $\sqcap$, top and bottom elements $\top$, $\bot$, a unary negation operator $\neg$, and a binary subtraction operator $-$, satisfying the following properties:
+\begin{enumerate}
+\item $\forall (a : B), a ≤ a$
+\item $(a b, c_1 : B), a \leq b → b \leq c_1 → a \leq c_1$
+\item $(\forall (a, b : B), a < b \iff a \leq b \land ¬b \leq a)$
+\item $(a, b : B), a \leq b \to b \leq a \to a = b$
+\item $ \forall (a, b : B), a \leq a \sqcup b$
+\item $ \forall (a, b : B), b \leq a \sqcup b$
+\item $\forall (a, b, c_1 : B), a \leq c_1 \to b \leq c_1 \to a \sqcup b \leq c_1$
+\item $\forall (a, b : B), a ⊓ b \leq a$
+\item $\forall (a, b : B), a ⊓ b \leq b$
+\item $\forall (a, b, c_1 : B), a \leq b \to a \leq c_1 \to a \leq b ⊓ c_1$
+\item $\forall (x, y, z : B), (x \sqcup y) ⊓ (x \sqcup z) \leq x \sqcup y ⊓ z$
+\item $\forall (a : B), a \leq ⊤$
+\item $\forall (a : B), ⊥ \leq a$
+\item $\forall (x : B), x ⊓ -x = ⊥$
+\item $\forall (x : B), x \sqcup -x = ⊤$
+\item $\forall (x, y : B), x - y = x ⊓ -y$
+  \end{enumerate}
+    }
+\section{Generic sets: Cohen's original proof}
 
 
 \section{Sheaves and filterquotients}
