@@ -43,9 +43,9 @@
 In these notes, intended as the plaintext part of the Flypitch project, we give a complete account of the independence of the continuum hypothesis from $\msf{ZFC}$, with special attention paid to comparing the different approaches: generic sets, Boolean-valued models, and double-negation sheaves.
 \end{abstract}
 
-% TODO(jesse) \section*{Introduction}
+% TODO(jesse) \newpage \section*{Introduction}
 
-\section{Preliminaries}
+\newpage \section{Preliminaries}
 
 \subsection{First-order logic}
 \subsubsection{General logical symbols}
@@ -723,7 +723,7 @@ This completes the proof of the completeness theorem.
 
 \subsection{The L\"owenheim-Skolem theorem}
 \remph{TODO}
-\section{$\msf{ZFC}$}
+\newpage \section{$\msf{ZFC}$}
 The language $\mc{L}_{\msf{ZFC}}$ of set theory comprises just one $2$-ary relation $\in$. Now we give the definition of the $\mc{L}_{\msf{ZFC}}$-theory $\msf{ZFC}$.
 
 \definition{
@@ -821,7 +821,7 @@ A set $x$ is called \tbf{transitive} if $y \in x, z \in y \rightarrow z \in x$.
 
 
 
-\section{Boolean-valued models}
+\newpage \section{Boolean-valued models}
 \subsection{Boolean algebras}
 \newcommand{\lt}{<}
 
@@ -883,11 +883,11 @@ A lattice $B$ has a \tbf{top element} $\top$ if for every $a : B, a \leq \top$.
 
 \definition{
   \label{def-bounded-distributive-lattice}
-  A \tbf{bounded distributive lattice} is a distributive lattice which is a, bounded.
+  A \tbf{bounded distributive lattice} is a distributive lattice which is bounded.
   }
 
 \definition{
-  \label{def-boolean-algebra} A \tbf{Boolean algebra} $B$ is a, bounded distributive lattice such that:
+  \label{def-boolean-algebra} A \tbf{Boolean algebra} $B$ is a bounded distributive lattice such that:
   \begin{enumerate}
   \item For every $a : B$, there exists an element $\neg a : B$ which satisfies the following properties:
     \begin{enumerate}
@@ -911,17 +911,68 @@ A lattice $B$ has a \tbf{top element} $\top$ if for every $a : B, a \leq \top$.
 \item $ \forall (a, b : B), a \leq a \sqcup b$
 \item $ \forall (a, b : B), b \leq a \sqcup b$
 \item $\forall (a, b, c_1 : B), a \leq c_1 \to b \leq c_1 \to a \sqcup b \leq c_1$
-\item $\forall (a, b : B), a ⊓ b \leq a$
-\item $\forall (a, b : B), a ⊓ b \leq b$
-\item $\forall (a, b, c_1 : B), a \leq b \to a \leq c_1 \to a \leq b ⊓ c_1$
-\item $\forall (x, y, z : B), (x \sqcup y) ⊓ (x \sqcup z) \leq x \sqcup y ⊓ z$
+\item $\forall (a, b : B), a \sqcap b \leq a$
+\item $\forall (a, b : B), a \sqcap b \leq b$
+\item $\forall (a, b, c_1 : B), a \leq b \to a \leq c_1 \to a \leq b \sqcap c_1$
+\item $\forall (x, y, z : B), (x \sqcup y) \sqcap (x \sqcup z) \leq x \sqcup y \sqcap z$
 \item $\forall (a : B), a \leq ⊤$
-\item $\forall (a : B), ⊥ \leq a$
-\item $\forall (x : B), x ⊓ -x = ⊥$
+\item $\forall (a : B), \bot \leq a$
+\item $\forall (x : B), x \sqcap -x = ⊥$
 \item $\forall (x : B), x \sqcup -x = ⊤$
-\item $\forall (x, y : B), x - y = x ⊓ -y$
+\item $\forall (x, y : B), x - y = x \sqcap -y$
   \end{enumerate}
-    }
+}
+
+\definition{
+A \tbf{complete lattice} $B$ is a bounded lattice which has operations $\opn{Sup}, \opn{Inf} : \opn{set} B \to B$,
+  }
+
+\definition{
+  A \tbf{complete distributive lattice} $B$ is a complete lattice which additionally satisfies the following properties:
+  \begin{enumerate}
+  \item $\forall a : B, s : \opn{set} B, \left(\bigsqcap_{b \in s}, a \sqcup b \leq a \sqcup \opn{Inf} s\right)$
+    \item $\forall a : B, s : \opn{set} B, a \sqcap \opn{Sup} s \leq \left(\bigsqcup_{b \in s}, a \sqcap b \right).$
+  \end{enumerate}
+  }
+
+\definition{
+A \tbf{complete boolean algebra} $B$ is a boolean algebra which is also a complete distributive lattice.
+}
+
+\subsection{Boolean-valued models}
+Fix $\mc{L}$ a first-order language and $T$ an $\mc{L}$-theory. Fix $\mbb{B}$ a boolean algebra.
+
+\newcommand{\bv}[2]{[[#2]]^{#1}}
+\definition{\label{def-boolean-valued-structure}
+  A \tbf{$\mbb{B}$-valued $\mc{L}$-structure} is the following data:
+  \bfenumerate{
+  \item A carrier type $A$,
+  \item an assignment of every $c : \msf{Const}(\mc{L})$ to a $c^A : A^{\opn{arity}(c)}$,
+  \item an assignment of every $R : \msf{Rel}(\mc{L})$ to a $\mbb{B}$-valued map $R^A : A^{\opn{arity}(R)} \to \mbb{B}$; in particular an assignment of a binary $\mbb{B}$-valued map for the equality symbol, and
+  \item an assignment of every $f : \msf{Funct}(\mc{L})$ to a function $f^A : A^{\opn{arity}(f)} \to A$.
+  }
+  If $\phi(\vec{x})$ is a formula, we write $[[\phi(\vec{x})]]^A$ to mean $\phi(\vec{x})$ viewed as a $\mbb{B}$-valued function (taking as many arguments as it has free variables).
+  The previous data must satisfy the following properties:
+  \begin{enumerate}
+  \item For every $a : A$, $[[a = a]]^A = 1$.
+  \item For every $a, b: A$, $\bv{A}{a = b} = \bv{A}{b = a}$.
+  \item For every $a, b, c : A$, $\bv{A}{a = b} \sqcap \bv{A}{b = c} \leq \bv{A}{a = c}$.
+  \item For every $n$-ary function symbol $R$, and for all $n$-tuples $(a_1, \dots, a_n)$ and $(b_1, \dots, b_n)$,
+    $$
+\left( \bigsqcap_{i = 1}^n \bv{A}{a_i = b_i} \right) \sqcap \bv{A}{R(a_1, \dots, a_n)} \leq \bv{A}{R(b_1, \dots, b_n)}
+$$
+\item For every $n$-ary function symbol $f$, for every $a, b : A$ and every $(a_1, \dots, a_n)$ and $(b_1, \dots, b_n)$ in $A^n$, the followng three properties hold:
+  $$
+\left(\bigsqcap_{i = 1}^n \bv{A} {a_i = b_i} \right)\sqcap \bv{A}{f(a_1, \dots, a_N) = a} \leq \bv{A}{f(b_1, \dots, b_n) = b},
+$$
+$$
+\bigsqcup_{a : A} \bv{A}{f(a_1, \dots, a_n) = a}, \te{ and }
+$$
+$$
+\bv{A}{f(a_1, \dots, a_n) = a} \sqcap \bv{A}{f(a_1, \dots, a_n) = b} \leq \bv{A}{a = b}.
+$$
+  \end{enumerate}
+}
 \section{Generic sets: Cohen's original proof}
 
 
