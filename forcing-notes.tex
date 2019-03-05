@@ -973,10 +973,102 @@ $$
 $$
   \end{enumerate}
 }
+
+\subsection{An example of a Boolean-valued model (experimental)}
+
+A preset is a type-indexed family of presets.
+
+This means that there is an associated indicator function on the ``disjoint union'' of all types, and it is 1 if and only if its argument is inside the indexing type.
+
+Let $\mbb{B}$ be a complete Boolean algebra. We construct a $\mbb{B}$-valued model analogous to the standard model $\mbb{W}$ as follows:
+
+A \tbf{$\mbb{B}$-valued preset} is an $\alpha$-indexed family of $\mbb{B}$-valued presets $ \times $ $\mbb{B}$ (i.e. a type-indexed family of presets with boolean truth values for membership).
+
+Such objects are called $\mbb{B}$-names. A $\mbb{B}$-name $u$ is specified by the following data:
+\begin{enumerate}
+\item An indexing type $\alpha$.
+\item An indexing function $A : \alpha \to \opn{bSet} \mathbb{B}$.
+\item A truth-value function $B : \alpha \to \mathbb{B}$.
+\end{enumerate}
+
+\section{The fundamental theorem of forcing for Boolean-valued models}
+The aim of this section is to prove the \emph{fundamental theorem of forcing} (for Boolean-valued models), which states that for any complete Boolean algebra $B$, $V^B$ satisfies all the ZFC axioms.
+
+\newcommand{\B}{\mathbb{B}}
+
+\subsection{The axiom of choice}
+\subsubsection{A global choice function}
+
+Let $x$ be a $\B$-set. By the maximum principle, there exists a $\B$-set $u_x$ such that
+$[[u_x \in x]] = \bigsqcup_{(y : V^B)} [[y \in x]]$. By the axiom of choice in the metatheory, we can then define a \emph{global choice function} $\msf{choice} : \opn{bSet} \B \to \opn{bSet} \B$.
+
+Na\"ively, this is not a choice function from the point of view of $V^\B$, as it may not be $=^\B$-extensional.
+
+However, by restricting $\msf{choice}$ to a $\B$-set, we can fulfill the requirements of $(\msf{AC'})$.
+
+\definition{\label{bv-ac1}
+The \emph{axiom of choice} is the sentence ($\msf{AC}$):
+$$
+\forall u, \exists f, \left[\opn{Fun}(f) \land \left( \dom(f) = u \right) \land \left(\forall x, x \in u \to \left( x \neq \emptyset \to f(x) \in x \right)\right)\right].
+$$}
+
+
+It is provably equivalent over $\msf{ZF}$ to the following sentence\footnote{See \url{http://us.metamath.org/mpeuni/ac3.html}}:
+\definition{\label{bv-ac2} ($\msf{AC'}$):
+$$
+\forall x, \exists y, \forall z, z \in x \to \left( z \neq \emptyset \to \exists! w, \left(w \in z \to \exists v, \left( v \in y \to \left( z \in v \land w \in v \right)\right)\right)\right).
+$$
+}
+
+\theorem{\label{bv-ac2-valid}
+The sentence $\msf{AC'}$ has truth value $\top$ in $V^B$.
+}
+
+\begin{proof}
+  Translated into Boolean truth values, we see that
+  $$
+[[\msf{AC'}]] = \bigsqcap_{(x : V^B)} \bigsqcup_{(y : V^B)} \bigsqcap_{(z : V^B)} [[z \in x]] \Rightarrow \left([[z = \emptyset]] \Rightarrow \bot \right) $$ $$ \Rightarrow (\bigsqcup!_{(w : V^B)} [[w \in z]] \Rightarrow \bigsqcup_{(v : V^B)} [[v \in y]] \Rightarrow [[z \in v]] \sqcap [[w \in v]].
+$$
+It then suffices to show that for every $x : V^B$,
+$$
+\top \leq \bigsqcup_{(y : V^B)} \bigsqcap_{(z : V^B)} [[z \in x]] \Rightarrow \left([[z = \emptyset]] \Rightarrow \bot \right) $$ $$ \Rightarrow (\bigsqcup!_{(w : V^B)} [[w \in z]] \Rightarrow \bigsqcup_{(v : V^B)} [[v \in y]] \Rightarrow [[z \in v]] \sqcap [[w \in v]].
+$$
+We will finish the proof by constructing a $y$ with which we instantiate the (Boolean-valued) existential quantifier.
+
+Before proceeding with the construction, we indicate how the argument would proceed after instantiating the $y$, which will expose the properties that such a $y$ must satisfy.
+
+So, fix a $y$. Instantiating the quantifier, we now have to show
+$$
+\top \leq \bigsqcap_{(z : V^B)} [[z \in x]] \Rightarrow \left([[z = \emptyset]] \Rightarrow \bot \right) $$ $$ \Rightarrow (\bigsqcup!_{(w : V^B)} [[w \in z]] \Rightarrow \bigsqcup_{(v : V^B)} [[v \in y]] \Rightarrow [[z \in v]] \sqcap [[w \in v]].
+$$
+Introducing the $z$, we then have to show that for any $z : V^B$,
+$$
+\top \leq [[z \in x]] \Rightarrow \left([[z = \emptyset]] \Rightarrow \bot \right) $$ $$ \Rightarrow (\bigsqcup!_{(w : V^B)} [[w \in z]] \Rightarrow \bigsqcup_{(v : V^B)} [[v \in y]] \Rightarrow [[z \in v]] \sqcap [[w \in v]].
+$$
+Introducing the implications (using, say, the deduction theorem), it suffices to show that
+$$[[z \in x]] \Rightarrow \left([[z = \emptyset]] \Rightarrow \bot \right) \leq (\bigsqcup!_{(w : V^B)} [[w \in z]] \Rightarrow \bigsqcup_{(v : V^B)} [[v \in y]] \Rightarrow [[z \in v]] \sqcap [[w \in v]].
+$$
+It is easy to see that for any $z : V^B$, $$[[z = \emptyset]] = \bigsqcap_{w : V^B} [[w \in z]] \Rightarrow \bot.$$ Let $u_z$ be the witness produced by the maximum principle such that
+$$
+[[u_z \in z]] = \bigsqcup_{(w : V^B)} [[w \in z]].
+$$
+% Simplifying the left-hand side of our goal, it now suffices to show that for an arbitrary $w : V^B$,
+Therefore, it suffices to show that
+$$
+[[z \in x]] \sqcap [[u_z \in z]] \leq (\bigsqcup!_{(w : V^B)} [[w \in z]] \Rightarrow \bigsqcup_{(v : V^B)} [[v \in y]] \Rightarrow [[z \in v]] \sqcap [[w \in v]].
+$$
+Instantiating the quantifier on the right-hand side with $u_z$ and unfolding the definition of the Boolean-valued version of the bounded ``exists unique'' quantifier, it now suffices to show that
+$$
+[[z \in x]] \sqcap [[u_z \in z]] \leq \bigsqcap_{(w' : V^B)} [[w' \in z]] \Rightarrow \left( \bigsqcup_{(v : V^B)} [[v \in y]] \sqcap [[z \in v]] \sqcap [[w' \in v]] \right) \Rightarrow [[w' = u_z]].
+$$
+Now we describe how to construct the necessary $y$.
+
+\remph{TODO(jesse): determine which way to associate these parentheses}
+
+\end{proof}
+
 \section{Generic sets: Cohen's original proof}
 
-
 \section{Sheaves and filterquotients}
-
 
 \end{document}
