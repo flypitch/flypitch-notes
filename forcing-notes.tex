@@ -603,7 +603,7 @@ and therefore that the $\mc{L}$-theory of an $\mc{L}$-structure (i.e. the collec
 
     By invoking the axiom of choice, we can extend any consistent theory to a complete consistent theory. We will prove this.
     
-    \proposition{Let $T$ be a consistent $\mc{L}$-theory. There exists a complete, consistent$\mc{L}$-theory $T'$ which contains $T$.
+    \proposition{Let $T$ be a consistent $\mc{L}$-theory.uuuu There exists a complete, consistent $\mc{L}$-theory $T'$ which contains $T$.
       \label{prop-complete-extension}
     }
 
@@ -990,14 +990,42 @@ Such objects are called $\mbb{B}$-names. A $\mbb{B}$-name $u$ is specified by th
 \item An indexing function $A : \alpha \to \opn{bSet} \mathbb{B}$.
 \item A truth-value function $B : \alpha \to \mathbb{B}$.
 \end{enumerate}
+\newcommand{\B}{\mathbb{B}}
+\section{The maximum principle}
+The following lemma is a corollary of the maximum principle:
+\lemma{\label{lemma-maximum-principle-corollary}
+  Let $\phi : V^\B \to \B$ be an $=^\B$-extensional function, such that $[[\exists x \phi(x)]] = \top$.
+  \bfenumerate{
+  \item For every $\B$-valued set $v$, there exists a $\B$-valued set $u$ such that $\phi(u) = 1$ and $\phi(v) = [[u = v]]$.
+  \item If $\psi : V^\B \to \B$ is another $=^\B$-extensional function, such that for every $u$, $\phi(u) = \top$ implies $\psi(u)=\top$, then
+    $$
+    \left(\bigsqcap_{(x : V^\B)} \phi(x) \rightarrow \psi(x)\right) = \top.
+    $$
+  }}
+\begin{proof}
+  \bfenumerate{
+  \item Since $[[\exists x \phi(x)]] = \top$, we obtain, using the maximum principle, a $w$ such that $\phi(w) = \top$. 
+
+    Put $b = \phi(v)$, and let $u$ be the two-term mixture $u = b \cdot v + (\neg b) \cdot w$. Then we calculate
+    $$
+    \top = b \sqcup \neg b \leq [[u = v \sqcap \phi(v)]] \lor [[u = w \sqcap \phi(w)]] \leq [[\phi(u)]].
+    $$
+    It remains to show that $\phi(v) = [[u = v]]$. Since $\phi$ is $=^\B$-extensional, we have the inequality
+    $$
+[[u = v]] = [[u = v]] \sqcap [[\phi(u)]] \leq [[\phi(v)]].
+$$
+Conversely, by definition of $u$,
+$$
+\phi(v) = b \leq [[u = v]].
+$$
+  \item Immediate.
+  }
+\end{proof}
 
 \section{The fundamental theorem of forcing for Boolean-valued models}
 The aim of this section is to prove the \emph{fundamental theorem of forcing} (for Boolean-valued models), which states that for any complete Boolean algebra $B$, $V^B$ satisfies all the ZFC axioms.
 
-\newcommand{\B}{\mathbb{B}}
-
 \subsection{The axiom of choice}
-\subsubsection{A global choice function}
 
 Let $x$ be a $\B$-set. By the maximum principle, there exists a $\B$-set $u_x$ such that
 $[[u_x \in x]] = \bigsqcup_{(y : V^B)} [[y \in x]]$. By the axiom of choice in the metatheory, we can then define a \emph{global choice function} $\msf{choice} : \opn{bSet} \B \to \opn{bSet} \B$.
@@ -1063,8 +1091,136 @@ $$
 $$
 Now we describe how to construct the necessary $y$.
 
-\remph{TODO(jesse): determine which way to associate these parentheses}
+\remph{TODO(jesse): Fix this to include injectivization and finish the proof.}
 
+\end{proof}
+
+\subsubsection{Zorn's lemma}
+The axiom of choice is equivalent to the following version of Zorn's lemma, which states that any set whose members are ordered by $\subseteq$ and is closed under unions of chains contains a maximal element.
+\definition{\label{bv_zorn} ($\msf{ZL}$):
+$$
+\forall x, (\forall y, (y \subseteq x \land \forall w_1 \in y, \forall w_2 \in y, w_1 \subseteq w_2 \lor w_2 \subseteq w_1) \implies$$ $$(\bigcup y ) \in x) \implies \exists m \in x, \forall z \in x, m \subseteq x \implies m = x$$}
+
+The aim of this section is to prove the following theorem:
+
+\theorem{Zorn's lemma has truth-value $\top$ in $V^B$.}
+
+To do this, we introduce the notion of a \emph{core} of a $\B$-valued set.
+
+\definition{\label{def-core}
+  Let $u$ be a $\B$-valued set. Let $S$ be a set of $\B$-valued sets. We say that $S$ is a \tbf{core} for $u$ if the following properties hold:
+  \begin{bfenumerate}
+  \item For every $v \in S$, $[[x \in u]] = 1$, and
+  \item For each $y \in V^B$ such that $[[y \in u]] = 1$, there exists a \emph{unique} $v_y \in S$ such that $[[y = v_y]] = 1$.
+  \end{bfenumerate}
+  }
+
+\lemma{\label{lemma-cores-exist}
+Let $u$ be a $\B$-valued set. There exists a set of $\B$-valued sets $S$ which is a core for $u$.
+}
+\begin{proof}
+  % For each $x : V^B$, define the set
+  % $$f_x \dfeq \left\{ \langle a, u.\opn{bval}(a) \sqcap [[u.\opn{func}(a) = x]] \rangle \stbar a : u.\opn{type} \right\}.$$
+
+  Consider the subset $S'$ of $V^B$ defined by
+  $$
+\lambda x, [[x \in u]] = \top.
+$$
+We equip $S'$ with an equivalence relation $\sim$, defined by
+$$
+x_1 \sim x_2 \iff [[x_1 = x_2]] = \top.
+$$
+We define $S$ to be a transversal of the $\sim$-equivalence classes of $S'$.
+\end{proof}
+
+\remark{If $u$ is nonempty with truth-value $\top$, then the maximum principle ensures that any core of $u$ is nonempty.}
+
+\lemma{\label{lemma-core}
+Let $u$ be a $\B$-valued set such that $[[u \neq \emptyset]] = \top$. Let $S$ be a core for $u$. Then for any $B$-valued set $x$, there exists a $y \in S$ such that $[[x = y]] = [[x \in u]]$.
+}
+\begin{proof}
+  Up to an equality of terms in $\B$, this is exactly \ref{lemma-maximum-principle-corollary}.
+\end{proof}
+
+\begin{proof}[Proof of \ref{bv_zorn}]
+  Let $X$ be a $\B$-valued set such that $(X, \subseteq)$ is a nonempty inductive partially ordered set. To prove Zorn's lemma, we must show that $X$ has a maximal element.
+
+  Let $S$ be a core for $X$. We define the relation $\leq : S \to S \to \Prop$ as follows:
+  $$
+\lambda s_1 s_2, [[s_1 \subseteq s_2]] = \top.
+$$
+It is easy to check that $\leq$ is a partial order on $S$. To apply the Zorn's lemma available in the metatheory, we must show that $\leq$ is inductive, i.e. that every chain has an upper bound.
+
+So, fix a chain $C$ of $S$. We can turn $C$ into a $\B$-valued set $\wh{C}$ by declaring the truth-value of all elements to be $\top$.
+
+We claim that if $C$ was a chain in $Y$, then $V^\B \models^\B \wh{C}$ ``is a chain in $X$.''
+\begin{proof}[Proof of claim.]
+  \remph{TODO(jesse) fill in}.
+\end{proof}
+
+Since $X$ is inductive, we can apply the maximum principle to obtain a $u : V^\B$ such that $V^\B \models^\B$ ``$u$ is an upper bound for $\wh{C}$ in $X$''.
+
+To see this, \remph{TODO(jesse) fill in}.
+
+In particular, $[[u \in x]] = \top$, so by virtue of $S$ being a core, there exists a $w \in S$ such that $[[w = u]] = \top$. Then $w$ is an upper bound for $C$ in $S$: for any other $w' \in S$, $[[w' \in \wh{C}]] = 1$, so $[[w' \subseteq w]] = \top$, and therefore $w' \leq w$.
+
+So $S$ is inductive and we may apply Zorn's lemma. Therefore, $S$ has a maximal element $m$. Since $S$ is a core, $[[m \in X]] = \top$.
+
+To finish the proof, it now suffices to show that $c$ is a maximal element of $X$. That is, we must show that
+$$
+V^\B \models^\B \forall x \in X, c \subseteq x \to x = c.
+$$
+That is, we must show that
+$$
+\top \leq \bigsqcap_{(x \in X)} c \subseteq^\B x \Rightarrow x =^\B c.
+$$
+Introducing the universal quantifier, it suffices to show that for any $x \in V^\B$,
+$$
+\top \leq x \in^\B X \Rightarrow c \subseteq^\B x \Rightarrow x =^\B c,
+$$
+and introducing the implication, it suffices to show that
+$$
+x \in^\B X \leq c \subseteq^\B x \Rightarrow x =^\B c.
+$$
+By \ref{lemma-core}, we can find a $y$ such that $x \in^\B X = [[x = y]]$, so we rewrite the above inequality to
+$$
+[[x = y]] \leq c \subseteq^\B x \Rightarrow x =^\B c.
+$$
+Introducing another implication, we have
+$$
+[[x = y]] \sqcap c \subseteq^\B x \leq [[x = c]].
+$$
+since $\subseteq^\B$ is $=^\B$-extensional, by applying the transitivity of $\leq$, it now suffices to show that
+$$
+[[x = y]] \sqcap (c \subseteq^\B y) \leq [[x = c]].
+$$
+If we can show that $c \subseteq^\B y \leq [[y = c]]$, then we are done, by applying transitivity of $\leq$ and then by applying the transitivity of $=^\B$.
+
+Let $a : \B$ be $c \subseteq^\B y$. We let $v$ be the two-term mixture $a \cdot y + (\neg a) \cdot c$.
+
+We claim that $v \in^\B X = \top$.
+\begin{proof}[Proof of claim.]
+\end{proof}
+
+By virtue of $S$ being a core, there exists a $z \in S$ such that $[[v = z]] = \top$.
+
+We claim that $[[c \subseteq v]] = \top$.
+\begin{proof}[Proof of claim.]
+\end{proof}
+
+Since $[[v = z]]$, it follows that $[[c \subseteq z]] = \top$, and therefore
+$$
+c \leq z
+$$
+in $S$, and since $c$ is $\leq$-maximal, $c = z$, so $c =^\B z = \top$.
+
+Now we calculate:
+\begin{align*}
+  [[c \subseteq y]] = a &\leq [[y = v]]\\
+                        &\leq [[y = v]] \sqcap [[v = z]]\\
+                        &\leq [[y = z]] = [[y = c]],
+\end{align*}
+and the proof is complete.
 \end{proof}
 
 \section{Generic sets: Cohen's original proof}
