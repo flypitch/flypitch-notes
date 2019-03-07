@@ -27,7 +27,8 @@
  \lstMakeShortInline" % optional, if you want to use the character " to open/close inline code
  % be careful, any instances of " inside a math environment will break compilation
 
-\newcommand{\arity}{\opn{arity}}
+ \newcommand{\arity}{\opn{arity}}
+ \newcommand{\set}{\opn{set}}
 \graphicspath{ {/home/pv/Pictures/latex/} }
 
 \begin{document}
@@ -992,7 +993,122 @@ Such objects are called $\mbb{B}$-names. A $\mbb{B}$-name $u$ is specified by th
 \end{enumerate}
 \newcommand{\B}{\mathbb{B}}
 \section{The maximum principle}
-The following lemma is a corollary of the maximum principle:
+\definition{\label{def-antichain}
+  Let $\B$ be a bounded lattice. An \tbf{antichain} in $\B$ is a subset $A \subseteq \B$ satisfying the following property:
+  $$
+\forall x \in S, \forall y \in S, \left(x \neq y \to x \sqcap y = \bot\right).
+  $$
+}
+
+\definition{\label{def-indexed-antichain}
+  Let $\B$ be a bounded lattice. An \tbf{indexed antichain} is the data of a type $I$ and a map $\msf{A} : I \to \B$ satisfying the following property:
+  $$
+\forall i, j : I, \left(i \neq j \to \msf{A}(i) \sqcap \msf{A}(j) = \bot\right).
+  $$
+  }
+\definition{\label{def-mixture}
+  Let $I$ be a type, and let $\msf{A} : I \to \B$ be an indexed antichain. Let $u : I \to V^\B$ be an $I$-indexed family of $\B$-valued sets. The \tbf{mixture} of $u$ with respect to $A$ is the following $\B$-valued set, which we will specify by the data $\langle \alpha_{\mu}, A_{\mu}, B_{\mu} \rangle$:
+  \begin{itemize}
+  \item $\alpha_{\mu}$ is defined to be the $\Sigma$-type
+    $$
+\alpha_{\mu} \dfeq \Sigma_{(i : I)} \alpha_{u(i)}.
+$$
+\item $A_{\mu}$ is defined to be the map
+  $$
+\left(A_{\mu} : \alpha_{\mu} \to V^\B  \right) \dfeq \lambda \langle i, x \rangle, A_{u(i)} (x).
+  $$
+\item $B_{\mu}$ is defined to be the map
+  $$
+\left(B_{\mu} : \alpha_{\mu} \to \B \right) \dfeq \lambda \langle i, x \rangle, \bigsqcup(j : \iota), \msf{A}(j) \sqcap (A_{u(i)} x) \in^\B u(j).
+  $$
+  \end{itemize}
+}
+
+We focus on a special case of mixtures when $I$ is a type with only two elements.
+
+\definition{\label{def-two-term-mixture}
+  Let $a_1, a_2 : \B$, and let $u_1, u_2 \in V^\B$. The \tbf{two-term mixture} of $u_1$ and $u_2$ is the following $\B$-valued set, given by the data $\langle \alpha_{\mu}, A_{\mu}, B_{\mu} \rangle$:
+  \begin{itemize}
+  \item $\alpha_{\mu} \dfeq \alpha_{u_1} \oplus \alpha_{u_2}$.
+  \item $\left(A_{\mu} : \alpha_{\mu} \to V^\B \right) \dfeq \lambda a, A_{u_1} a$ (if $a : \alpha_{u_1}$), and $\lambda a, A_{u_2} a$ otherwise.
+  \item $\left(B_{\mu} : \alpha_{\mu} \to \B \right) \dfeq \lambda (a : \alpha_{u_1} \oplus \alpha_{u_2}), \left(a_1 \sqcap (A_{\mu}(a) \in^\B u_1)\right) \sqcup \left(a_2 \sqcap (A_{\mu}(a) \in^\B u_2\right)$
+  \end{itemize}
+We write $a_1 \cdot u_1 + a_2 \cdot u_2$ for the two-term mixture of $u_1$ and $u_2$ with respect to $a_1$ and $a_2$.
+}
+
+
+\subsubsection{Corollaries of the maximum principle}
+  \lemma{\label{lemma-two-term-mixture-membership}
+    Let $X$ be a $\B$-valued set, and let $u_1$ and $u_2$ be $\B$-valued sets such that $u_1 \in^\B X = \top$ and $u_2 \in^\B X = \top$. Let $a_1$ and $a_2$ be an antichain such that $a_1 \sqcup a_2 = \top$.
+
+    Then $a_1 \cdot u_1 + a_2 \cdot u_2 \in^\B X = \top$.
+  }
+  \begin{proof}
+    Let $U = a_1 \cdot u_1 + a_2 \cdot u_2$.
+    We must show that
+    $$
+    \top \leq U \in^\B X. % \bigsqcup_{i_y : \alpha_X} B_X (i_y) \sqcap (a_1 \cdot u_1 + a_2 \cdot u_2) =^\B A_X(i_y).
+    $$
+    
+    By the mixing lemma, we have that $a_1 \leq U =^\B u_1$ and that $a_2 \leq U =^\B u_2$. Therefore, $a_1 \sqcup a_2 = \top \leq U =^\B u_1 \sqcup U =^\B u_2$.
+
+    Conjuncting this with the facts that $T \leq u_1 \in^\B X$ and $T \leq u_2 \in^\B X$ and then eliminating the previous Boolean-valued disjunction, we see that it suffices to prove that
+    $$
+    (U =^\B u_1) \sqcap (u_1 \in^\B X) \leq U \in^\B X \te{ and } (U=^\B u_1) \sqcap (u_2 \in^\B X) \leq U \in^\B X,
+    $$
+    and both of these obligations are precisely the left $=^\B$-extensionality of $\in^\B$.
+  \end{proof}
+
+\lemma{\label{lemma-two-term-mixture-subset}
+Let $X$ be a $\B$-valued set, and let $u_1$ and $u_2$ be $\B$-valued sets% such that $u_1 \in^\B X = \top$ and $u_2 \in^\B X = \top$
+. Let $a_1$ and $a_2$ be an antichain such that $a_1 \sqcup a_2 = \top$, such that $a_1 = u_2 \subseteq^\B u_1$. Then $\top \leq u_2 \subseteq^\B a_1 \cdot u_1 + a_2 \cdot u_2$.
+}
+\begin{proof}
+  Let $U$ be the two-term mixture $a_1 \cdot u_1 + a_2 \cdot u_2$. We need to show that
+  $$
+\top \leq \bigsqcap_{w : V^\B} w \in^\B u_2 \Rightarrow w \in^\B U,
+$$
+i.e. that for every $w : V^\B$,
+$$
+w \in^\B u_2 \leq w \in^\B U.
+$$
+Unfolding the definition of $\in^\B$, we restate our goal as:
+$$
+\bigsqcup_{i_y : \alpha_{u_2}} B_{u_2}(i_y) \sqcap w =^\B A_{u_2}(i_y) \leq \bigsqcup_{i_z : \alpha_{U}} B_U(i_z) \sqcap w =^\B A_U(i_z).
+$$
+Eliminating the existential quantifier on the left, we fix an arbitrary $i : \alpha_{u_2}$ and now must show that:
+$$
+B_{u_2}(i) \sqcap w =^\B A_{u_2}(i) \leq \bigsqcup_{i_z : \alpha_{U}} B_U(i_z) \sqcap w =^\B A_U(i_z).
+$$
+Instantiating the existential quantifier on the right with $i$, it now suffices to show:
+$$
+B_{u_2}(i) \sqcap w =^\B A_{u_2}(i) \leq B_U(i) \sqcap w =^\B A_{u_2}(i),
+$$
+and cancelling like terms, it suffices to show that
+$$
+\left(B_{u_2}(i)\leq B_U(i)\right) \iff \left(B_{u_2} \leq \left(a_1 \sqcap A_{U}(i) \in^\B u_1 \right) \sqcup \left(a_2 \sqcap A_{U}(i) \in^\B u_2 \right)\right).
+$$
+Rewriting the right hand side with de Morgan's law and splitting into cases, we see that it now suffices to show:
+\begin{enumerate}
+\item $B_{u_2}(i) \leq (a_1 \sqcup a_2) = \top$.
+\item $B_{u_2}(i) \leq (a_1 \sqcup A_{u_2}(i) \in^\B u_2)$.
+\item $B_{u_2}(i) \leq (a_2 \sqcup A_{u_2}(i) \in^\B u_1)$.
+\item $B_{u_2}(i) \leq (A_{u_2}(i) \in^\B u_2)$.
+\end{enumerate}
+
+All the cases except $(3)$ follow immediately from previous results.
+
+For $(3)$, note that we have by assumption that $a_2 = (\neg (u_2 \subseteq^\B u_1)) \sqcup A_{u_2}(i) \in^\B u_1$, so now our goal is to show
+$$
+B_{u_2}(i) \leq (u_2 \subseteq^\B u_1) \Rightarrow A_{u_2}(i) \in^\B u_1 \iff \left((u_2 \subseteq^\B u_1) \sqcap B_{u_2}(i) \leq A_{u_2}(i) \in^\B u_1\right).
+$$
+Instantiating the universal quantifier on the left hand side with $A_{u_2}(i)$, it now suffices to show that
+$$
+A_{u_2}(i) \in^\B u_2 \Rightarrow A_{u_2}(i) \in^\B u_1 \sqcap B_{u_2}(i) \leq A_{u_2}(i) \in^\B u_1.
+$$
+Since $B_{u_2}(i) \leq A_{u_2}(i) \in^\B u_2$, we are finished after applying $\leq$-transitivity and Boolean-valued implication elimination.
+\end{proof}
+
 \lemma{\label{lemma-maximum-principle-corollary}
   Let $\phi : V^\B \to \B$ be an $=^\B$-extensional function, such that $[[\exists x \phi(x)]] = \top$.
   \bfenumerate{
@@ -1109,28 +1225,46 @@ To do this, we introduce the notion of a \emph{core} of a $\B$-valued set.
 
 \definition{\label{def-core}
   Let $u$ be a $\B$-valued set. Let $S$ be a set of $\B$-valued sets. We say that $S$ is a \tbf{core} for $u$ if the following properties hold:
-  \begin{bfenumerate}
+\bfenumerate{
   \item For every $v \in S$, $[[x \in u]] = 1$, and
   \item For each $y \in V^B$ such that $[[y \in u]] = 1$, there exists a \emph{unique} $v_y \in S$ such that $[[y = v_y]] = 1$.
-  \end{bfenumerate}
+}
   }
 
 \lemma{\label{lemma-cores-exist}
 Let $u$ be a $\B$-valued set. There exists a set of $\B$-valued sets $S$ which is a core for $u$.
 }
 \begin{proof}
-  % For each $x : V^B$, define the set
-  % $$f_x \dfeq \left\{ \langle a, u.\opn{bval}(a) \sqcap [[u.\opn{func}(a) = x]] \rangle \stbar a : u.\opn{type} \right\}.$$
-
-  Consider the subset $S'$ of $V^B$ defined by
+  Fix $x : V^\B$. We define the set
   $$
-\lambda x, [[x \in u]] = \top.
+  f_x \dfeq \{(a, u_B (a) \sqcap u_A (a)  =^\B x) \stbar a \in u_{\alpha}\}.
+  $$
+  That is, $f_x$ is the graph-relation of the map
+  $$
+\lambda a : u_{\alpha}, u_B (a) \sqcap u_A (a) =^\B x.
 $$
-We equip $S'$ with an equivalence relation $\sim$, defined by
+As such, $f_x : \opn{set} (u_{\alpha} \times \beta)$. Consider the map
 $$
-x_1 \sim x_2 \iff [[x_1 = x_2]] = \top.
+(\lambda x : V^\B, f_x) : V^\B \to \opn{set}(u_{\alpha} \times \beta).
 $$
-We define $S$ to be a transversal of the $\sim$-equivalence classes of $S'$.
+
+Since $\opn{set}(u_{\alpha} \times \beta)$ is a small type, we may perform the same type of smallness argument as we did for the maximum principle, and select lifts of every fiber, obtaining a set $S' : \set V^\B$ which satisfies the following property: for every $x$, there exists a $y$ in $S'$ such that $f_x = f_y$.
+
+There is an equivalence relation $\sim$ on $V^B$, defined by $x_1 \sim x_2 \iff \left(x_1 =^\B x_2 = \top\right)$. This restricts to an equivalence relation on any subset of $V^\B$. In particular, we consider the restriction of $\sim$ to the subset of $S'' \dfeq \{x \in S' \stbar x \in^\B u = \top\}$. We define $S$ to be a transversal of the $\sim$-equivalence classes of $S''$.
+
+It remains to verify that $S$ is a core for $u$. Since $S \subseteq S''$ and $S''$ by definition is made up of $\B$-valued sets $x$ such that $x \in^\B u = \top$, item $\bfe{i}$ of the definition of a core is satisfied.
+
+To verify item $\bfe{ii}$, let $y : V^\B$ such that $y \in^\B u = \top$. By construction of $S'$, there exists a $y' \in S'$ such that $f_{y'} = f_y$. Since the supremum of (the values of) $f_y$ is $\top$, the supremum of (the values of) $f_{y'}$ is $\top$, and therefore $y' \in^\B u = \top$. By construction of $S''$, there exists a unique $y'' \in S''$ such that $y'' =^\B y' = \top$.
+
+We claim that $y =^\B y'' = \top$. To prove this claim, by the transitivity of Boolean-valued equality, it suffices to show that $y =^\B y' = \top$. We calculate:
+$$
+\top = \top \sqcap \top = \left(\bigsqcup_{(a : u_{\alpha})} y =^\B u_A(\alpha) \right) \sqcap \left(\bigsqcup_{(a : u_{\alpha})} u_{A}(\alpha) =^\B y' \right) \leq (y =^\B u_A(\alpha)) \sqcap (u_A(\alpha) =^\B y') \leq y=^\B y'.
+$$
+
+To complete the proof, we must show that $y''$ is unique for $y$. So, let $y'''$ be an element of $S''$ such that $y''' =^\B y = \top$. To show that $y''' = y''$, it suffices to show that $y''' =^\B y' = \top$, because then $y'''$ will belong to the $\sim$-class of $y'$ and by construction of $S''$, $y'''$ will have to be equal to $y''$.
+
+However, we have already seen that $y =^\B y' = \top$, so this follows from the transitivity of $=^\B$.
+
 \end{proof}
 
 \remark{If $u$ is nonempty with truth-value $\top$, then the maximum principle ensures that any core of $u$ is nonempty.}
@@ -1153,18 +1287,69 @@ It is easy to check that $\leq$ is a partial order on $S$. To apply the Zorn's l
 
 So, fix a chain $C$ of $S$. We can turn $C$ into a $\B$-valued set $\wh{C}$ by declaring the truth-value of all elements to be $\top$.
 
-We claim that if $C$ was a chain in $Y$, then $V^\B \models^\B \wh{C}$ ``is a chain in $X$.''
+We claim that if $C$ was a chain in $S$, then $V^\B \models^\B \wh{C}$ ``is a chain in $X$.''
 \begin{proof}[Proof of claim.]
-  \remph{TODO(jesse) fill in}.
+  Formally, ``$\wh{C}$ is a chain'' is the sentence
+  $$
+\forall u_1 \in \wh{C}, \forall u_2 \in \wh{C}, u_1 \subseteq u_2 \lor u_2 \subseteq u_1,
+$$
+and so we must show that
+$$
+\top \leq \bigsqcap_{u_1 \in C} \bigsqcap_{u_2 \in C} u_1 \subseteq^\B u_2 \lor u_2 \subseteq^\B u_1,
+$$
+or equivalently,
+$$
+\forall u_1 \in C, \forall u_2 \in C, T \leq u_1 \subseteq^\B u_2 \lor u_2 \subseteq^B u_1.
+$$
+
+So, fix $u_1$ and $u_2$ in $C$. Since $C$ was a chain in $S$, either $[[u_1 \subseteq u_2]] = \top$ or $[[u_2 \subseteq u_1]] = \top$. 
+
+Without loss of generality, suppose that $[[u_1 \subseteq u_2]] = \top$, as the other case is entirely symmetric. Then $\top \leq u_1 \subseteq^\B u_2$, and by the transitivity of $\leq$, it suffices to show that
+$$
+u_1 \subseteq^\B u_2 \leq u_1 \subseteq^\B u_2 \sqcup u_2 \subseteq^\B u_1,
+$$
+which immediately follows from the defining property of the binary sup.
+
+That $\wh{C}$ is a chain in $X$ means that
+$$
+\top \leq \bigsqcap_{u \in C} u \in^\B X.
+$$
+But, each $u$ belongs to $C$, which is a subset of a core $S$ for $X$, so $u \in^\B X = \top$.
 \end{proof}
 
-Since $X$ is inductive, we can apply the maximum principle to obtain a $u : V^\B$ such that $V^\B \models^\B$ ``$u$ is an upper bound for $\wh{C}$ in $X$''.
+Now we claim that for any chain $C$ in $S$, there exists a $u : V^\B$ such that $V^\B \models^\B$ ``$u$ is an upper bound for $\wh{C}$ in $X$''.
 
-To see this, \remph{TODO(jesse) fill in}.
+\begin{proof}[Proof of claim.]
+  We will use $u = \bigcup \wh{C}$. We need to to show two things:
+  \bfenumerate{
+  \item $\top \leq u \in^\B X$, and
+  \item $\top \leq \bigsqcap_{w \in C} w \subseteq^\B u$.
+  }
+  Item \bfe{ii} is an immediate consequence of the specification of the $\B$-valued unionset operation.
+
+  For item \bfe{i}, we have by assumption that $X$ is inductive, so that
+  $$
+  T \leq \bigsqcap_{(Y : V^\B)} \left(\left(Y \subseteq^\B X \sqcap \left(\bigsqcap_{w_1 \in Y} \bigsqcap_{w_2 \in Y} w_1 \subseteq^\B w_2 \sqcup w_2 \subseteq^\B w_1\right)\right) \Rightarrow (\bigcup Y) \in^\B X\right)
+  $$
+  $$
+\leq \left(u \subseteq^\B X \sqcap \left(\bigsqcap_{w_1 \in u} \bigsqcap_{w_2 \in u} w_1 \subseteq^\B w_2 \sqcup w_2 \subseteq^\B w_1\right)\right) \Rightarrow (\bigcup Y) \in^\B X
+  $$
+  Therefore, it suffices to show that
+  $$
+T \leq \left(\wh{C} \subseteq^\B X \sqcap \left(\bigsqcap_{w_1 \in\wh{C}} \bigsqcap_{w_2 \in\wh{C}} w_1 \subseteq^\B w_2 \sqcup w_2 \subseteq^\B w_1\right)\right),
+$$
+and so it suffices to show:
+\begin{enumerate}
+\item $\displaystyle{T \leq\wh{C} \subseteq^\B X}$, and
+\item $\displaystyle{T \leq \left(\bigsqcap_{w_1 \in\wh{C}} \bigsqcap_{w_2 \in\wh{C}} w_1 \subseteq^\B w_2 \sqcup w_2 \subseteq^\B w_1\right)}$,
+\end{enumerate}
+
+This is exactly the conclusion of the previous claim.
+\end{proof}
 
 In particular, $[[u \in x]] = \top$, so by virtue of $S$ being a core, there exists a $w \in S$ such that $[[w = u]] = \top$. Then $w$ is an upper bound for $C$ in $S$: for any other $w' \in S$, $[[w' \in \wh{C}]] = 1$, so $[[w' \subseteq w]] = \top$, and therefore $w' \leq w$.
 
-So $S$ is inductive and we may apply Zorn's lemma. Therefore, $S$ has a maximal element $m$. Since $S$ is a core, $[[m \in X]] = \top$.
+So $S$ is inductive and we may apply Zorn's lemma. Therefore, $S$ has a maximal element $c$. Since $S$ is a core, $[[c \in X]] = \top$.
 
 To finish the proof, it now suffices to show that $c$ is a maximal element of $X$. That is, we must show that
 $$
@@ -1200,12 +1385,14 @@ Let $a : \B$ be $c \subseteq^\B y$. We let $v$ be the two-term mixture $a \cdot 
 
 We claim that $v \in^\B X = \top$.
 \begin{proof}[Proof of claim.]
+This follows directly from \ref{lemma-two-term-mixture-membership}.
 \end{proof}
 
 By virtue of $S$ being a core, there exists a $z \in S$ such that $[[v = z]] = \top$.
 
 We claim that $[[c \subseteq v]] = \top$.
 \begin{proof}[Proof of claim.]
+This follows directly from \ref{lemma-two-term-mixture-subset}.
 \end{proof}
 
 Since $[[v = z]]$, it follows that $[[c \subseteq z]] = \top$, and therefore
