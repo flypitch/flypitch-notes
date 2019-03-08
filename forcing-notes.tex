@@ -1271,10 +1271,28 @@ It remains to verify that $S$ is a core for $u$. Since $S \subseteq S''$ and $S'
 
 To verify item $\bfe{ii}$, let $y : V^\B$ such that $y \in^\B u = \top$. By construction of $S'$, there exists a $y' \in S'$ such that $f_{y'} = f_y$. Since the supremum of (the values of) $f_y$ is $\top$, the supremum of (the values of) $f_{y'}$ is $\top$, and therefore $y' \in^\B u = \top$. By construction of $S''$, there exists a unique $y'' \in S''$ such that $y'' =^\B y' = \top$.
 
-We claim that $y =^\B y'' = \top$. To prove this claim, by the transitivity of Boolean-valued equality, it suffices to show that $y =^\B y' = \top$. We calculate:
+We claim that $y =^\B y'' = \top$. To prove this claim, by the transitivity of Boolean-valued equality, it suffices to show that $y =^\B y' = \top$. % We calculate:
+
+Let $a$ be an arbitrary element of $\alpha_u$. By the transitivity of $=^\B$,
 $$
-\top = \top \sqcap \top = \left(\bigsqcup_{(a : u_{\alpha})} y =^\B u_A(\alpha) \right) \sqcap \left(\bigsqcup_{(a : u_{\alpha})} u_{A}(\alpha) =^\B y' \right) \leq (y =^\B u_A(\alpha)) \sqcap (u_A(\alpha) =^\B y') \leq y=^\B y'.
+y =^\B A_u a \sqcap A_u a =^\B y' \leq y =^\B y'.
 $$
+This is equivalent to
+$$
+\left(\bigsqcup_{(a : \alpha_u)} y =^\B A_u a \sqcap A_u a =^\B y'\right) \leq y =^\B y',
+$$
+and it is easy to check that this implies
+$$
+\left(\bigsqcup_{(a : \alpha_u)} B_u a \sqcap y =^\B A_u a \sqcap A_u a =^\B y' \sqcap B_u a \right) \leq y =^\B y'
+$$
+Since $f_y = f_{y'}$, the left-hand side of this can be rewritten to
+$$
+\left(\bigsqcup_{(a : \alpha_u)} B_u a \sqcap y =^\B A_u a \sqcap B_u a \sqcap y =^\B A_u a \right) \leq y =^\B y',
+$$
+and it follows that
+$
+\displaystyle{\top \leq y \in^\B u = \bigsqcup B_u a \sqcap y =^\B A_u a \leq y =^\B y'},
+$ as required.
 
 To complete the proof, we must show that $y''$ is unique for $y$. So, let $y'''$ be an element of $S''$ such that $y''' =^\B y = \top$. To show that $y''' = y''$, it suffices to show that $y''' =^\B y' = \top$, because then $y'''$ will belong to the $\sim$-class of $y'$ and by construction of $S''$, $y'''$ will have to be equal to $y''$.
 
