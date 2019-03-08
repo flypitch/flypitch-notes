@@ -1122,9 +1122,18 @@ Since $B_{u_2}(i) \leq A_{u_2}(i) \in^\B u_2$, we are finished after applying $\
   \bfenumerate{
   \item Since $[[\exists x \phi(x)]] = \top$, we obtain, using the maximum principle, a $w$ such that $\phi(w) = \top$. 
 
-    Put $b = \phi(v)$, and let $u$ be the two-term mixture $u = b \cdot v + (\neg b) \cdot w$. Then we calculate
+    Put $b = \phi(v)$, and let $u$ be the two-term mixture $u = b \cdot v + (\neg b) \cdot w$.
+    We make the following observations:
+    \begin{enumerate}
+    \item $b \leq u =^\B v$ by the mixing lemma.
+    \item $b \leq \phi(v)$ by reflexivity.
+    \item $\neg b \leq u =^\B w$ by the mixing lemma.
+    \item $\neg b \leq \phi(w)$ because everything is bounded by $\top$.
+    \end{enumerate}
+
+    Putting these observations together, we conclude that
     $$
-    \top = b \sqcup \neg b \leq [[u = v \sqcap \phi(v)]] \lor [[u = w \sqcap \phi(w)]] \leq [[\phi(u)]].
+    \top = b \sqcup \neg b \leq [[u = v \sqcap \phi(v)]] \sqcup [[u = w \sqcap \phi(w)]] \leq [[\phi(u)]].
     $$
     It remains to show that $\phi(v) = [[u = v]]$. Since $\phi$ is $=^\B$-extensional, we have the inequality
     $$
