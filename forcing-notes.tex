@@ -1143,7 +1143,13 @@ Conversely, by definition of $u$,
 $$
 \phi(v) = b \leq [[u = v]].
 $$
-  \item Immediate.
+\item Let $v \in V^\B$. We may use part $(1)$ to choose $u \in V^\B$ such that $\phi(u) = \top$, and such that $\phi(v) = u =^\B v$.
+
+  Our goal is then to show that $\phi (v) \leq \psi (v)$. So, we calculate
+  $$
+\phi(v) \leq \phi(v) \sqcap \top = \phi(v) \sqcap \psi(u) = (u =^\B v) \sqcap \psi(u) \leq \psi(v), 
+$$
+since $\psi$ was $=^\B$-extensional.
   }
 \end{proof}
 
