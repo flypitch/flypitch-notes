@@ -29,6 +29,8 @@
 
  \newcommand{\arity}{\opn{arity}}
  \newcommand{\set}{\opn{set}}
+ \newcommand{\ZFC}{\msf{ZFC}}
+ \newcommand{\CH}{\msf{CH}}
 \graphicspath{ {/home/pv/Pictures/latex/} }
 
 \begin{document}
@@ -1156,6 +1158,23 @@ since $\psi$ was $=^\B$-extensional.
 \section{The fundamental theorem of forcing for Boolean-valued models}
 The aim of this section is to prove the \emph{fundamental theorem of forcing} (for Boolean-valued models), which states that for any complete Boolean algebra $B$, $V^B$ satisfies all the ZFC axioms.
 
+\subsection{Powersets in $V^\B$}
+\definition{\label{def-set-of-indicator} Let $u : V^\B$ be a $\B$-valued set. Let $\chi : \alpha_u \to \B$ be a function. We associate to $\chi$ a $\B$-valued set $\wt{\chi}$, which we think of as being the subset of $u$ induced by $\chi$. We define $\wt{\chi}$ by specifying the data $\langle \alpha, A, B\rangle$:
+  \begin{itemize}
+  \item $\alpha \dfeq \alpha_u$,
+  \item $A \dfeq A_u$,
+  \item $B \dfeq \chi$.
+  \end{itemize}
+}
+
+\definition{\label{def-powerset} Let $u$ be a $\B$-valued set. We define the $\tbf{powerset}$ $\mc{P}(u) : V^\B := \langle \alpha, A, B \rangle$ as follows:
+  \begin{itemize}
+  \item $\alpha \dfeq \alpha_u \to \B$,
+  \item $A : \alpha \to V^\B \dfeq \lambda \chi : \alpha_u \to \B, \wt{\chi}$,
+  \item $B : \alpha \to \B \dfeq \lambda \chi : \alpha_u \to \B, \wt{\chi} \subseteq^\B u$.
+  \end{itemize}
+}
+
 \subsection{The axiom of choice}
 
 Let $x$ be a $\B$-set. By the maximum principle, there exists a $\B$-set $u_x$ such that
@@ -1225,6 +1244,7 @@ Now we describe how to construct the necessary $y$.
 \remph{TODO(jesse): Fix this to include injectivization and finish the proof.}
 
 \end{proof}
+
 
 \subsubsection{Zorn's lemma}
 The axiom of choice is equivalent to the following version of Zorn's lemma, which states that any set whose members are ordered by $\subseteq$ and is closed under unions of chains contains a maximal element.
@@ -1442,6 +1462,34 @@ Now we calculate:
 \end{align*}
 and the proof is complete.
 \end{proof}
+
+\subsection{The consistency of $\neg \CH$}
+By the Boolean-valued soundness theorem, if $\ZFC$ proves $\msf{CH}$, then $\msf{CH}$ has truth-value $\top$ in every Boolean-valued model of $\ZFC$. Therefore, to show $\neg \left(\ZFC \vdash \CH\right)$, it suffices to show that there exists a model of $\ZFC$ where $\CH$ has truth-value not equal to $\top$.
+
+Throughout the rest of this section, $\mc{S}$ will denote the type of $\Prop$-valued functions on $\omega_2 \times \omega$. %TODO(jesse) figure out if we can replace ω₂ with something easier to work with which is still still strictly larger than ω, e.g. set $ set ω.
+
+We will show that $\CH$ is not true in $V^{\B}$, where $\B$ is defined to be the complete boolean algebra of regular opens of $2^{\mc{S}}$. Our goal will be to prove:
+
+\lemma{\label{B-CCC} $\B$ has the countable chain condition.}
+\begin{proof}
+  \remph{TODO}(jesse) %TODO
+\end{proof}
+
+\lemma{\label{lemma-CCC-2} In $V^\B$, $\aleph_{\check 2} = \check{\aleph_{2}}.$}
+
+\definition{\label{def-principal-open} Let $(a,b) : A \times B$. The \tbf{principal open} associated to $(a,b)$ is the collection of all subsets $S$ of $A \times B$ such that $(a,b) \in S$. We denote it by $\mbf{P}_{(a,b)}$. It is a regular open in the product topology on $\opn{set}(A \times B)$.}
+
+
+\theorem{\label{theorem-ch-not-true} $\CH$ is not true in $V^\B$. Specifically, $V^\B \models \aleph_2 \leq \left|2^{\omega}\right|$.}
+
+\definition{\label{def-cohen-real}
+  For each $\nu < \omega_2$, we define a $\B$-valued set $u_{\nu}$ (which we will think of as a new subset of $\omega$).
+
+  Let $\chi_{\nu} : \alpha_{\omega} \to \B$ be the function defined by $\lambda n : \mathbb{N}, \mbf{P}_{(\nu, n)}.$ We define
+  $$
+u_{\nu} \dfeq \wt{\chi_{\nu}}
+$$
+(see \ref{def-set-of-indicator} for a definition of the notation $\chi \mapsto \wt{\chi}$). Each $u_{\nu}$ is called a \tbf{Cohen real}.}
 
 \section{Generic sets: Cohen's original proof}
 
