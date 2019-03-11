@@ -818,11 +818,13 @@ We say that $y$ is a (binary) \tbf{relation} on $x$ if $y$ is a set of ordered p
 A set $x$ is called \tbf{transitive} if $y \in x, z \in y \rightarrow z \in x$.
     }
 \definition{
-  \label{def-ordinal} We say that a set $\alpha$ is an \tbf{ordinal} if it is well-ordered by the membership relation $\in$ and it is transitive. We abbreviate this assertion by $\opn{On } \alpha$.
+  \label{def-ordinal} We say that a set $\alpha$ is an \tbf{ordinal} if it is well-ordered by the membership relation $\in$ and it is transitive. We abbreviate this assertion by $\opn{Ord} \alpha$.
   }
 \subsection{Cardinal numbers}
 
-
+\definition{
+  \label{def-cardinal-number}
+  A set $x$ is a \tbf{cardinal number} if it is an ordinal number satisfying the following extra property: for every $y \in x$, there exists no bijection between $y$ and $x$.}
 
 \newpage \section{Boolean-valued models}
 \subsection{Boolean algebras}
@@ -882,7 +884,7 @@ A lattice $B$ has a \tbf{top element} $\top$ if for every $a : B, a \leq \top$.
 
 \definition{
   A \tbf{bounded lattice} is a lattice with a top and bottom element.
-  }
+}
 
 \definition{
   \label{def-bounded-distributive-lattice}
@@ -1468,19 +1470,39 @@ By the Boolean-valued soundness theorem, if $\ZFC$ proves $\msf{CH}$, then $\msf
 
 Throughout the rest of this section, $\mc{S}$ will denote the type of $\Prop$-valued functions on $\omega_2 \times \omega$. %TODO(jesse) figure out if we can replace ω₂ with something easier to work with which is still still strictly larger than ω, e.g. set $ set ω.
 
+%TODO(jesse) remove this
+\remph{Experimental: we regard $\omega_2$ as being equal to} $\opn{set}(\opn{set}(\omega))$
+
 We will show that $\CH$ is not true in $V^{\B}$, where $\B$ is defined to be the complete boolean algebra of regular opens of $2^{\mc{S}}$. Our goal will be to prove:
+
+\theorem{\label{theorem-ch-not-true} $\CH$ is not true in $V^\B$. Specifically, $V^\B \models \aleph_2 \leq \left|2^{\omega}\right|$.}
+
+Before proceeding with the proof of \ref{theorem-ch-not-true}, we set up some prerequisite definitions and lemmas.
 
 \lemma{\label{B-CCC} $\B$ has the countable chain condition.}
 \begin{proof}
-  \remph{TODO}(jesse) %TODO
+  \remph{TODO}(floris) %TODO
 \end{proof}
 
-\lemma{\label{lemma-CCC-2} In $V^\B$, $\aleph_{\check 2} = \check{\aleph_{2}}.$}
+\lemma{\label{lemma-CCC-1} In $V^\B$. $\aleph_{\check 1} \subseteq \check{\aleph_{1}}$.}
+\begin{proof}
+  By the universal property of the cardinal successor operation, it suffices to show that $\aleph_{\check{0}} \subsetneq \check{\aleph_1}$. We have that $\aleph_{\check{0}} = \check{\aleph_0}$, so it suffices to show that $\check{\aleph_0} \subsetneq \check{\aleph_1}$.
+\end{proof}
+
+\lemma{\label{lemma-CCC-2} In $V^\B$, $\aleph_{\check 2} \subseteq \check{\aleph_{2}}.$}
+\begin{proof}
+  % We want to prove that $\top \leq \aleph_{\check{2}} \subseteq \check{\aleph_2}$. 
+  It suffices to show that $\top \leq \aleph_{\check{1}} \subsetneq \check{\aleph_2}$,
+  because we have that $\aleph_{\check{1}} \subset \aleph_{\check{2}}$, and $\aleph_{\check{2}}$, being the cardinal successor of $\aleph_{\check{1}}$, is $\subseteq$ of anything larger than $\aleph_{\check{1}}$.
+
+  To show that $\top \leq \aleph_{\check{1}} \subsetneq \check{\aleph_2}$, it suffices to show $\aleph_{\check{1}} \subseteq \check{\aleph_1}$.
+%TODO
+  \remph{TODO}(jesse) finish this proof
+  % Repeating our previous argument, it suffices to show that $\aleph_{\check{0}} \subsetneq \check{\aleph_1}$. However, $\aleph_{\check{0}} = \check{\aleph_0}$, and by definition $\check{\aleph_0} \subsetneq \check{\aleph_1}$.
+\end{proof}
+
 
 \definition{\label{def-principal-open} Let $(a,b) : A \times B$. The \tbf{principal open} associated to $(a,b)$ is the collection of all subsets $S$ of $A \times B$ such that $(a,b) \in S$. We denote it by $\mbf{P}_{(a,b)}$. It is a regular open in the product topology on $\opn{set}(A \times B)$.}
-
-
-\theorem{\label{theorem-ch-not-true} $\CH$ is not true in $V^\B$. Specifically, $V^\B \models \aleph_2 \leq \left|2^{\omega}\right|$.}
 
 \definition{\label{def-cohen-real}
   For each $\nu < \omega_2$, we define a $\B$-valued set $u_{\nu}$ (which we will think of as a new subset of $\omega$).
@@ -1490,6 +1512,73 @@ We will show that $\CH$ is not true in $V^{\B}$, where $\B$ is defined to be the
 u_{\nu} \dfeq \wt{\chi_{\nu}}
 $$
 (see \ref{def-set-of-indicator} for a definition of the notation $\chi \mapsto \wt{\chi}$). Each $u_{\nu}$ is called a \tbf{Cohen real}.}
+
+This lemma says that $V^\B$ thinks that every Cohen real is a subset of $\omega$:
+\lemma{\label{lemma-cohen-reals-subset}
+$u_{\nu} \subseteq^\B \omega = \top$.
+}
+\begin{proof}
+  By definition, $\subseteq^\B$ unfolds to
+  $$
+u_{\nu} \subseteq^\B \omega = \bigsqcap_{k : \alpha_{u_{\nu}}} B_{u_{\nu}}(k) \Rightarrow A_{u_{\nu}}(k) \in^\B \omega,
+$$
+and since it suffices to show that
+$$
+\top \leq \bigsqcap_{k : \alpha_{u_{\nu}}} B_{u_{\nu}}(k) \Rightarrow A_{u_{\nu}}(k) \in^\B \omega,
+$$
+then this is equivalent to showing that for every $k : \N$,
+$$
+\top \leq B_{u_{\nu}}(k) \Rightarrow A_{u_{\nu}}(k) \in^\B \omega
+$$
+However, by the definition of $\wt{\chi}$, $A_{u_{\nu}}(k)$ is actually just $A_{\omega}$, so this becomes
+$$
+\top \leq B_{u_{\nu}}(k) \Rightarrow A_{\omega}(k) \in^\B \omega,
+$$
+and since what $V^\B$ thinks is $\omega$ is actually $\check{\omega}$, this is equivalent to
+$$
+\left(\top \leq B_{u_{\nu}}(k) \Rightarrow \top\right) \iff B_{u_{\nu}}(k) \leq \top,
+$$
+which is always true.
+\end{proof}
+
+This lemma says that $V^\B$ thinks that every Cohen real is \emph{distinct}:
+\lemma{\label{lemma-cohen-reals-distinct}
+  Let $\mu$ and $\nu$ belong to $\opn{set}\left(\opn{set}(\omega)\right)$. If $\mu \neq \nu$, then $u_{\mu} =^\B u_{\nu} = \bot$.
+}
+\begin{proof}
+  Suppose towards a contradiction that there exist $\mu$ and $\nu$ which are distinct such that $u_{\mu} =^\B u_{\nu} > \bot$. Since the Cohen poset $P$ is a basis for the Boolean algebra of regular opens, there exists a $p \in P$ such that $p \Vdash u_{\mu} = \mu_{\nu}$. Viewing $p$ as a partial function with a finite domain, we may choose an $n : \N$ such that for every $\xi : \set ( \set \omega)$, $(\xi, n)$ is not in $\dom(p)$.
+
+  We now a define an extension $p'$ of $p$, so that $p \leq p$. Put
+  $$
+  p' \dfeq p \cup \{((\mu, n), 1)\} \cup \{(\nu, n), 0)\},
+  $$
+  That is, we define $p'$ to be equal to $p$ everywhere except at $(\mu, n)$ and $(\nu, n)$.\, on which we define the values of $p'$ to be $1$ and $0$, respectively. (This extension is well-defined since $n$ was chosen to not occur in the domain of $p$.)
+
+  Then $p' \Vdash \check{n} \in u_{\mu} \and \check{n} \not \in u_{\nu}$. It follows that $p' \Vdash u_{\mu} \neq u_{\nu}$. However, since $p' \leq p$, $p'$ forces every statement that $p$ forces, so
+  $$
+p' \Vdash u_{\mu} = u_{\nu},
+$$
+a contradiction.
+\end{proof}
+
+It remains to construct a map from $\omega_{\check{2}}$ to $\mc{P}(\omega)$ which $V^\B$ believes is injective. We do this by internalizing to $V^\B$ the map $\nu \mapsto u_{\nu}$. In \ref{lemma-function-mk} we saw how a function out of the domain of a $\B$-valued set could be internalized into a function in $V^\B$. Applying the same construction here, we obtain
+$$
+f : V^\B := \langle \alpha, A, B \rangle,
+$$
+where:
+\begin{itemize}
+\item $\alpha \dfeq \alpha_{\check{\omega_2}}$, \remph{sorry}.
+\item \remph{sorry}
+\item \remph{sorry}
+\end{itemize}
+
+Since $V^\B$ believes the values of the function are all distinct, it follows from \ref{lemma-function-mk-inj} that the function is injective.
+
+Since $\B$ has the countable chain condition, $\omega_{\check{2}}$ embeds into $\check{\omega_2}$, so
+$$
+V^\B \models \omega_2 \prec \mc{P}(\omega).
+$$
+
 
 \section{Generic sets: Cohen's original proof}
 
