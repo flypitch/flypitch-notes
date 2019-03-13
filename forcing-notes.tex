@@ -1465,13 +1465,55 @@ Now we calculate:
 and the proof is complete.
 \end{proof}
 
+\subsection{Ordinals in $V^\B$}
+\newcommand{\Ord}{\opn{Ord}}
+\lemma{\label{lemma-no-new-ordinals}
+  Let $u \in V^\B$. Then
+  $$
+\Ord^\B(u) = \bigsqcup_{\alpha : \opn{ORD}} u =^\B \check{\alpha}.
+  $$
+}
+
+\begin{proof}
+  Since the property of being an ordinal is preserved by taking check-names, for an arbitrary ordinal $\alpha$,
+  $$
+u =^\B \check{\alpha} = u =^\B \check{\alpha} \sqcap \top = u =^\B \check{\alpha} \sqcap \Ord^\B(\check{\alpha}) \leq \Ord^\B(u),
+$$
+since the interpretation of any first-order formula is $=^\B$-extensional. So, the inequality
+$$
+\bigsqcup_{\alpha : \opn{ORD}} u =^\B \check{\alpha} \leq \Ord^\B(u)
+$$
+follows.
+
+To show the other direction, we first note that since $\eta \neq \xi \implies \check{\eta} =^\B \check{\xi} = \bot$, for any $x : \alpha_u$, the map $\xi \mapsto A_u(x) =^\B \check{\xi}$ is injective when restricted to $D_X \dfeq \{\xi : A_u(x) =^\B \check{\xi} > \bot\}$ (as a function into $\B$).
+
+Since $\B$ is small, so is $D_X$. Put $D = \bigcup_{x : \alpha_u} D_x.$
+
+If $\alpha_0$ is an ordinal greater than every ordinal in $D$, then for every $x : a_u$,
+$$
+\check{\alpha_0} =^\B A_u(x) = 0,
+$$
+so
+$$
+\check{\alpha_0} \in^\B u = 0.
+$$
+Since the ordinals are well-ordered and satisfy a trichotomy with respect to $\in$, it follows that
+$$
+\Ord^\B(u) \leq u \in^\B \check{\alpha_0} \sqcup u =^\B \check{\alpha_0} \sqcup \check{\alpha_0} \in^\B u.
+$$
+Therefore, $\Ord^\B(u) \leq u \in^\B \check{\alpha_0} \sqcup u =^\B \check{\alpha_0}$.
+
+In the first case, $u \in^\B \check{\alpha_0}$, and is therefore equal to some member of $\alpha_0$, which must be the check-name of an ordinal, and therefore an ordinal.
+
+In the second case, $u =^\B \check{\alpha_0}$ obviously implies that there exists an ordinal whose check-name is equal to $u$.
+\end{proof}
+
 \subsection{The consistency of $\neg \CH$}
 By the Boolean-valued soundness theorem, if $\ZFC$ proves $\msf{CH}$, then $\msf{CH}$ has truth-value $\top$ in every Boolean-valued model of $\ZFC$. Therefore, to show $\neg \left(\ZFC \vdash \CH\right)$, it suffices to show that there exists a model of $\ZFC$ where $\CH$ has truth-value not equal to $\top$.
 
 Throughout the rest of this section, $\mc{S}$ will denote the type of $\Prop$-valued functions on $\omega_2 \times \omega$. %TODO(jesse) figure out if we can replace ω₂ with something easier to work with which is still still strictly larger than ω, e.g. set $ set ω.
 
-%TODO(jesse) remove this
-\remph{Experimental: we regard $\omega_2$ as being equal to} $\opn{set}(\opn{set}(\omega))$
+% \remph{Experimental: we regard $\omega_2$ as being equal to} $\opn{set}(\opn{set}(\omega))$
 
 We will show that $\CH$ is not true in $V^{\B}$, where $\B$ is defined to be the complete boolean algebra of regular opens of $2^{\mc{S}}$. Our goal will be to prove:
 
@@ -1484,22 +1526,59 @@ Before proceeding with the proof of \ref{theorem-ch-not-true}, we set up some pr
   \remph{TODO}(floris) %TODO
 \end{proof}
 
+\lemma{\label{lemma-CCC-0}
+$\check{\aleph_1}$ is a cardinal.
+}
+\begin{proof}
+  It suffices to show that for every $f \in V^\B$ and $\eta \in \aleph_1$ (in $V^\B$) that
+  $$
+a(f, \eta) = [[ \te{$f$ is a function whose domain is $\eta$ and whose range is $\aleph_1$}]] = \bot.
+$$
+So, suppose towards a contradiction that there exists some $f \in V^\B$ and $\eta \in \aleph_1$ such that $a(f,\eta) > 0$. Since $\eta$ is an ordinal, we have that $\eta$ is equal to some $\check{\beta}$.
+
+We claim that $\beta < \aleph_1$. For otherwise, $\aleph_1 \subseteq \beta$, so then
+$$
+\check{\aleph_1} \subseteq \check{\beta} = \eta,
+$$
+and therefore $\eta \in \eta$, a contradiction.
+
+So, we may assume that $\beta < \aleph_1$. Therefore, $\beta$ is countable.
+
+We have that
+$$
+a \leq \bigsqcap_{\eta < \aleph_1} \bigsqcup_{\xi < \beta} [[f(\wt{xi}) = \check{\xi}]] \sqcap a
+$$
+(This restriction of quantifiers can be proved using a similar argument as above.)
+
+Then for each $\eta < \aleph_1$, there exists a least $\xi_{\eta} < \beta$ such that
+$$
+[[f(\check{\xi_{\eta}}) = \wt{\eta}]] \sqcap a \neq 0.
+$$
+Since the map $\eta \mapsto \xi_{\eta}$ is a map from the uncountable $\aleph_1$ to the countable $\beta$, there must exist a $\gamma < \beta$ such that the fiber of this map over $\gamma$ is uncountable.
+
+It is then easy to check that the set
+$$
+\left\{[[f(\check{\gamma}) = \check{\eta}]] \sqcap a : \eta \in X\right\}
+$$
+is an uncountable antichain in $B$, which contradicts the fact that $B$ had the CCC.
+\end{proof}
+
 \lemma{\label{lemma-CCC-1} In $V^\B$. $\aleph_{\check 1} \subseteq \check{\aleph_{1}}$.}
 \begin{proof}
-  By the universal property of the cardinal successor operation, it suffices to show that $\aleph_{\check{0}} \subsetneq \check{\aleph_1}$. We have that $\aleph_{\check{0}} = \check{\aleph_0}$, so it suffices to show that $\check{\aleph_0} \subsetneq \check{\aleph_1}$.
+  By the universal property of the cardinal successor operation (this is using the fact that $\check{\aleph_1}$ is actually a cardinal), it suffices to show that $\aleph_{\check{0}} \subsetneq \check{\aleph_1}$. We have that $\aleph_{\check{0}} = \check{\aleph_0}$, so it suffices to show that $\check{\aleph_0} \subsetneq \check{\aleph_1}$. Since the check-name of an ordinal is an ordinal, this is equivalent to showing that $\check{\aleph_0} \in \check{\aleph_1}$. This follows from the facts that $\aleph_0 \in \aleph_1$ and taking check-names preserves membership.
 \end{proof}
 
-\lemma{\label{lemma-CCC-2} In $V^\B$, $\aleph_{\check 2} \subseteq \check{\aleph_{2}}.$}
-\begin{proof}
-  % We want to prove that $\top \leq \aleph_{\check{2}} \subseteq \check{\aleph_2}$. 
-  It suffices to show that $\top \leq \aleph_{\check{1}} \subsetneq \check{\aleph_2}$,
-  because we have that $\aleph_{\check{1}} \subset \aleph_{\check{2}}$, and $\aleph_{\check{2}}$, being the cardinal successor of $\aleph_{\check{1}}$, is $\subseteq$ of anything larger than $\aleph_{\check{1}}$.
+% \lemma{\label{lemma-CCC-2} In $V^\B$, $\aleph_{\check 2} \subseteq \check{\aleph_{2}}.$}
+% \begin{proof}
+%   It suffices to show that $\top \leq \aleph_{\check{1}} \subsetneq \check{\aleph_2}$,
+%   because we have that $\aleph_{\check{1}} \subset \aleph_{\check{2}}$, and $\aleph_{\check{2}}$, being the cardinal successor of $\aleph_{\check{1}}$, is $\subseteq$ of anything larger than $\aleph_{\check{1}}$.
 
-  To show that $\top \leq \aleph_{\check{1}} \subsetneq \check{\aleph_2}$, it suffices to show $\aleph_{\check{1}} \subseteq \check{\aleph_1}$.
-%TODO
-  \remph{TODO}(jesse) finish this proof
-  % Repeating our previous argument, it suffices to show that $\aleph_{\check{0}} \subsetneq \check{\aleph_1}$. However, $\aleph_{\check{0}} = \check{\aleph_0}$, and by definition $\check{\aleph_0} \subsetneq \check{\aleph_1}$.
-\end{proof}
+%   To show that $\top \leq \aleph_{\check{1}} \subsetneq \check{\aleph_2}$, it suffices to show $\aleph_{\check{1}} \subseteq \check{\aleph_1}$, and this is the conclusion of \ref{lemma-CCC-1}.
+% \end{proof}
+
+\lemma{\label{lemma-function-mk} Let $u$ be a $\B$-valued set, and let $F : \alpha_u \to V^\B$ be a function which is $=^\B$-extensional, i.e. for every $i$ and $j$ in $\alpha_u$, $A_u(i) =^\B A_u(j) \leq F(i) =^\B F(j)$. Then $V^\B$ thinks the set of all pairs $(A_u(i), F(i))$ is a function from $u$ to $\langle \alpha_u, F, \lambda i, \top\rangle$.}
+
+\lemma{\label{lemma-function-mk-inj} Let $u$ be a $\B$-valued set, and let $F : \alpha_u \to V^\B$ be a function as in \ref{lemma-function-mk}. If, for every $i$ and $j$ in $\alpha_u$, if $i \neq j$ then $F(i) =^\B F(j) \leq \bot$, then $V^\B$ thinks $\wt{F}$ is injective.}
 
 
 \definition{\label{def-principal-open} Let $(a,b) : A \times B$. The \tbf{principal open} associated to $(a,b)$ is the collection of all subsets $S$ of $A \times B$ such that $(a,b) \in S$. We denote it by $\mbf{P}_{(a,b)}$. It is a regular open in the product topology on $\opn{set}(A \times B)$.}
@@ -1546,7 +1625,7 @@ This lemma says that $V^\B$ thinks that every Cohen real is \emph{distinct}:
   Let $\mu$ and $\nu$ belong to $\opn{set}\left(\opn{set}(\omega)\right)$. If $\mu \neq \nu$, then $u_{\mu} =^\B u_{\nu} = \bot$.
 }
 \begin{proof}
-  Suppose towards a contradiction that there exist $\mu$ and $\nu$ which are distinct such that $u_{\mu} =^\B u_{\nu} > \bot$. Since the Cohen poset $P$ is a basis for the Boolean algebra of regular opens, there exists a $p \in P$ such that $p \Vdash u_{\mu} = \mu_{\nu}$. Viewing $p$ as a partial function with a finite domain, we may choose an $n : \N$ such that for every $\xi : \set ( \set \omega)$, $(\xi, n)$ is not in $\dom(p)$.
+  Suppose towards a contradiction that there exist $\mu$ and $\nu$ which are distinct such that $u_{\mu} =^\B u_{\nu} > \bot$. Since the Cohen poset $P$ is a basis for the Boolean algebra of regular opens, there exists a $p \in P$ such that $p \Vdash u_{\mu} = \mu_{\nu}$. Viewing $p$ as a partial function with a finite domain, we may choose an $n : \N$ such that for every $\xi : \omega_2$, $(\xi, n)$ is not in $\dom(p)$.
 
   We now a define an extension $p'$ of $p$, so that $p \leq p$. Put
   $$
@@ -1567,17 +1646,16 @@ f : V^\B := \langle \alpha, A, B \rangle,
 $$
 where:
 \begin{itemize}
-\item $\alpha \dfeq \alpha_{\check{\omega_2}}$, \remph{sorry}.
-\item \remph{sorry}
-\item \remph{sorry}
+\item $\alpha \dfeq \alpha_{\check{\omega_2}}$
+\item $A \dfeq F$
+\item $B \dfeq \lambda \_, \top$
 \end{itemize}
 
 Since $V^\B$ believes the values of the function are all distinct, it follows from \ref{lemma-function-mk-inj} that the function is injective.
 
-Since $\B$ has the countable chain condition, $\omega_{\check{2}}$ embeds into $\check{\omega_2}$, so
-$$
-V^\B \models \omega_2 \prec \mc{P}(\omega).
-$$
+By \ref{lemma-cohen-reals-subset}, $V^\B$ thinks this is an injective function into $\mc{P}(\omega)$.
+
+Since $\B$ has the countable chain condition, by \ref{lemma-CCC-1} we have that $\aleph_1$ is a subset of $\check{\aleph_1}$. Since taking check-names preserves subsets, $\check{\aleph_1}$ is a subset of $\check{\aleph_2}$. Therefore, $V^\B$ thinks there is an injective function from $\aleph_1$ into $\mc{P}(\omega)$: the continuum hypothesis is false in $V^\B$.
 
 
 \section{Generic sets: Cohen's original proof}
