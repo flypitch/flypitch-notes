@@ -46,6 +46,8 @@
 In these notes, intended as the plaintext part of the Flypitch project, we give a complete account of the independence of the continuum hypothesis from $\msf{ZFC}$, with special attention paid to comparing the different approaches: generic sets, Boolean-valued models, and double-negation sheaves.
 \end{abstract}
 
+\tableofcontents
+
 % TODO(jesse) \newpage \section*{Introduction}
 
 \newpage \section{Preliminaries}
@@ -1508,16 +1510,33 @@ In the first case, $u \in^\B \check{\alpha_0}$, and is therefore equal to some m
 In the second case, $u =^\B \check{\alpha_0}$ obviously implies that there exists an ordinal whose check-name is equal to $u$.
 \end{proof}
 
+\subsection{The Cohen poset and the boolean algebra of regular opens}
+The complete Boolean algebra that we will use for forcing the negation of $\CH$ is the \tbf{algebra of regular opens} on a product topological space.
+
+\newcommand{\RO}{\opn{RO}}
+
+\definition{
+  \label{def-regular-open}
+  Let $(X, \tau)$ be a topological space, where $\tau$ is the collection of open sets in the space. An open set $U \in \tau$ is \tbf{regular} if $U$ is the interior of the closure of $U$.
+We denote the collection of regular opens of $(X, \tau)$ by $\RO(X)$.
+}
+
+\lemma{
+  \label{lemma-regular-open-boolean-algebra}
+  For any topological space $X$, $\RO(X)$ is a complete Boolean algebra.
+}
+\begin{proof}
+ \remph{TODO}(floris)
+\end{proof}
+
 \subsection{The consistency of $\neg \CH$}
-By the Boolean-valued soundness theorem, if $\ZFC$ proves $\msf{CH}$, then $\msf{CH}$ has truth-value $\top$ in every Boolean-valued model of $\ZFC$. Therefore, to show $\neg \left(\ZFC \vdash \CH\right)$, it suffices to show that there exists a model of $\ZFC$ where $\CH$ has truth-value not equal to $\top$.
+By the Boolean-valued soundness theorem, if $\ZFC$ proves $\msf{CH}$, then $\msf{CH}$ has truth-value $\top$ in every Boolean-valued model of $\ZFC$. Therefore, to show $\neg \left(\ZFC \vdash \CH\right)$, it suffices to show that there exists a Boolean-valued model of $\ZFC$ where $\CH$ has truth-value not equal to $\top$.
 
-Throughout the rest of this section, $\mc{S}$ will denote the type of $\Prop$-valued functions on $\omega_2 \times \omega$. %TODO(jesse) figure out if we can replace ω₂ with something easier to work with which is still still strictly larger than ω, e.g. set $ set ω.
+Throughout the rest of this section, $\mc{S}$ will denote the type of $\Prop$-valued functions on $\aleph_2 \times \aleph_0$.
 
-% \remph{Experimental: we regard $\omega_2$ as being equal to} $\opn{set}(\opn{set}(\omega))$
+We will show that $\CH$ is not true in $V^{\B}$, where $\B$ is defined to be the complete boolean algebra of regular opens of $\mc{S}$. Our goal will be to prove:
 
-We will show that $\CH$ is not true in $V^{\B}$, where $\B$ is defined to be the complete boolean algebra of regular opens of $2^{\mc{S}}$. Our goal will be to prove:
-
-\theorem{\label{theorem-ch-not-true} $\CH$ is not true in $V^\B$. Specifically, $V^\B \models \aleph_2 \leq \left|2^{\omega}\right|$.}
+\theorem{\label{theorem-ch-not-true} $\CH$ is not true in $V^\B$. Specifically, $V^\B \models \aleph_2 \leq \left|2^{\aleph}\right|$.}
 
 Before proceeding with the proof of \ref{theorem-ch-not-true}, we set up some prerequisite definitions and lemmas.
 
@@ -1558,7 +1577,7 @@ Since the map $\eta \mapsto \xi_{\eta}$ is a map from the uncountable $\aleph_1$
 
 It is then easy to check that the set
 $$
-\left\{[[f(\check{\gamma}) = \check{\eta}]] \sqcap a : \eta \in X\right\}
+\left\{f(\check{\gamma}) =^\B \check{\eta} \sqcap a : \eta \in X\right\}
 $$
 is an uncountable antichain in $B$, which contradicts the fact that $B$ had the CCC.
 \end{proof}
@@ -1584,48 +1603,44 @@ is an uncountable antichain in $B$, which contradicts the fact that $B$ had the 
 \definition{\label{def-principal-open} Let $(a,b) : A \times B$. The \tbf{principal open} associated to $(a,b)$ is the collection of all subsets $S$ of $A \times B$ such that $(a,b) \in S$. We denote it by $\mbf{P}_{(a,b)}$. It is a regular open in the product topology on $\opn{set}(A \times B)$.}
 
 \definition{\label{def-cohen-real}
-  For each $\nu < \omega_2$, we define a $\B$-valued set $u_{\nu}$ (which we will think of as a new subset of $\omega$).
+  For each $\nu < \aleph_2$, we define a $\B$-valued set $u_{\nu}$ (which we will think of as a new subset of $\aleph_0$).
 
-  Let $\chi_{\nu} : \alpha_{\omega} \to \B$ be the function defined by $\lambda n : \mathbb{N}, \mbf{P}_{(\nu, n)}.$ We define
+  Let $\chi_{\nu} : \alpha_{\aleph_0} \to \B$ be the function defined by $\lambda n : \mathbb{N}, \mbf{P}_{(\nu, n)}.$ We define
   $$
 u_{\nu} \dfeq \wt{\chi_{\nu}}
 $$
 (see \ref{def-set-of-indicator} for a definition of the notation $\chi \mapsto \wt{\chi}$). Each $u_{\nu}$ is called a \tbf{Cohen real}.}
 
-This lemma says that $V^\B$ thinks that every Cohen real is a subset of $\omega$:
+This lemma says that $V^\B$ thinks that every Cohen real is a subset of $\aleph_0$:
 \lemma{\label{lemma-cohen-reals-subset}
-$u_{\nu} \subseteq^\B \omega = \top$.
+$u_{\nu} \subseteq^\B \aleph_0 = \top$.
 }
 \begin{proof}
   By definition, $\subseteq^\B$ unfolds to
   $$
-u_{\nu} \subseteq^\B \omega = \bigsqcap_{k : \alpha_{u_{\nu}}} B_{u_{\nu}}(k) \Rightarrow A_{u_{\nu}}(k) \in^\B \omega,
+u_{\nu} \subseteq^\B \aleph_0= \bigsqcap_{k : \alpha_{u_{\nu}}} B_{u_{\nu}}(k) \Rightarrow A_{u_{\nu}}(k) \in^\B \aleph_0,
 $$
 and since it suffices to show that
 $$
-\top \leq \bigsqcap_{k : \alpha_{u_{\nu}}} B_{u_{\nu}}(k) \Rightarrow A_{u_{\nu}}(k) \in^\B \omega,
+\top \leq \bigsqcap_{k : \alpha_{u_{\nu}}} B_{u_{\nu}}(k) \Rightarrow A_{u_{\nu}}(k) \in^\B \aleph_0,
 $$
 then this is equivalent to showing that for every $k : \N$,
 $$
-\top \leq B_{u_{\nu}}(k) \Rightarrow A_{u_{\nu}}(k) \in^\B \omega
+\top \leq B_{u_{\nu}}(k) \Rightarrow A_{u_{\nu}}(k) \in^\B \aleph_0
 $$
-However, by the definition of $\wt{\chi}$, $A_{u_{\nu}}(k)$ is actually just $A_{\omega}$, so this becomes
+However, by the definition of $\wt{\chi}$, $A_{u_{\nu}}(k)$ is actually just $A_{\aleph_0}$, so this becomes
 $$
-\top \leq B_{u_{\nu}}(k) \Rightarrow A_{\omega}(k) \in^\B \omega,
+\top \leq \top \Rightarrow A_{\aleph_0}(k) \in^\B \aleph_0 \iff \top \leq A_{\aleph_0}(k) \in^\B \aleph_0,
 $$
-and since what $V^\B$ thinks is $\omega$ is actually $\check{\omega}$, this is equivalent to
-$$
-\left(\top \leq B_{u_{\nu}}(k) \Rightarrow \top\right) \iff B_{u_{\nu}}(k) \leq \top,
-$$
-which is always true.
+and since what $V^\B$ thinks is $\aleph_0$ is actually $\check{\aleph_0}$, this is equivalent to checking that $\top$ is less than or equal to the truth-value of ``the check-name of a finite ordinal is a member of the check-name of $\omega$''. Since this is always true in $V$, this is always true in $V^\B$, so our goal reduces to $\top \leq \top$ and is proved.
 \end{proof}
 
 This lemma says that $V^\B$ thinks that every Cohen real is \emph{distinct}:
 \lemma{\label{lemma-cohen-reals-distinct}
-  Let $\mu$ and $\nu$ belong to $\opn{set}\left(\opn{set}(\omega)\right)$. If $\mu \neq \nu$, then $u_{\mu} =^\B u_{\nu} = \bot$.
+  Let $\mu$ and $\nu$ belong to $\opn{set}\left(\opn{set}(\aleph)\right)$. If $\mu \neq \nu$, then $u_{\mu} =^\B u_{\nu} = \bot$.
 }
 \begin{proof}
-  Suppose towards a contradiction that there exist $\mu$ and $\nu$ which are distinct such that $u_{\mu} =^\B u_{\nu} > \bot$. Since the Cohen poset $P$ is a basis for the Boolean algebra of regular opens, there exists a $p \in P$ such that $p \Vdash u_{\mu} = \mu_{\nu}$. Viewing $p$ as a partial function with a finite domain, we may choose an $n : \N$ such that for every $\xi : \omega_2$, $(\xi, n)$ is not in $\dom(p)$.
+  Suppose towards a contradiction that there exist $\mu$ and $\nu$ which are distinct such that $u_{\mu} =^\B u_{\nu} > \bot$. Since the Cohen poset $P$ is a basis for the Boolean algebra of regular opens, there exists a $p \in P$ such that $p \Vdash u_{\mu} = \mu_{\nu}$. Viewing $p$ as a partial function with a finite domain, we may choose an $n : \N$ such that for every $\xi : \aleph_2$, $(\xi, n)$ is not in $\dom(p)$.
 
   We now a define an extension $p'$ of $p$, so that $p \leq p$. Put
   $$
@@ -1633,29 +1648,73 @@ This lemma says that $V^\B$ thinks that every Cohen real is \emph{distinct}:
   $$
   That is, we define $p'$ to be equal to $p$ everywhere except at $(\mu, n)$ and $(\nu, n)$.\, on which we define the values of $p'$ to be $1$ and $0$, respectively. (This extension is well-defined since $n$ was chosen to not occur in the domain of $p$.)
 
-  Then $p' \Vdash \check{n} \in u_{\mu} \and \check{n} \not \in u_{\nu}$. It follows that $p' \Vdash u_{\mu} \neq u_{\nu}$. However, since $p' \leq p$, $p'$ forces every statement that $p$ forces, so
+  Then $p' \Vdash \check{n} \in u_{\mu} \land \check{n} \not \in u_{\nu}$. It follows that $p' \Vdash u_{\mu} \neq u_{\nu}$. However, since $p' \leq p$, $p'$ forces every statement that $p$ forces, so
   $$
 p' \Vdash u_{\mu} = u_{\nu},
 $$
 a contradiction.
 \end{proof}
-
-It remains to construct a map from $\omega_{\check{2}}$ to $\mc{P}(\omega)$ which $V^\B$ believes is injective. We do this by internalizing to $V^\B$ the map $\nu \mapsto u_{\nu}$. In \ref{lemma-function-mk} we saw how a function out of the domain of a $\B$-valued set could be internalized into a function in $V^\B$. Applying the same construction here, we obtain
+\begin{proof}[Proof of \ref{theorem-ch-not-true}]
+It remains to construct a map from $\aleph_{\check{2}}$ to $\mc{P}(\aleph)$ which $V^\B$ believes is injective. We do this by internalizing to $V^\B$ the map $\nu \mapsto u_{\nu}$. In \ref{lemma-function-mk} we saw how a function out of the domain of a $\B$-valued set could be internalized into a function in $V^\B$. Applying the same construction here, we obtain
 $$
 f : V^\B := \langle \alpha, A, B \rangle,
 $$
 where:
 \begin{itemize}
-\item $\alpha \dfeq \alpha_{\check{\omega_2}}$
+\item $\alpha \dfeq \alpha_{\check{\aleph_2}}$
 \item $A \dfeq F$
 \item $B \dfeq \lambda \_, \top$
 \end{itemize}
 
 Since $V^\B$ believes the values of the function are all distinct, it follows from \ref{lemma-function-mk-inj} that the function is injective.
 
-By \ref{lemma-cohen-reals-subset}, $V^\B$ thinks this is an injective function into $\mc{P}(\omega)$.
+By \ref{lemma-cohen-reals-subset}, $V^\B$ thinks this is an injective function into $\mc{P}(\aleph)$.
 
-Since $\B$ has the countable chain condition, by \ref{lemma-CCC-1} we have that $\aleph_1$ is a subset of $\check{\aleph_1}$. Since taking check-names preserves subsets, $\check{\aleph_1}$ is a subset of $\check{\aleph_2}$. Therefore, $V^\B$ thinks there is an injective function from $\aleph_1$ into $\mc{P}(\omega)$: the continuum hypothesis is false in $V^\B$.
+Since $\B$ has the countable chain condition, by \ref{lemma-CCC-1} we have that $\aleph_1$ is a subset of $\check{\aleph_1}$. Since taking check-names preserves subsets, $\check{\aleph_1}$ is a subset of $\check{\aleph_2}$ of strictly smaller cardinality. Therefore, $V^\B$ thinks that $\aleph_1$ is strictly smaller than $\mc{P}(\N)$: the continuum hypothesis is false in $V^\B$.
+\end{proof}
+
+\subsection{A direct proof that cardinal inequalities are preserved assuming CCC}
+The proof in this section is adapted from Manin's \emph{A Course in Mathematical Logic for Mathematicians}, Propositions 8.9-8.12.
+
+\definition{
+  We define the map $\psi : V^\B \to V^\B \to \B$
+  by
+  $$
+\psi(x,y) \dfeq \bigsqcup_{f : V^\B} (\msf{func}(f) \sqcap \left(\bigsqcap_{v : V^\B} (v \in^\B y) \Rightarrow \left(\bigsqcup_{w : V^\B} w \in^\B x \sqcap (w,v) \in^\B f\right)\right).
+  $$
+  }
+
+  \theorem{\label{CCC-cardinal-inequalities} Let $s$ and $t$ be sets in $V$ such that $|s| < |t|$ and $|s| \geq \aleph_0$. Assume that $\B$ has the countable chain condition.
+
+Then $\psi(\check{s}, \check{t}) = \bot$.}
+
+\begin{proof}
+  It suffices to show that for any $\Gamma$, $\Gamma \leq \psi(\check{s}, \check{t}) \Rightarrow \bot$. Throughout the rest of this proof we will abuse notation and identify $\Gamma$ with any necessary specializations. Introducing the implication, we have that $\Gamma \leq \psi(\check{s}, \check{t})$ and it suffices to show that $\Gamma \leq \bot$.
+
+  Casing on $\psi$, we fix an $f : V^\B$ such that $\Gamma \leq \msf{func}(f)$ and
+  $$
+\Gamma \leq \left(\bigsqcap_{v : V^\B} (v \in^\B y) \Rightarrow \left(\bigsqcup_{w : V^\B} w \in^\B x \sqcap (w,v) \in^\B f\right)\right).
+$$
+Introducing the implication, we obtain a $v$ such that $\Gamma \leq v \in^\B y$ and
+$$
+\Gamma \leq \bigsqcup_{w : V^\B} w \in^\B x \sqcap (w,v) \in^\B f.
+$$
+
+Suppose towards a contradiction that $\bot < \Gamma$. Then
+$$
+\bot < \bigsqcup_{w : V^\B} w \in^\B x \sqcap (w,v) \in^\B f
+$$
+
+\end{proof}
+
+\section{The consistency of $\mathsf{CH}$}
+
+\subsection{Forcing $\mathsf{CH}$}
+
+\subsection{The constructible universe $\mathsf{L}$}
+
+
+
 
 
 \section{Generic sets: Cohen's original proof}

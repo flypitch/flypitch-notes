@@ -1,0 +1,32 @@
+\contentsline {section}{\numberline {1}Preliminaries}{3}{section.1}% 
+\contentsline {subsection}{\numberline {1.1}First-order logic}{3}{subsection.1.1}% 
+\contentsline {subsubsection}{\numberline {1.1.1}General logical symbols}{3}{subsubsection.1.1.1}% 
+\contentsline {subsubsection}{\numberline {1.1.2}First-order languages}{3}{subsubsection.1.1.2}% 
+\contentsline {subsubsection}{\numberline {1.1.3}Terms, formulas, and sentences}{3}{subsubsection.1.1.3}% 
+\contentsline {subsubsection}{\numberline {1.1.4}Predicate calculus and provability}{4}{subsubsection.1.1.4}% 
+\contentsline {subsection}{\numberline {1.2}Models and satisfiability}{6}{subsection.1.2}% 
+\contentsline {subsection}{\numberline {1.3}The completeness theorem}{9}{subsection.1.3}% 
+\contentsline {subsubsection}{\numberline {1.3.1}The Henkin construction}{9}{subsubsection.1.3.1}% 
+\contentsline {subsection}{\numberline {1.4}The L\"owenheim-Skolem theorem}{14}{subsection.1.4}% 
+\contentsline {section}{\numberline {2}$\mathsf {ZFC}$}{15}{section.2}% 
+\contentsline {subsection}{\numberline {2.1}Ordinal numbers}{16}{subsection.2.1}% 
+\contentsline {subsection}{\numberline {2.2}Cardinal numbers}{16}{subsection.2.2}% 
+\contentsline {section}{\numberline {3}Boolean-valued models}{17}{section.3}% 
+\contentsline {subsection}{\numberline {3.1}Boolean algebras}{17}{subsection.3.1}% 
+\contentsline {subsection}{\numberline {3.2}Boolean-valued models}{19}{subsection.3.2}% 
+\contentsline {subsection}{\numberline {3.3}An example of a Boolean-valued model (experimental)}{19}{subsection.3.3}% 
+\contentsline {section}{\numberline {4}The maximum principle}{20}{section.4}% 
+\contentsline {subsubsection}{\numberline {4.0.1}Corollaries of the maximum principle}{21}{subsubsection.4.0.1}% 
+\contentsline {section}{\numberline {5}The fundamental theorem of forcing for Boolean-valued models}{23}{section.5}% 
+\contentsline {subsection}{\numberline {5.1}Powersets in $V^\mathbb {B}$}{23}{subsection.5.1}% 
+\contentsline {subsection}{\numberline {5.2}The axiom of choice}{23}{subsection.5.2}% 
+\contentsline {subsubsection}{\numberline {5.2.1}Zorn's lemma}{25}{subsubsection.5.2.1}% 
+\contentsline {subsection}{\numberline {5.3}Ordinals in $V^\mathbb {B}$}{29}{subsection.5.3}% 
+\contentsline {subsection}{\numberline {5.4}The Cohen poset and the boolean algebra of regular opens}{30}{subsection.5.4}% 
+\contentsline {subsection}{\numberline {5.5}The consistency of $\neg \mathsf {CH}$}{30}{subsection.5.5}% 
+\contentsline {subsection}{\numberline {5.6}A direct proof that cardinal inequalities are preserved assuming CCC}{33}{subsection.5.6}% 
+\contentsline {section}{\numberline {6}The consistency of $\mathsf {CH}$}{34}{section.6}% 
+\contentsline {subsection}{\numberline {6.1}Forcing $\mathsf {CH}$}{34}{subsection.6.1}% 
+\contentsline {subsection}{\numberline {6.2}The constructible universe $\mathsf {L}$}{34}{subsection.6.2}% 
+\contentsline {section}{\numberline {7}Generic sets: Cohen's original proof}{34}{section.7}% 
+\contentsline {section}{\numberline {8}Sheaves and filterquotients}{34}{section.8}% 
