@@ -31,6 +31,9 @@
  \newcommand{\set}{\opn{set}}
  \newcommand{\ZFC}{\msf{ZFC}}
  \newcommand{\CH}{\msf{CH}}
+ \newcommand{\bval}{\msf{.bval}}
+ \newcommand{\func}{\msf{.func}}
+ \newcommand{\type}{\msf{.type}}
 \graphicspath{ {/home/pv/Pictures/latex/} }
 
 \begin{document}
@@ -1689,21 +1692,21 @@ The proof in this section is adapted from Manin's \emph{A Course in Mathematical
 Then $\psi(\check{s}, \check{t}) = \bot$.}
 
 \begin{proof}
-  It suffices to show that for any $\Gamma$, $\Gamma \leq \psi(\check{s}, \check{t}) \Rightarrow \bot$. Throughout the rest of this proof we will abuse notation and identify $\Gamma$ with any necessary specializations. Introducing the implication, we have that $\Gamma \leq \psi(\check{s}, \check{t})$ and it suffices to show that $\Gamma \leq \bot$.
+%   It suffices to show that for any $\Gamma$, $\Gamma \leq \psi(\check{s}, \check{t}) \Rightarrow \bot$. Throughout the rest of this proof we will abuse notation and identify $\Gamma$ with any necessary specializations. Introducing the implication, we have that $\Gamma \leq \psi(\check{s}, \check{t})$ and it suffices to show that $\Gamma \leq \bot$.
 
-  Casing on $\psi$, we fix an $f : V^\B$ such that $\Gamma \leq \msf{func}(f)$ and
-  $$
-\Gamma \leq \left(\bigsqcap_{v : V^\B} (v \in^\B y) \Rightarrow \left(\bigsqcup_{w : V^\B} w \in^\B x \sqcap (w,v) \in^\B f\right)\right).
-$$
-Introducing the implication, we obtain a $v$ such that $\Gamma \leq v \in^\B y$ and
-$$
-\Gamma \leq \bigsqcup_{w : V^\B} w \in^\B x \sqcap (w,v) \in^\B f.
-$$
+%   Casing on $\psi$, we fix an $f : V^\B$ such that $\Gamma \leq \msf{func}(f)$ and
+%   $$
+% \Gamma \leq \left(\bigsqcap_{v : V^\B} (v \in^\B y) \Rightarrow \left(\bigsqcup_{w : V^\B} w \in^\B x \sqcap (w,v) \in^\B f\right)\right).
+% $$
+% Introducing the implication, we obtain a $v$ such that $\Gamma \leq v \in^\B y$ and
+% $$
+% \Gamma \leq \bigsqcup_{w : V^\B} w \in^\B x \sqcap (w,v) \in^\B f.
+% $$
 
-Suppose towards a contradiction that $\bot < \Gamma$. Then
-$$
-\bot < \bigsqcup_{w : V^\B} w \in^\B x \sqcap (w,v) \in^\B f
-$$
+% Suppose towards a contradiction that $\bot < \Gamma$. Then
+% $$
+% \bot < \bigsqcup_{w : V^\B} w \in^\B x \sqcap (w,v) \in^\B f
+% $$
 
 \end{proof}
 
@@ -1711,11 +1714,258 @@ $$
 
 \subsection{Forcing $\mathsf{CH}$}
 
+\definition{Let $\kappa$ be a cardinal, and let $X$ and $Y$ be sets. The \tbf{collapsing forcing notion} $C_{\kappa}(X,Y)$ is the collection of all partial maps $x \to y$ whose domains have cardinality $< \kappa$, with $q \leq p$ iff $q$ extends $p$.}
+
+\definition{Let $\kappa$ be a cardinal, and let $X$ and $Y$ be sets. The \tbf{collapsing topology} on $Y^X$ is defined by the following collection of basic open sets (so that it is finer than the product topology):
+  $$
+\mc{D}_p \dfeq \{f : X \to Y \stbar p \subseteq f\}.
+$$
+Let $\left(Y^X, \{\mc{D}_p \stbar p : C_{\kappa}(X,Y)\}\right)$ denote $Y^X$ equipped with the collapsing topology.
+}
+
+\definition{
+  Let $\kappa$ be a cardinal, and let $X$ and $Y$ be sets. The \tbf{collapsing algebra} is defined to be
+  $$
+\RO\left( Y^X, \mc{D} \right).
+  $$
+}
+
+\lemma{\label{B-completes-C} Let $\kappa$ be a cardinal, and let $X$ and $Y$ be sets. Then
+  $B_{\kappa}(X,Y)$ is a Boolean completion of $C_{\kappa}(X,Y)$.}
+
+\begin{proof}
+  
+\end{proof}
+\lemma {\label{omega-closed} $B_{\kappa}(X,Y)$ satisfies the following property: for every $\omega$-indexed descending chain
+  $$
+D_{p_0} \supseteq \cdots \supseteq D_{p_n} \supseteq \cdots,
+$$
+there exists a $p_{\omega}$ such that
+$$
+D_{p_0} \supseteq \cdots \supseteq D_{p_n} \supseteq \cdots \supseteq D_{p_{\omega}}.
+$$}
+
+\begin{proof}
+  This follows from the fact that a countable union of compatible countable partial functions is again a countable partial function.
+\end{proof}
+
+\lemma{\label{omega-closed'} $B_{\kappa}(X,Y)$ satisfies the following property: for every $\omega$-indexed chain $s : \omega \to B_{\kappa(X,Y)}$ such that $s(0) \supseteq \cdots \supseteq s(n) \supseteq \cdots$ and such that for every $n$, $\bigsqcap_{i \leq n} s(n) \neq \emptyset$,
+  $$
+\left(\bigcap_{n : \omega} s(n)\right) \neq \emptyset.
+$$}
+
+\begin{proof}
+  This should follow from the prevous lemma.
+\end{proof}
+
+\lemma{\label{lemma-powerset-comparison} Let $X$ be a set. Then for any $\beta$,
+$$\top \leq \check{\mathcal{P}(X)} \subseteq^\beta \mathcal{P}(\check{X}).$$
+}
+
+\begin{proof}
+  
+\end{proof}
+
+\lemma{\label{continuum-is-continuum} In $V^\B$, $\mathcal{P}(\check{X}) \subseteq^\B \check{\mathcal{P}(X)}$.}
+
+\begin{proof}
+  
+\end{proof}
+
+\lemma{\label{aleph-one-comparison} For any $\beta$,
+$\top \leq \check{\aleph_1} \subseteq^\B \aleph_1$.
+}
+
+\begin{proof}
+  
+\end{proof}
+
+\lemma{\label{aleph-one-is-aleph-one} In $V^\B$, $\aleph_1 \subseteq^\B \check{\aleph_1}$.}
+
+\begin{proof}
+  
+\end{proof}
+
+\definition{\label{collapsing-map-chi} We define $\chi_{\pi}$ to be the following function:
+$$
+\chi_{\pi} : \check{(\aleph_1)} \to \check{\mc{P}(\omega)} \dfeq (\eta, S) \mapsto \{g : \aleph_1 \to \mc{P}(\omega) \stbar g (\eta) = S \}.
+$$
+}
+
+\lemma{\label{pi-extensional} $\top \leq (\pi$ is extensional). }
+
+\begin{proof}
+  See the formalization.
+\end{proof}
+
+
+\lemma{\label{pi-functional} $\top \leq (\pi$ is functional). }
+
+\begin{proof}
+  See the formalization.
+\end{proof}
+
+\lemma{\label{pi-surjection} $\top \leq (\pi$ is a surjection). }
+
+\begin{proof}
+  See the formalization.
+\end{proof}
+
+\definition{\label{collapsing-map} We define a $\B$-valued set $\pi$ which we will show is a surjection from $\check{\aleph_1}$ to $\check{\mc{P}(\omega)}$.
+
+  $\pi$ is defined to be the subset of $\check{\aleph_1} \times \check{\mc{P}(\omega)}$ induced by $\chi_{\pi}$.
+  }
+
+\theorem{\label{new-surjection} In $V^\B$,
+  $$
+\top \leq \text{there exists a surjection from $\aleph_1$ to the continuum}.
+$$}
+
+\begin{proof}
+  Use $\pi$.
+\end{proof}
+
+\theorem{\label{CH-consistent}
+Suppose that $\aleph_1 = \check{\aleph_1}$ and $\mc{P}(\check{\omega}) = \check{\mc{P}(\omega)}$. Then
+  $$
+\top \leq - \bigsqcup_x \bigsqcup_y \omega \prec x \sqcap x \prec y \sqcap y \preceq \mathcal{P}(\omega).
+  $$
+That is, $V^\B \vDash \CH.$
+}
+
+\begin{proof}
+  Rewriting negation as an implication of $\bot$ and rewriting using the deduction theorem, it suffices to prove that
+  $$
+\bigsqcup_x \bigsqcup_y \omega \prec x \sqcap x \prec y \sqcap y \preceq \mathcal{P}(\omega) \leq \bot.
+$$
+Eliminating the existential quantifiers, it suffices to show that for an arbitrary $x$ and $y$,
+$$
+\omega \prec x \sqcap x \prec y \sqcap y \preceq \mathcal{P}(\omega) \leq \bot.
+$$
+Tidying the context, it suffices to show that for an arbitrary context $\Gamma$,
+\begin{align}
+  \Gamma &\leq \omega \prec x \\
+  \Gamma &\leq x \prec y \\
+  \Gamma &\leq y \preceq \mathcal{P}(\omega) \\
+  \vdash \Gamma &\leq \bot.
+\end{align}
+Since $\Gamma \leq \omega \prec x$, it follows from the universal property of $\omega$ that $\Gamma \leq \aleph_1 \preceq x$.
+
+Since $\Gamma \leq x \prec y$, it follows that $\Gamma \leq \aleph_1 \prec y$.
+
+Since $\Gamma \leq y \preceq \mathcal{P}(\omega)$, it follows that $\Gamma \prec \aleph_1 \prec \mathcal{P}(\omega)$.
+
+By \myref{Lemma}{new-surjection}, we have that $\Gamma \leq - \left( \aleph_1 \prec \mathcal{P}(\omega)\right)$, so it follows that $\Gamma \leq \bot$, as required.
+
+\end{proof}
+
+To finish the argument, we need to show that $\check{\aleph_1} = \aleph_1$ and that $\check{\mc{P}(\omega)} = \mc{P}(\omega)$.
+
+\theorem{\label{no-new-surjections-onto-aleph-one} If $V^\B \vDash$ ``f is a surjective function from $\omega$ onto $\check{\aleph_1}$'', then there exists a surjective function $g : \omega \to \aleph_1$ in $V$.}
+
+\begin{proof}
+  \remph{TODO}
+\end{proof}
+
+\theorem{\label{continuum-is-continuum} $V^\B \vDash$ ``$\forall S, S$ is a member of $\mc{P}(\omega)$ iff $S$ is a member of $\check{\mc{P}(\omega)}$ ''}
+\begin{proof}
+  Since $V^\B \vDash \mc{P}(\omega) \subseteq^\B$, it suffices to show that $V^\B \vDash \mc{P}(\omega) \subseteq^\B  \check{\mc{P}(\omega)} $. That is, we must show that
+  $$
+V^\B \vDash \bigsqcap (\chi : \omega \to \B), \wt{\chi} \subseteq^\B \omega \Rightarrow \bigsqcup_{S : 2^\omega} \check{\mc{P}(\omega)}\bval(S) \sqcap \wt{\chi} =^\B \check{S}.
+$$
+By some easy lemmas, we see that this is equivalent to showing that
+$$
+\forall (\chi : \omega \to \B), V^\B \vDash \bigsqcup_{S : 2^\omega} \wt{\chi} =^\B \check{S}.
+$$
+
+Fix an arbitrary $\chi$. Unfolding the definition of $\B$-valued equality and simplifying the $\bval$s of check-names, it suffices to show that
+$$
+V^\B \vDash \bigsqcup_{S : 2^\omega} \left(\bigsqcap_{n : \omega} \chi(n) \Rightarrow \bigsqcup_{k : S} \check{n} =^\B \check{k} \right) \sqcap \left( \bigsqcap_{k : S} \bigsqcup_{n : \omega} \chi(n) \sqcap \check{n} =^\B \check{k} \right).
+$$
+
+Inspecting the conjuncts, we see that the terms of the left conjunct reduce to $\top$ if $n \in S$ and to $- \chi(n)$ if $n \notin S$. The right conjunct as a whole reduces to $\bigsqcap_k \chi(k)$. Therefore, it is equivalent to show
+$$
+\top \leq \bigsqcup_{S : 2^\omega} \left(\bigsqcap_{n : \neg S} \neg \chi(n)\right) \sqcap \left(  \bigsqcap_{k : S} \chi(k) \right).
+$$
+
+Since indexed suprema are the regular-open closure of the union, it suffices to show that
+$$
+\bigcup_{S : 2^\omega} \left(\bigsqcap_{n : \neg S} \neg \chi(n)\right) \sqcap \left(  \bigsqcap_{k : S} \chi(k) \right)
+$$
+is dense. That is, for every $p : C_{\aleph_1}(\aleph_1, 2^\omega)$, we must show that
+$$
+D_p \cap \bigcup_{S : 2^\omega} \left(\bigsqcap_{n : \neg S} \neg \chi(n)\right) \sqcap \left(  \bigsqcap_{k : S} \chi(k) \right) \neq \emptyset.
+$$
+That is, we must show that there exists some $S : 2^\omega$ such that
+$$
+D_p \cap \left(\left(\bigsqcap_{n : \neg S} \neg \chi(n)\right) \sqcap \left(  \bigsqcap_{k : S} \chi(k) \right) \right) \neq \emptyset.
+$$
+
+Let $S = \{ m : \omega \stbar \neg \chi(m) \cap D_p \} = \emptyset $.
+
+We define $S$ by induction. We put $0 \in S$ if and only if $\chi(0) \sqcap D_p = \emptyset$.
+
+If $k$ has already been decided, put $\sigma(k) \chi(k)$ to be $\chi(k)$ if $k \in S$, and $\neg \chi(k)$ otherwise.
+
+If $0, \dots, n$ have already been decided, then we put $(n+1) \in S$ if and only if
+$$
+\left(\left(\bigsqcap_{k \leq n} \sigma(k)\chi(k)\right) \sqcap - \chi(n+1)\right) \sqcap D_p = \emptyset.
+$$
+
+That concludes the construction of $S$. By construction, and because $\B$ is $\omega$-closed, we conclude that $$D_p \cap \left(\left(\bigsqcap_{n : \neg S} \neg \chi(n)\right) \sqcap \left(  \bigsqcap_{k : S} \chi(k) \right) \right) \neq \emptyset.$$
+\end{proof}
+
+% To do this, we will need to reflect functions. Our next goal is to prove the following theorem.
+
+% \theorem{\label{reflect-function-main} Let $x$ and $y$ be pre-sets, and let $f$ be a $\B$-valued set such that $V^\B \vDash$ $f$ is a function from $\check{x} \to \check{y}$. Then there exists a pre-set $g$ such that $V \vDash$ $g$ is a function from $x \to y$ and $\check{g} = f$.}
+
+% \lemma{\label{reflect-function-AE} Let $x$ and $y$ be pre-sets, and $f$ be a definite $\B$-valued set such that $V^\B \vDash$ $f$ is a function from $\check{x}$ to $\check{y}$. Then the following statement is true:
+%   $$
+%   \forall i : x\type, \exists j : y\type, \top \leq \left(\check{x}\func(i), \check{y}\func(j)\right) \in^\B f.
+%   $$}
+
+% \begin{proof}
+ 
+%   Since
+%   $$
+%   \top \leq \left(\bigsqcap_v v \in^\B \check{x} \Rightarrow \bigsqcup_w w \in^\B\check{y}\sqcap (v,w) \in^\B f\right) \sqcap \left( \opn{ext}(f)  \right),
+%   $$
+%   we have
+%   $$
+% \top \leq \left( \bigsqcap_v v \in^\B \check{x} \Rightarrow \bigsqcup_w w \in^\B\check{y} \sqcap (v,w) \in^\B f\right).
+% $$
+% Localizing the quantifiers, we have
+% $$
+% \top \leq \left( \bigsqcap_{i : x\type} \check{x}\bval (i) \Rightarrow \bigsqcup_{j : y\type} \check{y}\bval(j) \sqcap (x\func(i),y\func(j)) \in^\B f \right).
+% $$
+
+% Since the $\bval$s of a check-name are always $\top$, this simplifies to
+
+% $$
+% \top \leq \left( \bigsqcap_{i : x\type} \top \Rightarrow \bigsqcup_{j : y\type}  (\check{x}\func(i),\check{y}\func(j)) \in^\B f \right).
+% $$
+
+% Since for any $a$, $\top \Rightarrow a = (- \top) \sqcup a = a,$ this simplifies to
+
+% $$
+% \top \leq \left( \bigsqcap_{i : x\type} \bigsqcup_{j : y\type}  (\check{x}\func(i),\check{y}\func(j)) \in^\B f \right).
+% $$
+
+% Now, fix an arbitrary $i : x\type$.
+% $$
+% \top \leq \left( \bigsqcup_{j : y\type}  (\check{x}\func(i),\check{y}\func(j)) \in^\B f \right).
+% $$
+
+% Since $\top \leq f \subset^\B \check{x} \times \check{y}$ (i.e., $V^\B$ thinks $f$ is a subset of a check-name), it follows that there exists a $j : y\type$ such that
+% $$
+% \top \leq \left( (\check{x}\func(i), \check{y}\func(j)) \in^\B f \right).
+% $$
+% \end{proof}
+
+% \lemma{\label{reflect-function-AE} Let $x$ and $y$ be pre-sets, and $f$ be a definite $\B$-valued set such that $V^\B \vDash$ $f$ is a function from $\check{x}$ to $\check{y}$. We define the \textbf{reflection} of $f$ to be the following pre-set. \remph{TODO}(jesse) finish this}
+
+
 \subsection{The constructible universe $\mathsf{L}$}
-
-
-
-
 
 \section{Generic sets: Cohen's original proof}
 
