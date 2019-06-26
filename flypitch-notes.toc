@@ -5,7 +5,7 @@
 \contentsline {subsubsection}{\numberline {1.1.3}Terms, formulas, and sentences}{3}{subsubsection.1.1.3}% 
 \contentsline {subsubsection}{\numberline {1.1.4}Predicate calculus and provability}{4}{subsubsection.1.1.4}% 
 \contentsline {subsection}{\numberline {1.2}Models and satisfiability}{6}{subsection.1.2}% 
-\contentsline {subsection}{\numberline {1.3}The completeness theorem}{9}{subsection.1.3}% 
+\contentsline {subsection}{\numberline {1.3}The completeness theorem}{8}{subsection.1.3}% 
 \contentsline {subsubsection}{\numberline {1.3.1}The Henkin construction}{9}{subsubsection.1.3.1}% 
 \contentsline {subsection}{\numberline {1.4}The L\"owenheim-Skolem theorem}{14}{subsection.1.4}% 
 \contentsline {section}{\numberline {2}$\mathsf {ZFC}$}{15}{section.2}% 
@@ -21,12 +21,13 @@
 \contentsline {subsection}{\numberline {5.1}Powersets in $V^\mathbb {B}$}{23}{subsection.5.1}% 
 \contentsline {subsection}{\numberline {5.2}The axiom of choice}{23}{subsection.5.2}% 
 \contentsline {subsubsection}{\numberline {5.2.1}Zorn's lemma}{25}{subsubsection.5.2.1}% 
-\contentsline {subsection}{\numberline {5.3}Ordinals in $V^\mathbb {B}$}{29}{subsection.5.3}% 
-\contentsline {subsection}{\numberline {5.4}The Cohen poset and the boolean algebra of regular opens}{30}{subsection.5.4}% 
-\contentsline {subsection}{\numberline {5.5}The consistency of $\neg \mathsf {CH}$}{30}{subsection.5.5}% 
-\contentsline {subsection}{\numberline {5.6}A direct proof that cardinal inequalities are preserved assuming CCC}{33}{subsection.5.6}% 
+\contentsline {subsection}{\numberline {5.3}Consequences of the axiom of choice}{29}{subsection.5.3}% 
+\contentsline {subsection}{\numberline {5.4}Ordinals in $V^\mathbb {B}$}{30}{subsection.5.4}% 
+\contentsline {subsection}{\numberline {5.5}The Cohen poset and the Boolean algebra of regular opens}{31}{subsection.5.5}% 
+\contentsline {subsection}{\numberline {5.6}The consistency of $\neg \mathsf {CH}$}{31}{subsection.5.6}% 
+\contentsline {subsection}{\numberline {5.7}A direct proof that cardinal inequalities are preserved assuming CCC}{34}{subsection.5.7}% 
 \contentsline {section}{\numberline {6}The consistency of $\mathsf {CH}$}{34}{section.6}% 
 \contentsline {subsection}{\numberline {6.1}Forcing $\mathsf {CH}$}{34}{subsection.6.1}% 
-\contentsline {subsection}{\numberline {6.2}The constructible universe $\mathsf {L}$}{37}{subsection.6.2}% 
-\contentsline {section}{\numberline {7}Generic sets: Cohen's original proof}{37}{section.7}% 
-\contentsline {section}{\numberline {8}Sheaves and filterquotients}{37}{section.8}% 
+\contentsline {subsection}{\numberline {6.2}The constructible universe $\mathsf {L}$}{39}{subsection.6.2}% 
+\contentsline {section}{\numberline {7}Generic sets: Cohen's original proof}{39}{section.7}% 
+\contentsline {section}{\numberline {8}Sheaves and filterquotients}{39}{section.8}% 

@@ -11,6 +11,7 @@
 \usepackage{fixltx2e}
 \usepackage{tcolorbox}
 \usepackage{jmhmacros}
+\usepackage{microtype} % thanks favonia
 
 % % COPY THIS
  \usepackage[utf8x]{inputenc}
@@ -1470,6 +1471,38 @@ Now we calculate:
 and the proof is complete.
 \end{proof}
 
+\subsection{Consequences of the axiom of choice}
+
+\definition
+{Let $x$ and $y$ be $\B$-valued sets.
+
+We say that $x$ is \tbf{larger than} $y$, written $y \prec x$ if there exists a surjection from $x$ onto $y$. We put $x \prec y$ if and only if $x$ is not 
+
+We say that $x$ \tbf{injects into} $y$, written $x \preceq y$, if ``there exists an injection from $x$ into $y$'' has truth-value $\top$.}
+
+\lemma{\label{lt_of_le_of_lt} Let $x, y$ and $z$ be $\B$-valued sets. Then for all $\Gamma : \B$,
+  $$
+\Gamma \leq \left(\left(x \preceq y\right) \sqcap \left( y \prec z \right)\right) \Rightarrow \left( x \prec z \right).
+  $$
+}
+\begin{proof}
+  It suffices to show that
+  \begin{align*}
+          \Gamma &\leq x \preceq y \\
+      \Gamma &\leq y \prec z \\
+      \Gamma &\leq - x \prec z \\
+      \vdash \Gamma &\leq \bot.
+  \end{align*}
+
+  We have that $\Gamma \leq - x \prec z$ expands to $\Gamma \leq \text{``there exists a surjection from $x$ onto $z$''}$. To obtain $\Gamma \leq \bot$, it suffices to show that
+  $$
+\Gamma \leq - y \prec z,
+$$
+i.e. it suffices to exhibit some $g$ such that $\Gamma \leq \text{``$g$ is a surjection from $y$ onto $z$''}$.
+
+\remph{TODO}(jesse): finish this
+\end{proof}
+
 \subsection{Ordinals in $V^\B$}
 \newcommand{\Ord}{\opn{Ord}}
 \lemma{\label{lemma-no-new-ordinals}
@@ -1767,7 +1800,7 @@ $$\top \leq \check{\mathcal{P}(X)} \subseteq^\beta \mathcal{P}(\check{X}).$$
 \end{proof}
 From now one, we fix the collapsing algebra $\B=B_{\aleph_1}(\aleph_1,\mc{P}(\omega))$.
 
-\lemma{\label{continuum-is-continuum} In $V^\B$ we have $\vDash\mathcal{P}(\check{X}) \subseteq^\B \check{\mathcal{P}(X)}$.}
+\lemma{In $V^\B$, we have $\vDash \mathcal{P}(\check{X}) \subseteq^\B \check{\mathcal{P}(X)}$.}
 
 \begin{proof}
 
@@ -1914,6 +1947,71 @@ $$
 $$
 
 That concludes the construction of $S$. By construction, and because $\B$ is $\omega$-closed, we conclude that $$D_p \cap \left(\left(\bigsqcap_{n : \neg S} \neg \chi(n)\right) \sqcap \left(  \bigsqcap_{k : S} \chi(k) \right) \right) \neq \emptyset.$$
+\end{proof}
+
+It might be easier, however, to prove the following theorem, and then deduce \ref{continuum-is-continuum} by constructing (in $V^\B$) the equivalence between $\mathcal{P}(\omega)$ and $2^\omega$:
+
+\theorem{Let $y$ be a $\B$-valued set. Then $V^\B \vDash$  `` $\forall G, G \in^\B (\check{y})^\omega \Leftrightarrow G \in^\B \check{(y^\omega)}$.''}
+
+\begin{proof}
+  Since $V^\B \vDash \check{(y^\omega)} \subseteq \check{y}^\omega$, it suffices to show that
+  $V^\B \vDash \check{y}^\omega \subseteq \check{(y^\omega)}$.
+
+  That is, we need to show that for every $\chi : \omega \times y \to \B$,
+  $$
+V^\B \vDash \msf{is\_func}(\omega) (y) (\wt{\chi}) \Rightarrow \bigsqcup_{f : \omega \to y} \check{f} =^\B \wt{\chi}.
+$$
+Tidying the context, it suffices to show that for an arbitrary $\Gamma : \B$ such that $\Gamma \leq \msf{is\_func}(\omega) (y) (\wt{\chi})$,
+$$
+\Gamma \leq \bigsqcup_{f : \omega \to y} \check{f} =^\B \wt{\chi}.
+$$
+
+Since indexed suprema are the regular-open closure of the union, it suffices to show that the quantity on the right is dense on the regular open $\msf{is\_func}(\omega) (y) (\wt{\chi})$. To show this, it suffices\footnote{TODO(jesse): formally state and prove this.} to show that for every basic open $D_p$ such that $D_p' := D_p \cap \msf{is\_func}(\omega) (y) (\wt{\chi})$ is not $\bot$, we have that
+$$
+\bot < D_p' \cap \bigcup_{f : \omega \to y} \check{f} =^\B \wt{\chi}.
+$$
+This follows immediately by applying \myref{Lemma}{lemma-AE-of-check-func-check'} using the $\omega$-closedness of $\B$, with $\Gamma = D_p'$.
+
+% remark(jesse): while this proof still works as in the specialized case of powersets, it actually obscures the _real_ technique of proof, which is the AE_of_..._check lemma
+% Applying subset-extensionality, it suffices to show that
+% $$
+% \Gamma \leq \bigsqcup_{f : \omega \to y} \wt{\chi} \subseteq^\B \check{f} \sqcap \check{f} \subseteq^\B \wt{\chi} 
+% $$
+% This unfolds to
+% $$
+% \Gamma \leq \bigsqcup_{f : \omega \to y} \left( \bigsqcap_{(n, j)} (n,j) \in^\B \wt{\chi} \Rightarrow (n,j) \in^\B \check{f} \right) \sqcap \left( \bigsqcap_{(n, j)} (n,j) \in^\B \check{f} \Rightarrow (n,j) \in^\B \wt{\chi} \right).
+% $$
+% As above, the terms of the left conjunct is $\top$ if $f (n) = j$, and $\neg \chi(n,j)$ otherwise, and the terms of the right conjunct are $\top$ if $f (n) \neq j$ and $\chi(n,j)$ otherwise. Therefore, this simplifies to
+
+% $$
+% \Gamma \leq \bigsqcup_{f : \omega \to y} \left(\bigsqcap_{(n,j) \in f} \chi(n,j) \right) \sqcap \left( \bigsqcap_{(n,j) \not \in f} \neg \chi(n,j) \right).
+% $$
+\end{proof}
+
+\lemma{\label{lemma-AE-of-check-func-check}
+  Let $y : V$, $g : V^\B$, and $\Gamma : \B$ satisfy that $\bot < \Gamma$ and $\Gamma \leq \msf{is\_func}(\omega) (\check{y}) (g)$. Then for every $n : \omega$, there exists a $j : y$ and a $\Gamma' : \B$ such that $\bot < \Gamma' \leq \msf{is\_func}(\omega) (\check{y}) (g) \sqcap (n,j) \in^\B g$, and $\Gamma' \leq \Gamma$.
+}
+\begin{proof}
+  See proof of lemma \lstinline{AE_of_check_func_check} in the formalization.
+\end{proof}
+
+\lemma{\label{lemma-AE-of-check-func-check'}
+  Let $\B$ be a nontrivial complete Boolean algebra. Suppose that $\B$ is $\omega$-closed. Let $y : V$,$g : V^\B$, and $\Gamma : \B$ satisfy that $\bot < \Gamma$ and $\Gamma \leq \msf{is\_func}(\omega) (\check{y}) (g)$. Then there exists an $f : V$ and a $\Gamma'$ such that $\bot < \Gamma' \leq \Gamma$ and $\Gamma' \leq g =^\B \check{f}$.
+}
+\begin{proof}
+  We simultaneously define, by recursion on $\omega$, a function $B_{(-)} : \omega \to \B$ and a function $f : \omega \to y$:
+
+  For the base case, $B_0$ is the $\Gamma'$ witnessing the conclusion of \myref{Lemma}{lemma-AE-of-check-func-check} with $n = 0$, and $f(0)$ is the $j$ from the same conclusion.
+
+  At the induction step, we have defined $B_0,...,B_n$ and $f(0),...,f(n)$.
+  Since $B_n \leq \msf{is\_func}(\omega) (\check{y}) (g)$, we can apply \myref{Lemma}{lemma-AE-of-check-func-check} again with $\Gamma := \B_n$.
+
+  Note that by inspecting the definition of the $B_i$, we see that actually, for every $n$,
+  $$
+B_n \leq \msf{is\_func}(\omega) (\check{y}) (g) \sqcap (0, f(0)) \in^\B g \sqcap \cdots \sqcap (n, f(n)) \in^\B g.
+$$
+
+Since $\B$ is $\omega$-closed, and all finite fragments of the intersection $\bigsqcap_i B_i$ are nonempty, $\bigsqcap B_i$ is nonempty, and so there exists some $B_{\infty}$ such that for every $n$, $B_{\infty} \leq B_n$. Evidently, $B_\infty \leq \bigsqcap_{n : \N} \bigsqcap_{j : y} (n,j) in^\B \check{f} \Rightarrow (n,j) \in^\B g$, and since $g$ was a function, we conclude that $B_{\infty} \leq \check{f} =^\B g$. Therefore, $B_\infty$ is the required $\Gamma'$.
 \end{proof}
 
 % To do this, we will need to reflect functions. Our next goal is to prove the following theorem.
