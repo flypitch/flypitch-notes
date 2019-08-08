@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-\usepackage[margin=1in]{geometry} 
+\usepackage[margin=1in]{geometry}
 \usepackage{tikz-cd}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -81,7 +81,7 @@ $$  \begin{gmatrix}
   }
 
 Whenever we interpret a language on some carrier $A$, we mean for constants $c$ to be interpreted as elements of $A^{\opn{arity}(c)}$, relations $R$ to be interpreted as subsets of $A^{\opn{arity}(R)}$, and for function symbols to be interpreted as functions $A^{\opn{arity}(f)} \to A$.
-  
+
   \example{
     \begin{itemize}
     \item The language of groups comprises a $1$-ary constant symbol for the identity and a $2$-ary function for group multiplication.
@@ -201,10 +201,10 @@ is valid.
 
 \item (Rule of specialization ``$\forall$-elimination'')
   Let $c$ be any constant symbol, and let $\varphi(x)$ be a formula whose only free variable is $x$. Then $(\forall x \varphi(x)) \to \varphi(c)$ is valid.
-  
+
 \item (``$\neg$-introduction'')
   If $\neg A \leftrightarrow (A \to \false)$ is valid.
-  
+
 \item (Generalization of constants ``$\forall$-introduction'') \label{forall-introduction}
   Let $B$ be a sentence which does not contain the constant $c$ or the variable $x$. Let $\varphi(x)$ be some formula such that $\varphi(c) \to B$ is valid. Then $\exists x \varphi(x) \to B$ is also valid.\footnote{In particular, using the next rule, if $\neg \varphi(c) \to \false$ is valid, so is $\exists x \neg \varphi(x) \to \false$, so is $\neg \exists x \neg \varphi(x)$, and therefore so is $\forall x \varphi(x)$.}
 
@@ -226,8 +226,8 @@ is valid.
     \remark{
 One may wonder why we work with a type of formulas and not with a collection of $\Prop$s directly. The problem with this is that everything needs to be typed, and so to reason about a predicate (say ``$\in$'') using $\Prop$, we need some carrier type $A$ such that $\in : A \to A \to \Prop$, so that e.g. $\in$ satisfies the axioms of set theory. But then what does it mean for some other type $B$ to have an interpretation of $\in$ and the axioms it satisfies? There then needs to be a separate predicate $\in_B : B \to B \to \Prop$ satisfying the same \emph{kind} of $\Prop$s as $\in : A \to A \to \Prop$. We could proceed to define a typeclass of such $(B, \in_B)$, and we would then be working with models of set theory, but we would lack a way to reason syntactically about the axioms themselves.
       }
-      
-  
+
+
       \subsection{Models and satisfiability}
       For the remainder of this section we fix a language $\mc{L}$.
 \definition{
@@ -256,7 +256,7 @@ One may wonder why we work with a type of formulas and not with a collection of 
     \item If $t = f(t_0)$ for some function symbol $f$, then $\mbf{r}(t) = f^A \circ \mbf{r}(t_0)$.
     \end{enumerate}
     }
-  
+
   \definition{
     \label{def-realization-of-formulas}
     Let $A$ be an $\mc{L}$-structure. Using the data of $A$ being an $\mc{L}$-structure, we can inductively assign to every formula $\varphi(x_1, \dots, x_n)$ (where $x_1, \dots, x_n$ exhaust the free variables of $\varphi$) a \tbf{realization} $\mbf{r}(\varphi) : A^n \to \msf{Prop}$, as follows:
@@ -369,7 +369,7 @@ but this is not a valid $\mc{L}$-sentence. (Indeed, if it were, then the soundne
 }
 
 It will turn out that we can do the next best thing. If we rule out this kind of exception by requiring that $M \models \varphi$ \emph{for every $\mc{L}$-structure} $M$ (resp. every model $M$ of $T$), then it follows that $\entails_{\mc{L}} \varphi$ (resp. $T \entails_{\mc{L}} \varphi$). This is the completeness theorem.
-  
+
   \subsection{The completeness theorem}
 In this section, our goal will be to prove the \tbf{completeness theorem}:
 \theorem{\label{theorem-completeness} Let $T$ be an $\mc{L}$-theory. $T$ is consistent if and only if there exists a model of $T$.}
@@ -442,7 +442,7 @@ It then remains to show that if $T$ is consistent, $T$ has a model. We will use 
 
 %   From the previous lemma, at each stage $\beta$ of this construction, $S_{\beta} \dfeq S \cup \{G_{\alpha} \stbar \alpha < \beta\}$ is consistent. Since any inconsistency is derivable from finitely many other sentences, the union
 %   $$
-% H \dfeq \bigcup_{\beta} S_{\beta} 
+% H \dfeq \bigcup_{\beta} S_{\beta}
 % $$
 % is consistent.
 
@@ -477,7 +477,7 @@ It then remains to show that if $T$ is consistent, $T$ has a model. We will use 
 %   \begin{proof}
 %     Apply the change-of-variables rule and the de Morgan rules for quantifiers to change any sentence not in the desired form into one in $T'$.
 %   \end{proof}
-  
+
 % \theorem{\label{theorem-relational-completeness}Now suppose that $S$ is a relational theory, which possibly contains quantifiers, and is consistent. Then $S$ has a model.}
 % \begin{proof}
 %   Let $T$ be a theory whose sentences are either quantifier-free or begin with a quantifier. We expand $T$ (and the language) as follows: for every sentence in $T$ of the form $\exists x \varphi(x)$, we expand the language by a new constant symbol $c$ and adjoin to $T$ the sentence $\varphi(c)$, and for every sentence in $T$ of the form $\forall x \varphi(x)$ and every constant $c$ already occuring in $T$, we adjoin the sentence $\varphi(c)$. We call the result of this process $T^*$.
@@ -487,7 +487,7 @@ It then remains to show that if $T$ is consistent, $T$ has a model. We will use 
 % \entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\bigwedge_{j} \psi_j(c_j)\right) \to \false,
 % $$ where $c_j$ are the new constant symbols. Applying the generalization of constants deduction rule and the de Morgan rules, we conclude that
 % $$
-% \entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\exists x_j\bigwedge_{j} \psi_j(x_j)\right) \to \false 
+% \entails_{\mc{L}} \left(\bigwedge_{i} \varphi_i \right) \wedge \left(\exists x_j\bigwedge_{j} \psi_j(x_j)\right) \to \false
 % $$
 % and therefore
 % $$
@@ -503,7 +503,7 @@ It then remains to show that if $T$ is consistent, $T$ has a model. We will use 
 % }
 
 % \begin{proof}[Sketch.]
-% For every function symbol $f$ of $\mc{L}$, we interpret $f$ as the function specified by the graph relation $\Gamma_f$ in $\mc{L}_{\opn{rel}}$, which was axiomatized in $T_{\opn{rel}}$ to be the graph of a function. This gives an $\mc{L}$-structure $M$. Since $M \models T_{\opn{rel}}$ and every sentence of $T_{\opn{rel}}$ is either a modified version of a sentence in $T$ or asserts that a new relation is a graph of a function, $M \models T$. 
+% For every function symbol $f$ of $\mc{L}$, we interpret $f$ as the function specified by the graph relation $\Gamma_f$ in $\mc{L}_{\opn{rel}}$, which was axiomatized in $T_{\opn{rel}}$ to be the graph of a function. This gives an $\mc{L}$-structure $M$. Since $M \models T_{\opn{rel}}$ and every sentence of $T_{\opn{rel}}$ is either a modified version of a sentence in $T$ or asserts that a new relation is a graph of a function, $M \models T$.
 % \end{proof}
 
 % \proposition{
@@ -610,7 +610,7 @@ and therefore that the $\mc{L}$-theory of an $\mc{L}$-structure (i.e. the collec
     }
 
     By invoking the axiom of choice, we can extend any consistent theory to a complete consistent theory. We will prove this.
-    
+
     \proposition{Let $T$ be a consistent $\mc{L}$-theory.uuuu There exists a complete, consistent $\mc{L}$-theory $T'$ which contains $T$.
       \label{prop-complete-extension}
     }
@@ -654,7 +654,7 @@ $\entails_{\mc{L}} \neg \sigma$ and $\entails_{\mc{L}} \neg \rho$, so $T$ is inc
 
       This now fits the hypotheses of Zorn's lemma, which gives us a maximal consistent extension of $T'$ of $T$. If $T'$ were not complete, then the previous lemma shows that we can extend it.
     \end{proof}
-    
+
 \theorem{\label{theorem-henkin-completeness}
   Let $T$ be a complete Henkin $\mc{L}$-theory. If $T$ is consistent, then $\term(T)$ is a model of $T$.
 }
@@ -857,7 +857,7 @@ A set $x$ is called \tbf{transitive} if $y \in x, z \in y \rightarrow z \in x$.
   \begin{enumerate}
   \item $\forall a, b : B, a \leq a \sqcup b$
   \item $\forall a, b : B, b \leq a \sqcup b$
-  \item $\forall a, b, c : B, a\ leq c \to b \leq c \to a \sqcup b \leq c$.
+  \item $\forall a, b, c : B, a \leq c \to b \leq c \to a \sqcup b \leq c$.
   \end{enumerate}
   }
 
@@ -912,7 +912,7 @@ A lattice $B$ has a \tbf{top element} $\top$ if for every $a : B, a \leq \top$.
   }
 
   \definition{
-    For convenience, we accumulate the previous definitions into a complete axiomatization of a boolean algebra. A boolean algebra is a type $B$ with a specification of binary ordering relations $\leq$, $\lt$, a binary sup operation $\sqcup$, a binary inf operation $\sqcap$, top and bottom elements $\top$, $\bot$, a unary negation operator $\neg$, and a binary subtraction operator $-$, satisfying the following properties:
+    For convenience, we accumulate the previous definitions into a complete axiomatization of a Boolean algebra. A Boolean algebra is a type $B$ with a specification of binary ordering relations $\leq$, $\lt$, a binary sup operation $\sqcup$, a binary inf operation $\sqcap$, top and bottom elements $\top$, $\bot$, a unary negation operator $\neg$, and a binary subtraction operator $-$, satisfying the following properties:
 \begin{enumerate}
 \item $\forall (a : B), a ≤ a$
 \item $(a b, c_1 : B), a \leq b → b \leq c_1 → a \leq c_1$
@@ -946,11 +946,11 @@ A \tbf{complete lattice} $B$ is a bounded lattice which has operations $\opn{Sup
   }
 
 \definition{
-A \tbf{complete boolean algebra} $B$ is a boolean algebra which is also a complete distributive lattice.
+A \tbf{complete Boolean algebra} $B$ is a Boolean algebra which is also a complete distributive lattice.
 }
 
 \subsection{Boolean-valued models}
-Fix $\mc{L}$ a first-order language and $T$ an $\mc{L}$-theory. Fix $\mbb{B}$ a boolean algebra.
+Fix $\mc{L}$ a first-order language and $T$ an $\mc{L}$-theory. Fix $\mbb{B}$ a Boolean algebra.
 
 \newcommand{\bv}[2]{[[#2]]^{#1}}
 \definition{\label{def-boolean-valued-structure}
@@ -992,7 +992,7 @@ This means that there is an associated indicator function on the ``disjoint unio
 
 Let $\mbb{B}$ be a complete Boolean algebra. We construct a $\mbb{B}$-valued model analogous to the standard model $\mbb{W}$ as follows:
 
-A \tbf{$\mbb{B}$-valued preset} is an $\alpha$-indexed family of $\mbb{B}$-valued presets $ \times $ $\mbb{B}$ (i.e. a type-indexed family of presets with boolean truth values for membership).
+A \tbf{$\mbb{B}$-valued preset} is an $\alpha$-indexed family of $\mbb{B}$-valued presets $ \times $ $\mbb{B}$ (i.e. a type-indexed family of presets with Boolean truth values for membership).
 
 Such objects are called $\mbb{B}$-names. A $\mbb{B}$-name $u$ is specified by the following data:
 \begin{enumerate}
@@ -1058,7 +1058,7 @@ We write $a_1 \cdot u_1 + a_2 \cdot u_2$ for the two-term mixture of $u_1$ and $
     $$
     \top \leq U \in^\B X. % \bigsqcup_{i_y : \alpha_X} B_X (i_y) \sqcap (a_1 \cdot u_1 + a_2 \cdot u_2) =^\B A_X(i_y).
     $$
-    
+
     By the mixing lemma, we have that $a_1 \leq U =^\B u_1$ and that $a_2 \leq U =^\B u_2$. Therefore, $a_1 \sqcup a_2 = \top \leq U =^\B u_1 \sqcup U =^\B u_2$.
 
     Conjuncting this with the facts that $T \leq u_1 \in^\B X$ and $T \leq u_2 \in^\B X$ and then eliminating the previous Boolean-valued disjunction, we see that it suffices to prove that
@@ -1129,7 +1129,7 @@ Since $B_{u_2}(i) \leq A_{u_2}(i) \in^\B u_2$, we are finished after applying $\
   }}
 \begin{proof}
   \bfenumerate{
-  \item Since $[[\exists x \phi(x)]] = \top$, we obtain, using the maximum principle, a $w$ such that $\phi(w) = \top$. 
+  \item Since $[[\exists x \phi(x)]] = \top$, we obtain, using the maximum principle, a $w$ such that $\phi(w) = \top$.
 
     Put $b = \phi(v)$, and let $u$ be the two-term mixture $u = b \cdot v + (\neg b) \cdot w$.
     We make the following observations:
@@ -1156,7 +1156,7 @@ $$
 
   Our goal is then to show that $\phi (v) \leq \psi (v)$. So, we calculate
   $$
-\phi(v) \leq \phi(v) \sqcap \top = \phi(v) \sqcap \psi(u) = (u =^\B v) \sqcap \psi(u) \leq \psi(v), 
+\phi(v) \leq \phi(v) \sqcap \top = \phi(v) \sqcap \psi(u) = (u =^\B v) \sqcap \psi(u) \leq \psi(v),
 $$
 since $\psi$ was $=^\B$-extensional.
   }
@@ -1362,7 +1362,7 @@ $$
 \forall u_1 \in C, \forall u_2 \in C, T \leq u_1 \subseteq^\B u_2 \lor u_2 \subseteq^B u_1.
 $$
 
-So, fix $u_1$ and $u_2$ in $C$. Since $C$ was a chain in $S$, either $[[u_1 \subseteq u_2]] = \top$ or $[[u_2 \subseteq u_1]] = \top$. 
+So, fix $u_1$ and $u_2$ in $C$. Since $C$ was a chain in $S$, either $[[u_1 \subseteq u_2]] = \top$ or $[[u_2 \subseteq u_1]] = \top$.
 
 Without loss of generality, suppose that $[[u_1 \subseteq u_2]] = \top$, as the other case is entirely symmetric. Then $\top \leq u_1 \subseteq^\B u_2$, and by the transitivity of $\leq$, it suffices to show that
 $$
@@ -1513,7 +1513,7 @@ In the first case, $u \in^\B \check{\alpha_0}$, and is therefore equal to some m
 In the second case, $u =^\B \check{\alpha_0}$ obviously implies that there exists an ordinal whose check-name is equal to $u$.
 \end{proof}
 
-\subsection{The Cohen poset and the boolean algebra of regular opens}
+\subsection{The Cohen poset and the Boolean algebra of regular opens}
 The complete Boolean algebra that we will use for forcing the negation of $\CH$ is the \tbf{algebra of regular opens} on a product topological space.
 
 \newcommand{\RO}{\opn{RO}}
@@ -1537,7 +1537,7 @@ By the Boolean-valued soundness theorem, if $\ZFC$ proves $\msf{CH}$, then $\msf
 
 Throughout the rest of this section, $\mc{S}$ will denote the type of $\Prop$-valued functions on $\aleph_2 \times \aleph_0$.
 
-We will show that $\CH$ is not true in $V^{\B}$, where $\B$ is defined to be the complete boolean algebra of regular opens of $\mc{S}$. Our goal will be to prove:
+We will show that $\CH$ is not true in $V^{\B}$, where $\B$ is defined to be the complete Boolean algebra of regular opens of $\mc{S}$. Our goal will be to prove:
 
 \theorem{\label{theorem-ch-not-true} $\CH$ is not true in $V^\B$. Specifically, $V^\B \models \aleph_2 \leq \left|2^{\aleph}\right|$.}
 
@@ -1726,7 +1726,7 @@ Let $\left(Y^X, \{\mc{D}_p \stbar p : C_{\kappa}(X,Y)\}\right)$ denote $Y^X$ equ
 \definition{
   Let $\kappa$ be a cardinal, and let $X$ and $Y$ be sets. The \tbf{collapsing algebra} is defined to be
   $$
-\RO\left( Y^X, \mc{D} \right).
+  $B_{\kappa}(X,Y)$ = \RO\left( Y^X, \mc{D} \right).
   $$
 }
 
@@ -1734,7 +1734,7 @@ Let $\left(Y^X, \{\mc{D}_p \stbar p : C_{\kappa}(X,Y)\}\right)$ denote $Y^X$ equ
   $B_{\kappa}(X,Y)$ is a Boolean completion of $C_{\kappa}(X,Y)$.}
 
 \begin{proof}
-  
+
 \end{proof}
 \lemma {\label{omega-closed} $B_{\kappa}(X,Y)$ satisfies the following property: for every $\omega$-indexed descending chain
   $$
@@ -1749,7 +1749,7 @@ $$}
   This follows from the fact that a countable union of compatible countable partial functions is again a countable partial function.
 \end{proof}
 
-\lemma{\label{omega-closed'} $B_{\kappa}(X,Y)$ satisfies the following property: for every $\omega$-indexed chain $s : \omega \to B_{\kappa(X,Y)}$ such that $s(0) \supseteq \cdots \supseteq s(n) \supseteq \cdots$ and such that for every $n$, $\bigsqcap_{i \leq n} s(n) \neq \emptyset$,
+\lemma{\label{omega-closed'} $B_{\kappa}(X,Y)$ satisfies the following property: for every $\omega$-indexed chain $s : \omega \to B_\kappa(X,Y)$ such that $s(0) \supseteq \cdots \supseteq s(n) \supseteq \cdots$ and such that for every $n$, $\bigsqcap_{i \leq n} s(n) \neq \emptyset$,
   $$
 \left(\bigcap_{n : \omega} s(n)\right) \neq \emptyset.
 $$}
@@ -1758,32 +1758,33 @@ $$}
   This should follow from the prevous lemma.
 \end{proof}
 
-\lemma{\label{lemma-powerset-comparison} Let $X$ be a set. Then for any $\beta$,
+\lemma{\label{lemma-powerset-comparison} Let $X$ be a set. Then for any Boolean algebra $\beta$,
 $$\top \leq \check{\mathcal{P}(X)} \subseteq^\beta \mathcal{P}(\check{X}).$$
 }
 
 \begin{proof}
-  
-\end{proof}
 
-\lemma{\label{continuum-is-continuum} In $V^\B$, $\mathcal{P}(\check{X}) \subseteq^\B \check{\mathcal{P}(X)}$.}
+\end{proof}
+From now one, we fix the collapsing algebra $\B=B_{\aleph_1}(\aleph_1,\mc{P}(\omega))$.
+
+\lemma{\label{continuum-is-continuum} In $V^\B$ we have $\vDash\mathcal{P}(\check{X}) \subseteq^\B \check{\mathcal{P}(X)}$.}
 
 \begin{proof}
-  
+
 \end{proof}
 
-\lemma{\label{aleph-one-comparison} For any $\beta$,
-$\top \leq \check{\aleph_1} \subseteq^\B \aleph_1$.
+\lemma{\label{aleph-one-comparison} For any Boolean algebra $\beta$ we have
+$\top \leq \check{\aleph_1} \subseteq^\beta \aleph_1$.
 }
 
 \begin{proof}
-  
+
 \end{proof}
 
-\lemma{\label{aleph-one-is-aleph-one} In $V^\B$, $\aleph_1 \subseteq^\B \check{\aleph_1}$.}
+\lemma{\label{aleph-one-is-aleph-one} In $V^\B$ we have $\aleph_1 \subseteq^\B \check{\aleph_1}$.}
 
 \begin{proof}
-  
+
 \end{proof}
 
 \definition{\label{collapsing-map-chi} We define $\chi_{\pi}$ to be the following function:
@@ -1925,7 +1926,7 @@ That concludes the construction of $S$. By construction, and because $\B$ is $\o
 %   $$}
 
 % \begin{proof}
- 
+
 %   Since
 %   $$
 %   \top \leq \left(\bigsqcap_v v \in^\B \check{x} \Rightarrow \bigsqcup_w w \in^\B\check{y}\sqcap (v,w) \in^\B f\right) \sqcap \left( \opn{ext}(f)  \right),
