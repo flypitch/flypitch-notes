@@ -1724,9 +1724,9 @@ Let $\left(Y^X, \{\mc{D}_p \stbar p : C_{\kappa}(X,Y)\}\right)$ denote $Y^X$ equ
 }
 
 \definition{
-  Let $\kappa$ be a cardinal, and let $X$ and $Y$ be sets. The \tbf{collapsing algebra} is defined to be
+  Let $\kappa$ be a cardinal, and let $X$ and $Y$ be sets. The \tbf{collapsing algebra} $B_{\kappa}(X,Y)$ is defined to be
   $$
-  $B_{\kappa}(X,Y)$ = \RO\left( Y^X, \mc{D} \right).
+  \RO\left( Y^X, \mc{D} \right).
   $$
 }
 
@@ -1870,7 +1870,7 @@ To finish the argument, we need to show that $\check{\aleph_1} = \aleph_1$ and t
 
 \theorem{\label{continuum-is-continuum} $V^\B \vDash$ ``$\forall S, S$ is a member of $\mc{P}(\omega)$ iff $S$ is a member of $\check{\mc{P}(\omega)}$ ''}
 \begin{proof}
-  Since $V^\B \vDash \mc{P}(\omega) \subseteq^\B$, it suffices to show that $V^\B \vDash \mc{P}(\omega) \subseteq^\B  \check{\mc{P}(\omega)} $. That is, we must show that
+  Since $V^\B \vDash \check{\mc{P}(\omega)} \subseteq^\B \mc{P}(\omega)$, it suffices to show that $V^\B \vDash \mc{P}(\omega) \subseteq^\B  \check{\mc{P}(\omega)} $. That is, we must show that
   $$
 V^\B \vDash \bigsqcap (\chi : \omega \to \B), \wt{\chi} \subseteq^\B \omega \Rightarrow \bigsqcup_{S : 2^\omega} \check{\mc{P}(\omega)}\bval(S) \sqcap \wt{\chi} =^\B \check{S}.
 $$
